@@ -2,7 +2,7 @@
 
 ## Overview
 
-Library for AMeter/VMeter by M5UnitUnified.  
+Library for AMeter/VMeter using M5UnitUnified.  
 
 The M5UnitUnified version of the library is located under [src/unit](src/unit).  
 M5UnitUnfied has a unified API and can control multiple units via PaHub, etc.
@@ -27,14 +27,10 @@ In order to ensure the measurement accuracy, there is a built-in DC-DC isolated 
 
 This prevents noise and surges on the data bus or other circuits from entering the local ground terminal to interfere or damage sensitive circuits. Each Unit is individually calibrated when leaving the factory, initial accuracy of 0.1%FS, ±1 count, and a maximum measurement voltage of ±36V.
 
-
-
-
-
 ## Related Link
 
-- [ADS1115t & Datasheet](https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/docs/datasheet/unit/ADS1115.PDF)
-- [CA-IS3020S & Datasheet](https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/docs/datasheet/unit/CA-IS3020S.pdf)
+- [Unit Ameter & Datasheet](https://docs.m5stack.com/en/unit/ameter)
+- [Unit Vmeter & Datasheet](https://docs.m5stack.com/en/unit/vmeter)
 
 ## Required Libraries:
 
