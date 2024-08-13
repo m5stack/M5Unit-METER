@@ -50,8 +50,7 @@ void setup() {
     i2c_cfg.pin_scl = m5::hal::gpio::getPin(pin_num_scl);
     auto i2c_bus    = m5::hal::bus::i2c::getBus(i2c_cfg);
     M5_LOGI("Bus:%d", i2c_bus.has_value());
-    if (!Units.add(unit, i2c_bus ? i2c_bus.value() : nullptr) ||
-        !Units.begin()) {
+    if (!Units.add(unit, i2c_bus ? i2c_bus.value() : nullptr) || !Units.begin()) {
         M5_LOGE("Failed to begin");
         lcd.clear(TFT_RED);
         while (true) {
@@ -74,9 +73,8 @@ void setup() {
     M5_LOGI("M5UnitUnified has been begun");
     M5_LOGI("%s", Units.debugInfo().c_str());
 
-    M5_LOGI(">RES:%f COEE:%f CF:%f CORR:%f periodic :%d", unit.resolution(),
-            unit.coefficient(), unit.calibrationFactor(), unit.correction(),
-            unit.inPeriodic());
+    M5_LOGI(">RES:%f COEE:%f CF:%f CORR:%f periodic :%d", unit.resolution(), unit.coefficient(),
+            unit.calibrationFactor(), unit.correction(), unit.inPeriodic());
 
     lcd.clear(TFT_DARKGREEN);
 }

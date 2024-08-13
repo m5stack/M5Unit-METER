@@ -152,19 +152,16 @@ struct Config {
         value = (value & ~(1U << 15)) | ((b ? 1U : 0) << 15);
     }
     inline void mux(const Mux m) {
-        value = (value & ~(0x07 << 12)) |
-                ((m5::stl::to_underlying(m) & 0x07) << 12);
+        value = (value & ~(0x07 << 12)) | ((m5::stl::to_underlying(m) & 0x07) << 12);
     }
     inline void pga(const Gain g) {
-        value =
-            (value & ~(0x07 << 9)) | ((m5::stl::to_underlying(g) & 0x07) << 9);
+        value = (value & ~(0x07 << 9)) | ((m5::stl::to_underlying(g) & 0x07) << 9);
     }
     inline void mode(const bool b) {
         value = (value & ~(1U << 8)) | ((b ? 1U : 0) << 8);
     }
     inline void dr(const Sampling r) {
-        value =
-            (value & ~(0x07 << 5)) | ((m5::stl::to_underlying(r) & 0x07) << 5);
+        value = (value & ~(0x07 << 5)) | ((m5::stl::to_underlying(r) & 0x07) << 5);
     }
     inline void comp_mode(const bool b) {
         value = (value & ~(1U << 4)) | ((b ? 1U : 0) << 4);
@@ -201,9 +198,7 @@ struct Data {
   @class UnitADS111x
   @brief Base class for ADS111x series
  */
-class UnitADS111x
-    : public Component,
-      public PeriodicMeasurementAdapter<UnitADS111x, ads111x::Data> {
+class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS111x, ads111x::Data> {
     M5_UNIT_COMPONENT_HPP_BUILDER(UnitADS111x, 0x00);
 
    public:
@@ -221,8 +216,7 @@ class UnitADS111x
     };
 
     explicit UnitADS111x(const uint8_t addr = DEFAULT_ADDRESS)
-        : Component(addr),
-          _data{new m5::container::CircularBuffer<ads111x::Data>(1)} {
+        : Component(addr), _data{new m5::container::CircularBuffer<ads111x::Data>(1)} {
     }
     virtual ~UnitADS111x() {
     }
@@ -336,8 +330,7 @@ class UnitADS111x
       @warning Until it can be measured, it will be blocked until the timeout
       time
     */
-    bool measureSingleshot(ads111x::Data& d,
-                           const uint32_t timeoutMillis = 1000);
+    bool measureSingleshot(ads111x::Data& d, const uint32_t timeoutMillis = 1000);
     ///@}
 
     ///@name Threshold
@@ -409,8 +402,7 @@ class UnitADS111x
     bool set_latching_comparator(const bool b);
     bool set_comparator_queue(const ads111x::ComparatorQueue c);
 
-    M5_UNIT_COMPONENT_PERIODIC_MEASUREMENT_ADAPTER_HPP_BUILDER(UnitADS111x,
-                                                               ads111x::Data);
+    M5_UNIT_COMPONENT_PERIODIC_MEASUREMENT_ADAPTER_HPP_BUILDER(UnitADS111x, ads111x::Data);
 
    protected:
     std::unique_ptr<m5::container::CircularBuffer<ads111x::Data>> _data{};

@@ -23,8 +23,7 @@ const types::uid_t UnitADS1114::uid{"UnitADS1114"_mmh3};
 const types::uid_t UnitADS1114::attr{0};
 bool UnitADS1114::on_begin() {
     M5_LIB_LOGV("mux is not support");
-    return setSamplingRate(_cfg.rate) && setGain(_cfg.gain) &&
-           setComparatorQueue(_cfg.comp_que);
+    return setSamplingRate(_cfg.rate) && setGain(_cfg.gain) && setComparatorQueue(_cfg.comp_que);
 }
 }  // namespace unit
 }  // namespace m5

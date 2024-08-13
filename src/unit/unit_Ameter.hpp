@@ -28,8 +28,7 @@ class UnitAmeter : public UnitADS1115WithEEPROM {
     constexpr static uint8_t DEFAULT_EEPROM_ADDRESS{0x51};
     constexpr static float PRESSURE_COEFFICIENT{0.05f};
 
-    explicit UnitAmeter(const uint8_t addr      = DEFAULT_ADDRESS,
-                        const uint8_t epromAddr = DEFAULT_EEPROM_ADDRESS)
+    explicit UnitAmeter(const uint8_t addr = DEFAULT_ADDRESS, const uint8_t epromAddr = DEFAULT_EEPROM_ADDRESS)
         : UnitADS1115WithEEPROM(addr, epromAddr) {
     }
     virtual ~UnitAmeter() {
@@ -45,8 +44,7 @@ class UnitAmeter : public UnitADS1115WithEEPROM {
     }
     //! @brief Oldest current
     inline float current() const {
-        return !empty() ? correction() * std::abs(adc())
-                        : std::numeric_limits<float>::quiet_NaN();
+        return !empty() ? correction() * std::abs(adc()) : std::numeric_limits<float>::quiet_NaN();
     }
 
    protected:

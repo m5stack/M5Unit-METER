@@ -28,5 +28,4 @@ namespace m5 {
  */
 namespace unit {}  // namespace unit
 }  // namespace m5
-
 #endif

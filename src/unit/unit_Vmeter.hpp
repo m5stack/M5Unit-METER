@@ -27,8 +27,7 @@ class UnitVmeter : public UnitADS1115WithEEPROM {
     constexpr static uint8_t DEFAULT_EEPROM_ADDRESS{0x53};
     constexpr static float PRESSURE_COEFFICIENT{0.01591895f};
 
-    explicit UnitVmeter(const uint8_t addr      = DEFAULT_ADDRESS,
-                        const uint8_t epromAddr = DEFAULT_EEPROM_ADDRESS)
+    explicit UnitVmeter(const uint8_t addr = DEFAULT_ADDRESS, const uint8_t epromAddr = DEFAULT_EEPROM_ADDRESS)
         : UnitADS1115WithEEPROM(addr, epromAddr) {
     }
 
@@ -47,10 +46,9 @@ class UnitVmeter : public UnitADS1115WithEEPROM {
 
     //! @brief Oldest voltage
     inline float voltage() const {
-        return !empty() ? correction() * std::abs(adc())
-                        : std::numeric_limits<float>::quiet_NaN();
+        return !empty() ? correction() * std::abs(adc()) : std::numeric_limits<float>::quiet_NaN();
     }
-    
+
    protected:
     virtual void apply_coefficient(const ads111x::Gain gain) override;
 

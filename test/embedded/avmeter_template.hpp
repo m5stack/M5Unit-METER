@@ -28,12 +28,11 @@ using namespace m5::unit::googletest;
 using namespace m5::unit;
 using namespace m5::unit::ads111x;
 
-class TestADS1115
-    : public ComponentTestBase<UnitADS1115WithEEPROM, TestParams> {
+class TestADS1115 : public ComponentTestBase<UnitADS1115WithEEPROM, TestParams> {
    protected:
     virtual UnitADS1115WithEEPROM* get_instance() override {
         TestParams tp = GetParam();
-        auto ptr = new m5::unit::UnitADS1115WithEEPROM(tp.reg, tp.reg_eeprom);
+        auto ptr      = new m5::unit::UnitADS1115WithEEPROM(tp.reg, tp.reg_eeprom);
         if (ptr) {
             auto cfg        = ptr->config();
             cfg.stored_size = 4;
@@ -97,8 +96,7 @@ TEST_P(TestADS1115, Configration) {
     uint16_t prev{}, now{};
     {
         constexpr Mux mux_table[] = {
-            Mux::GND_0,  Mux::GND_1,  Mux::GND_2,  Mux::GND_3,
-            Mux::AIN_01, Mux::AIN_03, Mux::AIN_13, Mux::AIN_23,
+            Mux::GND_0, Mux::GND_1, Mux::GND_2, Mux::GND_3, Mux::AIN_01, Mux::AIN_03, Mux::AIN_13, Mux::AIN_23,
         };
 
         SCOPED_TRACE("Mux");
@@ -117,8 +115,7 @@ TEST_P(TestADS1115, Configration) {
 
     {
         constexpr Gain gain_table[] = {
-            Gain::PGA_6144, Gain::PGA_4096, Gain::PGA_2048,
-            Gain::PGA_1024, Gain::PGA_512,  Gain::PGA_256,
+            Gain::PGA_6144, Gain::PGA_4096, Gain::PGA_2048, Gain::PGA_1024, Gain::PGA_512, Gain::PGA_256,
         };
 
         SCOPED_TRACE("Gain");
@@ -164,9 +161,8 @@ TEST_P(TestADS1115, Configration) {
 
     {
         constexpr Sampling rate_table[] = {
-            Sampling::Rate8,   Sampling::Rate16,  Sampling::Rate32,
-            Sampling::Rate64,  Sampling::Rate128, Sampling::Rate250,
-            Sampling::Rate475, Sampling::Rate860,
+            Sampling::Rate8,   Sampling::Rate16,  Sampling::Rate32,  Sampling::Rate64,
+            Sampling::Rate128, Sampling::Rate250, Sampling::Rate475, Sampling::Rate860,
         };
 
         SCOPED_TRACE("Rate");
@@ -256,9 +252,8 @@ TEST_P(TestADS1115, Periodic) {
     SCOPED_TRACE(ustr);
 
     std::tuple<const char*, Sampling> table[] = {
-        {"8sps", Sampling::Rate8},     {"16sps", Sampling::Rate16},
-        {"32sps", Sampling::Rate32},   {"64sps", Sampling::Rate64},
-        {"128sps", Sampling::Rate128}, {"250sps", Sampling::Rate250},
+        {"8sps", Sampling::Rate8},     {"16sps", Sampling::Rate16},   {"32sps", Sampling::Rate32},
+        {"64sps", Sampling::Rate64},   {"128sps", Sampling::Rate128}, {"250sps", Sampling::Rate250},
         {"475sps", Sampling::Rate475}, {"860sps", Sampling::Rate860},
     };
 

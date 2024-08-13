@@ -34,8 +34,7 @@ using namespace m5::unit::ads111x::command;
 
 namespace {
 constexpr Gain gain_table[] = {
-    Gain::PGA_6144, Gain::PGA_4096, Gain::PGA_2048,
-    Gain::PGA_1024, Gain::PGA_512,  Gain::PGA_256,
+    Gain::PGA_6144, Gain::PGA_4096, Gain::PGA_2048, Gain::PGA_1024, Gain::PGA_512, Gain::PGA_256,
 };
 }
 
@@ -46,8 +45,8 @@ const char UnitADS1115::name[] = "UnitADS1115";
 const types::uid_t UnitADS1115::uid{"UnitADS1115"_mmh3};
 const types::uid_t UnitADS1115::attr{0};
 bool UnitADS1115::on_begin() {
-    return setSamplingRate(_cfg.rate) && setMultiplexer(_cfg.mux) &&
-           setGain(_cfg.gain) && setComparatorQueue(_cfg.comp_que);
+    return setSamplingRate(_cfg.rate) && setMultiplexer(_cfg.mux) && setGain(_cfg.gain) &&
+           setComparatorQueue(_cfg.comp_que);
 }
 
 // class UnitADS1115WithEEPROM
@@ -78,13 +77,11 @@ bool UnitADS1115WithEEPROM::assign(TwoWire& wire) {
 bool UnitADS1115WithEEPROM::on_begin() {
     int idx{};
     for (auto&& e : gain_table) {
-        if (!read_calibration(e, _calibration[idx].hope,
-                              _calibration[idx].actual)) {
+        if (!read_calibration(e, _calibration[idx].hope, _calibration[idx].actual)) {
             M5_LIB_LOGE("Failed ti read calibration data");
             return false;
         }
-        M5_LIB_LOGV("Calibration[%u]: %d,%d", e, _calibration[idx].hope,
-                    _calibration[idx].actual);
+        M5_LIB_LOGV("Calibration[%u]: %d,%d", e, _calibration[idx].hope, _calibration[idx].actual);
         ++idx;
     }
     apply_calibration(_adsCfg.pga());
@@ -99,18 +96,15 @@ bool UnitADS1115WithEEPROM::setGain(const ads111x::Gain gain) {
     return false;
 }
 
-bool UnitADS1115WithEEPROM::read_calibration(const Gain gain, int16_t& hope,
-                                             int16_t& actual) {
+bool UnitADS1115WithEEPROM::read_calibration(const Gain gain, int16_t& hope, int16_t& actual) {
     uint8_t reg = 0xD0 + m5::stl::to_underlying(gain) * 8;
     uint8_t buf[8]{};
 
-    if (_adapterEEPROM->writeWithTransaction(reg, nullptr, 0U) !=
-        m5::hal::error::error_t::OK) {
+    if (_adapterEEPROM->writeWithTransaction(reg, nullptr, 0U) != m5::hal::error::error_t::OK) {
         M5_LIB_LOGE("Failed to write");
         return false;
     }
-    if (_adapterEEPROM->readWithTransaction(buf, sizeof(buf)) !=
-        m5::hal::error::error_t::OK) {
+    if (_adapterEEPROM->readWithTransaction(buf, sizeof(buf)) != m5::hal::error::error_t::OK) {
         return false;
     }
 
@@ -131,11 +125,10 @@ bool UnitADS1115WithEEPROM::read_calibration(const Gain gain, int16_t& hope,
 }
 
 void UnitADS1115WithEEPROM::apply_calibration(const Gain gain) {
-    auto idx = m5::stl::to_underlying(gain);
-    _calibrationFactor =
-        (idx < m5::stl::size(_calibration) && _calibration[idx].actual)
-            ? (float)_calibration[idx].hope / _calibration[idx].actual
-            : 1.0f;
+    auto idx           = m5::stl::to_underlying(gain);
+    _calibrationFactor = (idx < m5::stl::size(_calibration) && _calibration[idx].actual)
+                             ? (float)_calibration[idx].hope / _calibration[idx].actual
+                             : 1.0f;
 }
 
 }  // namespace unit

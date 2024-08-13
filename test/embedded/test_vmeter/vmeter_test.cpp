@@ -9,8 +9,7 @@
 #include "../avmeter_template.hpp"
 #include <unit/unit_Vmeter.hpp>
 
-const ::testing::Environment* global_fixture =
-    ::testing::AddGlobalTestEnvironment(new GlobalFixture<400000U>());
+const ::testing::Environment* global_fixture = ::testing::AddGlobalTestEnvironment(new GlobalFixture<400000U>());
 
 #if 0
 INSTANTIATE_TEST_SUITE_P(
@@ -21,9 +20,8 @@ INSTANTIATE_TEST_SUITE_P(
                                  +UnitVmeter::DEFAULT_EEPROM_ADDRESS}));
 #endif
 INSTANTIATE_TEST_SUITE_P(ParamValues, TestADS1115,
-                         ::testing::Values(TestParams{
-                             false, +UnitVmeter::DEFAULT_ADDRESS,
-                             +UnitVmeter::DEFAULT_EEPROM_ADDRESS}));
+                         ::testing::Values(TestParams{false, +UnitVmeter::DEFAULT_ADDRESS,
+                                                      +UnitVmeter::DEFAULT_EEPROM_ADDRESS}));
 
 // For UnitVmeter-specific testing
 class TestVmeter : public ComponentTestBase<UnitVmeter, bool> {
@@ -48,8 +46,7 @@ INSTANTIATE_TEST_SUITE_P(ParamValues, TestVmeter, ::testing::Values(false));
 
 TEST_P(TestVmeter, Correction) {
     constexpr Gain gain_table[] = {
-        Gain::PGA_6144, Gain::PGA_4096, Gain::PGA_2048,
-        Gain::PGA_1024, Gain::PGA_512,  Gain::PGA_256,
+        Gain::PGA_6144, Gain::PGA_4096, Gain::PGA_2048, Gain::PGA_1024, Gain::PGA_512, Gain::PGA_256,
     };
 
     float prev = unit->correction();

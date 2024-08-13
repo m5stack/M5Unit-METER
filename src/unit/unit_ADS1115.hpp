@@ -23,8 +23,7 @@ class UnitADS1115 : public UnitADS111x {
     M5_UNIT_COMPONENT_HPP_BUILDER(UnitADS1115, 0x00);
 
    public:
-    explicit UnitADS1115(const uint8_t addr = DEFAULT_ADDRESS)
-        : UnitADS111x(addr) {
+    explicit UnitADS1115(const uint8_t addr = DEFAULT_ADDRESS) : UnitADS111x(addr) {
     }
     virtual ~UnitADS1115() {
     }
@@ -74,9 +73,8 @@ class UnitADS1115WithEEPROM : public UnitADS1115 {
    public:
     constexpr static uint8_t DEFAULT_EEPROM_ADDRESS{0xFF};
 
-    explicit UnitADS1115WithEEPROM(
-        const uint8_t addr      = DEFAULT_ADDRESS,
-        const uint8_t epromAddr = DEFAULT_EEPROM_ADDRESS)
+    explicit UnitADS1115WithEEPROM(const uint8_t addr      = DEFAULT_ADDRESS,
+                                   const uint8_t epromAddr = DEFAULT_EEPROM_ADDRESS)
         : UnitADS1115(addr), _eepromAddr(epromAddr) {
     }
     virtual ~UnitADS1115WithEEPROM() {
@@ -94,8 +92,7 @@ class UnitADS1115WithEEPROM : public UnitADS1115 {
 
    protected:
     virtual bool on_begin() override;
-    bool read_calibration(const ads111x::Gain gain, int16_t& hope,
-                          int16_t& actual);
+    bool read_calibration(const ads111x::Gain gain, int16_t& hope, int16_t& actual);
     void apply_calibration(const ads111x::Gain gain);
 
    protected:

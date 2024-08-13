@@ -22,8 +22,7 @@ class UnitADS1114 : public UnitADS111x {
     M5_UNIT_COMPONENT_HPP_BUILDER(UnitADS1114, 0xFF);
 
    public:
-    explicit UnitADS1114(const uint8_t addr = DEFAULT_ADDRESS)
-        : UnitADS111x(addr) {
+    explicit UnitADS1114(const uint8_t addr = DEFAULT_ADDRESS) : UnitADS111x(addr) {
     }
     virtual ~UnitADS1114() {
     }

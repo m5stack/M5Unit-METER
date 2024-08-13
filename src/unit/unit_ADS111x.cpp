@@ -17,8 +17,7 @@ using namespace m5::unit::ads111x::command;
 
 namespace {
 constexpr elapsed_time_t interval_table[] = {
-    1000UL / 8,   1000UL / 16,  1000UL / 32,  1000UL / 64,
-    1000UL / 128, 1000UL / 250, 1000UL / 475, 1000UL / 860,
+    1000UL / 8, 1000UL / 16, 1000UL / 32, 1000UL / 64, 1000UL / 128, 1000UL / 250, 1000UL / 475, 1000UL / 860,
 };
 
 constexpr float coefficient_table[] = {
@@ -83,8 +82,7 @@ bool UnitADS111x::begin() {
     apply_interval(_adsCfg.dr());
     apply_coefficient(_adsCfg.pga());
 
-    return _cfg.start_periodic ? startPeriodicMeasurement()
-                               : stopPeriodicMeasurement();
+    return _cfg.start_periodic ? startPeriodicMeasurement() : stopPeriodicMeasurement();
 }
 
 void UnitADS111x::update(const bool force) {
@@ -138,8 +136,7 @@ bool UnitADS111x::start_periodic_measurement() {
 }
 
 bool UnitADS111x::start_periodic_measurement(const ads111x::Sampling rate) {
-    return !inPeriodic() && setSamplingRate(rate) &&
-           start_periodic_measurement();
+    return !inPeriodic() && setSamplingRate(rate) && start_periodic_measurement();
 }
 
 bool UnitADS111x::stop_periodic_measurement() {
@@ -154,8 +151,7 @@ bool UnitADS111x::stop_periodic_measurement() {
     return false;
 }
 
-bool UnitADS111x::measureSingleshot(ads111x::Data& d,
-                                    const uint32_t timeoutMillis) {
+bool UnitADS111x::measureSingleshot(ads111x::Data& d, const uint32_t timeoutMillis) {
     if (inPeriodic()) {
         M5_LIB_LOGW("Periodic measurements are running");
         return false;
@@ -228,8 +224,7 @@ bool UnitADS111x::generalReset() {
 
 bool UnitADS111x::readThreshould(int16_t& high, int16_t& low) {
     uint16_t hh{}, ll{};
-    if (readRegister16(HIGH_THRESHOLD_REG, hh, 0) &&
-        readRegister16(LOW_THRESHOLD_REG, ll, 0)) {
+    if (readRegister16(HIGH_THRESHOLD_REG, hh, 0) && readRegister16(LOW_THRESHOLD_REG, ll, 0)) {
         high = hh;
         low  = ll;
         return true;
@@ -242,8 +237,7 @@ bool UnitADS111x::setThreshould(const int16_t high, const int16_t low) {
         M5_LIB_LOGW("high must be greater than low");
         return false;
     }
-    return writeRegister16(HIGH_THRESHOLD_REG, (uint16_t)high) &&
-           writeRegister16(LOW_THRESHOLD_REG, (uint16_t)low);
+    return writeRegister16(HIGH_THRESHOLD_REG, (uint16_t)high) && writeRegister16(LOW_THRESHOLD_REG, (uint16_t)low);
 }
 
 //
