@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: MIT
  */
 /*!
-  @file M5UnitMETER.hpp
+  @file M5UnitUnifiedMETER.hpp
   @brief Main header of M5UnitMETER
 
   @mainpage M5UnitMETER
   Library for UnitMETER using M5UnitUnified.
 */
-#ifndef M5_UNIT_METER_HPP
-#define M5_UNIT_METER_HPP
+#ifndef M5_UNIT_UNIFIED_METER_HPP
+#define M5_UNIT_UNIFIED_METER_HPP
 
 #include "unit/unit_Ameter.hpp"
 #include "unit/unit_Vmeter.hpp"

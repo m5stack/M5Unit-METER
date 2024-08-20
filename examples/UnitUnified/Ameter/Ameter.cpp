@@ -11,10 +11,11 @@
 
 #include <M5Unified.h>
 #include <M5UnitUnified.h>
-#include <unit/unit_Ameter.hpp>
+#include <M5UnitUnifiedMETER.h>
 #if !defined(USING_M5HAL)
 #include <Wire.h>
 #endif
+#include <cmath>
 
 using namespace m5::unit::ads111x;
 
