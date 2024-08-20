@@ -19,7 +19,7 @@ namespace unit {
   @brief ADS1114 unit
  */
 class UnitADS1114 : public UnitADS111x {
-    M5_UNIT_COMPONENT_HPP_BUILDER(UnitADS1114, 0xFF);
+    M5_UNIT_COMPONENT_HPP_BUILDER(UnitADS1114, 0x00);
 
    public:
     explicit UnitADS1114(const uint8_t addr = DEFAULT_ADDRESS) : UnitADS111x(addr) {

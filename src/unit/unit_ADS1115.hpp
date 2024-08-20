@@ -68,7 +68,7 @@ class UnitADS1115 : public UnitADS111x {
   overwritten and the measurement results will be inaccurate.
  */
 class UnitADS1115WithEEPROM : public UnitADS1115 {
-    M5_UNIT_COMPONENT_HPP_BUILDER(UnitADS1115WithEEPROM, 0xFF);
+    M5_UNIT_COMPONENT_HPP_BUILDER(UnitADS1115WithEEPROM, 0x00);
 
    public:
     constexpr static uint8_t DEFAULT_EEPROM_ADDRESS{0xFF};
