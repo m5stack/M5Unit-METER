@@ -13,6 +13,9 @@
 #ifndef M5_UNIT_UNIFIED_METER_HPP
 #define M5_UNIT_UNIFIED_METER_HPP
 
+#include "unit/unit_ADS1113.hpp"
+#include "unit/unit_ADS1114.hpp"
+#include "unit/unit_ADS1115.hpp"
 #include "unit/unit_Ameter.hpp"
 #include "unit/unit_Vmeter.hpp"
 
