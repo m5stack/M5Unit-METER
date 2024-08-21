@@ -24,7 +24,7 @@ on:
 jobs:
   build:
     name: ${{ matrix.unit }}:${{ matrix.example }}:${{ matrix.board }}:${{ matrix.framework }}@${{ matrix.espressif32 }}
-
+#    name: ${{ matrix.unit }}_${{ matrix.example }}_${{ matrix.board }}_${{ matrix.framework }}_${{ matrix.espressif32 }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -36,12 +36,12 @@ jobs:
           - UnitAmeter
           - UnitVmeter
 
-
         example:
           - PlotToSerial
 
         board:
           - Core
+          - Core2
           - CoreS3
           - StampS3
           - AtomS3
