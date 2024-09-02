@@ -22,7 +22,7 @@ const types::uid_t UnitVmeter::attr{0};
 
 void UnitVmeter::apply_coefficient(const ads111x::Gain gain) {
     UnitADS111x::apply_coefficient(gain);
-    _correction = resolution() * calibrationFactor();
+    _correction = resolution() * _eeprom.calibrationFactor(gain);
 }
 
 }  // namespace unit

@@ -62,5 +62,6 @@ TEST_P(TestAmeter, Correction) {
 
         EXPECT_TRUE(std::isfinite(now));
         EXPECT_NE(now, prev);
+        prev = now;
     }
 }

@@ -16,23 +16,24 @@
 #include <googletest/test_template.hpp>
 #include <googletest/test_helper.hpp>
 #include <unit/unit_ADS1115.hpp>
+#include <unit/unit_Vmeter.hpp>
 #include <limits>
 
 struct TestParams {
-    const bool hal;  // bool true: Using bus false: using wire
-    const uint8_t reg;
-    const uint8_t reg_eeprom;
+    const bool hal;            // bool true: Using bus false: using wire
+    const uint8_t reg;         // unit address
+    const uint8_t reg_eeprom;  // eeprom address
 };
 
 using namespace m5::unit::googletest;
 using namespace m5::unit;
 using namespace m5::unit::ads111x;
 
-class TestADS1115 : public ComponentTestBase<UnitADS1115WithEEPROM, TestParams> {
+class TestADS1115 : public ComponentTestBase<UnitAVmeterBase, TestParams> {
    protected:
-    virtual UnitADS1115WithEEPROM* get_instance() override {
+    virtual UnitAVmeterBase* get_instance() override {
         TestParams tp = GetParam();
-        auto ptr      = new m5::unit::UnitADS1115WithEEPROM(tp.reg, tp.reg_eeprom);
+        auto ptr      = new m5::unit::UnitAVmeterBase(tp.reg, tp.reg_eeprom);
         if (ptr) {
             auto cfg        = ptr->config();
             cfg.stored_size = 4;
@@ -46,13 +47,14 @@ class TestADS1115 : public ComponentTestBase<UnitADS1115WithEEPROM, TestParams> 
 };
 
 namespace {
-inline void check_measurement_values(m5::unit::UnitADS1115WithEEPROM* u) {
+inline void check_measurement_values(m5::unit::UnitAVmeterBase* u) {
     EXPECT_NE(u->adc(), std::numeric_limits<int16_t>::min());
 }
 }  // namespace
 
 TEST_P(TestADS1115, Address) {
-    m5::unit::UnitADS1115WithEEPROM tmp(0x00, 0x00);
+    SCOPED_TRACE(ustr);
+    m5::unit::UnitAVmeterBase tmp(0x00, 0x00);
     EXPECT_FALSE(tmp.begin());
 }
 
@@ -276,6 +278,10 @@ TEST_P(TestADS1115, Periodic) {
 
             EXPECT_TRUE(unit->stopPeriodicMeasurement());
             EXPECT_FALSE(unit->inPeriodic());
+
+            EXPECT_TRUE(unit->full());
+            EXPECT_FALSE(unit->empty());
+            EXPECT_EQ(unit->available(), 4U);
         }
     }
 }

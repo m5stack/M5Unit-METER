@@ -45,6 +45,8 @@ class TestVmeter : public ComponentTestBase<UnitVmeter, bool> {
 INSTANTIATE_TEST_SUITE_P(ParamValues, TestVmeter, ::testing::Values(false));
 
 TEST_P(TestVmeter, Correction) {
+    SCOPED_TRACE(ustr);
+
     constexpr Gain gain_table[] = {
         Gain::PGA_6144, Gain::PGA_4096, Gain::PGA_2048, Gain::PGA_1024, Gain::PGA_512, Gain::PGA_256,
     };
@@ -58,5 +60,7 @@ TEST_P(TestVmeter, Correction) {
 
         EXPECT_TRUE(std::isfinite(now));
         EXPECT_NE(now, prev);
+
+        prev = now;
     }
 }

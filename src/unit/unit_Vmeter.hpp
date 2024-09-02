@@ -11,26 +11,25 @@
 #define M5_UNIT_METER_UNIT_V_METER_HPP
 
 #include "unit_ADS1115.hpp"
+#include <limits>  // NaN
 
 namespace m5 {
 namespace unit {
-
 /*!
   @class UnitVmeter
   @brief Voltmeter Unit is a voltage meter that can monitor the voltage in real
   time
  */
-class UnitVmeter : public UnitADS1115WithEEPROM {
+class UnitVmeter : public UnitAVmeterBase {
     M5_UNIT_COMPONENT_HPP_BUILDER(UnitVmeter, 0x49);
 
    public:
     constexpr static uint8_t DEFAULT_EEPROM_ADDRESS{0x53};
     constexpr static float PRESSURE_COEFFICIENT{0.01591895f};
 
-    explicit UnitVmeter(const uint8_t addr = DEFAULT_ADDRESS, const uint8_t epromAddr = DEFAULT_EEPROM_ADDRESS)
-        : UnitADS1115WithEEPROM(addr, epromAddr) {
+    explicit UnitVmeter(const uint8_t addr = DEFAULT_ADDRESS, const uint8_t eepromAddr = DEFAULT_EEPROM_ADDRESS)
+        : UnitAVmeterBase(addr, eepromAddr) {
     }
-
     virtual ~UnitVmeter() {
     }
 
@@ -52,7 +51,7 @@ class UnitVmeter : public UnitADS1115WithEEPROM {
    protected:
     virtual void apply_coefficient(const ads111x::Gain gain) override;
 
-   protected:
+   private:
     float _correction{1.0f};
 };
 }  // namespace unit

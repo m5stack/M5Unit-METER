@@ -15,21 +15,20 @@
 
 namespace m5 {
 namespace unit {
-
 /*!
   @class UnitAmeter
   @brief Ameter Unit is a current meter that can monitor the current in real
   time
 */
-class UnitAmeter : public UnitADS1115WithEEPROM {
+class UnitAmeter : public UnitAVmeterBase {
     M5_UNIT_COMPONENT_HPP_BUILDER(UnitAmeter, 0x48);
 
    public:
     constexpr static uint8_t DEFAULT_EEPROM_ADDRESS{0x51};
     constexpr static float PRESSURE_COEFFICIENT{0.05f};
 
-    explicit UnitAmeter(const uint8_t addr = DEFAULT_ADDRESS, const uint8_t epromAddr = DEFAULT_EEPROM_ADDRESS)
-        : UnitADS1115WithEEPROM(addr, epromAddr) {
+    explicit UnitAmeter(const uint8_t addr = DEFAULT_ADDRESS, const uint8_t eepromAddr = DEFAULT_EEPROM_ADDRESS)
+        : UnitAVmeterBase(addr, eepromAddr) {
     }
     virtual ~UnitAmeter() {
     }
@@ -42,6 +41,7 @@ class UnitAmeter : public UnitADS1115WithEEPROM {
     inline float correction() const {
         return _correction;
     }
+
     //! @brief Oldest current
     inline float current() const {
         return !empty() ? correction() * std::abs(adc()) : std::numeric_limits<float>::quiet_NaN();
@@ -50,7 +50,7 @@ class UnitAmeter : public UnitADS1115WithEEPROM {
    protected:
     virtual void apply_coefficient(const ads111x::Gain gain) override;
 
-   protected:
+   private:
     float _correction{1.0f};
 };
 }  // namespace unit
