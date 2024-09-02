@@ -10,7 +10,7 @@
 #ifndef M5_UNIT_METER_UNIT_EEPROM_HPP
 #define M5_UNIT_METER_UNIT_EEPROM_HPP
 
-#include "unit_ads111x.hpp"
+#include "unit_ADS111x.hpp"
 #include <M5UnitComponent.hpp>
 #include <m5_utility/stl/extension.hpp>
 #include <array>
