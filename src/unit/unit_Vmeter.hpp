@@ -43,9 +43,9 @@ class UnitVmeter : public UnitAVmeterBase {
         return _correction;
     }
 
-    //! @brief Oldest voltage
+    //! @brief Oldest voltage (mV)
     inline float voltage() const {
-        return !empty() ? correction() * std::abs(adc()) : std::numeric_limits<float>::quiet_NaN();
+        return !empty() ? correction() * adc() : std::numeric_limits<float>::quiet_NaN();
     }
 
    protected:

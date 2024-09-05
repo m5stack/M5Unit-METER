@@ -42,9 +42,9 @@ class UnitAmeter : public UnitAVmeterBase {
         return _correction;
     }
 
-    //! @brief Oldest current
+    //! @brief Oldest current (mA)
     inline float current() const {
-        return !empty() ? correction() * std::abs(adc()) : std::numeric_limits<float>::quiet_NaN();
+        return !empty() ? correction() * adc() : std::numeric_limits<float>::quiet_NaN();
     }
 
    protected:

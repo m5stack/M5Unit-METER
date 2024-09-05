@@ -257,6 +257,7 @@ void UnitADS111x::apply_interval(const ads111x::Sampling rate) {
     auto idx = m5::stl::to_underlying(rate);
     assert(idx < m5::stl::size(interval_table) && "Illegal value");
     _interval = interval_table[idx];
+    M5_LIB_LOGV("interval %u", _interval);
 }
 
 void UnitADS111x::apply_coefficient(const ads111x::Gain gain) {
