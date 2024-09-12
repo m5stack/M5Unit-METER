@@ -54,9 +54,10 @@ const types::uid_t UnitADS111x::uid{"UnitADS111x"_mmh3};
 const types::uid_t UnitADS111x::attr{0};
 
 bool UnitADS111x::begin() {
-    assert(_cfg.stored_size && "stored_size must be greater than zero");
-    if (_cfg.stored_size != _data->capacity()) {
-        _data.reset(new m5::container::CircularBuffer<Data>(_cfg.stored_size));
+    auto ssize = stored_size();
+    assert(ssize && "stored_size must be greater than zero");
+    if (ssize != _data->capacity()) {
+        _data.reset(new m5::container::CircularBuffer<Data>(ssize));
         if (!_data) {
             M5_LIB_LOGE("Failed to allocate");
             return false;

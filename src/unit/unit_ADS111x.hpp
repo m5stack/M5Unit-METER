@@ -217,6 +217,9 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
 
     explicit UnitADS111x(const uint8_t addr = DEFAULT_ADDRESS)
         : Component(addr), _data{new m5::container::CircularBuffer<ads111x::Data>(1)} {
+        auto ccfg  = component_config();
+        ccfg.clock = 400 * 1000U;
+        component_config(ccfg);
     }
     virtual ~UnitADS111x() {
     }
