@@ -28,8 +28,8 @@ const char UnitADS1115::name[] = "UnitADS1115";
 const types::uid_t UnitADS1115::uid{"UnitADS1115"_mmh3};
 const types::uid_t UnitADS1115::attr{0};
 bool UnitADS1115::on_begin() {
-    return setSamplingRate(_cfg.rate) && setMultiplexer(_cfg.mux) && setGain(_cfg.gain) &&
-           setComparatorQueue(_cfg.comp_que);
+    return writeSamplingRate(_cfg.rate) && writeMultiplexer(_cfg.mux) && writeGain(_cfg.gain) &&
+           writeComparatorQueue(_cfg.comp_que);
 }
 
 // class UnitAVmeterBase
@@ -54,12 +54,12 @@ bool UnitAVmeterBase::on_begin() {
     if (!_eeprom.readCalibration()) {
         return false;
     }
-    apply_calibration(_adsCfg.pga());
+    apply_calibration(_ads_cfg.pga());
     return UnitADS1115::on_begin();
 }
 
-bool UnitAVmeterBase::setGain(const ads111x::Gain gain) {
-    if (UnitADS1115::setGain(gain)) {
+bool UnitAVmeterBase::writeGain(const ads111x::Gain gain) {
+    if (UnitADS1115::writeGain(gain)) {
         apply_calibration(gain);
         return true;
     }

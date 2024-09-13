@@ -17,8 +17,7 @@ namespace m5 {
 namespace unit {
 /*!
   @class UnitVmeter
-  @brief Voltmeter Unit is a voltage meter that can monitor the voltage in real
-  time
+  @brief Voltmeter Unit is a voltage meter that can monitor the voltage in real time
  */
 class UnitVmeter : public UnitAVmeterBase {
     M5_UNIT_COMPONENT_HPP_BUILDER(UnitVmeter, 0x49);
@@ -29,6 +28,7 @@ class UnitVmeter : public UnitAVmeterBase {
 
     explicit UnitVmeter(const uint8_t addr = DEFAULT_ADDRESS, const uint8_t eepromAddr = DEFAULT_EEPROM_ADDRESS)
         : UnitAVmeterBase(addr, eepromAddr) {
+        // component_config().clock is set at ADS111x constructor
     }
     virtual ~UnitVmeter() {
     }

@@ -17,8 +17,7 @@ namespace m5 {
 namespace unit {
 /*!
   @class UnitAmeter
-  @brief Ameter Unit is a current meter that can monitor the current in real
-  time
+  @brief Ameter Unit is a current meter that can monitor the current in real time
 */
 class UnitAmeter : public UnitAVmeterBase {
     M5_UNIT_COMPONENT_HPP_BUILDER(UnitAmeter, 0x48);
@@ -29,6 +28,7 @@ class UnitAmeter : public UnitAVmeterBase {
 
     explicit UnitAmeter(const uint8_t addr = DEFAULT_ADDRESS, const uint8_t eepromAddr = DEFAULT_EEPROM_ADDRESS)
         : UnitAVmeterBase(addr, eepromAddr) {
+        // component_config().clock is set at ADS111x constructor
     }
     virtual ~UnitAmeter() {
     }

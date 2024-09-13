@@ -18,6 +18,7 @@
 #include <unit/unit_ADS1115.hpp>
 #include <unit/unit_Vmeter.hpp>
 #include <limits>
+#include <utility>
 
 struct TestParams {
     const bool hal;            // bool true: Using bus false: using wire
@@ -35,9 +36,9 @@ class TestADS1115 : public ComponentTestBase<UnitAVmeterBase, TestParams> {
         TestParams tp = GetParam();
         auto ptr      = new m5::unit::UnitAVmeterBase(tp.reg, tp.reg_eeprom);
         if (ptr) {
-            auto cfg        = ptr->config();
-            cfg.stored_size = 4;
-            ptr->config(cfg);
+            auto ccfg        = ptr->component_config();
+            ccfg.stored_size = 4;
+            ptr->component_config(ccfg);
         }
         return ptr;
     }
@@ -65,10 +66,12 @@ TEST_P(TestADS1115, GeneralReset) {
     EXPECT_FALSE(unit->inPeriodic());
 
     // Rewriting config register
-    EXPECT_TRUE(unit->setMultiplexer(Mux::AIN_23));
-    EXPECT_TRUE(unit->setGain(Gain::PGA_256));
-    EXPECT_TRUE(unit->setSamplingRate(Sampling::Rate475));
-    EXPECT_TRUE(unit->setComparatorQueue(ComparatorQueue::Four));
+    EXPECT_TRUE(unit->writeMultiplexer(Mux::AIN_23));
+    EXPECT_TRUE(unit->writeGain(Gain::PGA_256));
+    EXPECT_TRUE(unit->writeSamplingRate(Sampling::Rate475));
+    EXPECT_TRUE(unit->writeComparatorQueue(ComparatorQueue::Four));
+    EXPECT_TRUE(unit->writeThreshold(0x7123, 0x8123));
+
     EXPECT_TRUE(unit->startPeriodicMeasurement());
     EXPECT_TRUE(unit->inPeriodic());
 
@@ -87,7 +90,7 @@ TEST_P(TestADS1115, GeneralReset) {
     constexpr int16_t default_high = 0x7FFF;
     constexpr int16_t default_low  = 0x8000;
     int16_t high{}, low{};
-    EXPECT_TRUE(unit->readThreshould(high, low));
+    EXPECT_TRUE(unit->readThreshold(high, low));
     EXPECT_EQ(high, default_high);
     EXPECT_EQ(low, default_low);
 }
@@ -105,7 +108,7 @@ TEST_P(TestADS1115, Configration) {
         EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, prev, 0));
 
         for (auto&& e : mux_table) {
-            EXPECT_TRUE(unit->setMultiplexer(e));
+            EXPECT_TRUE(unit->writeMultiplexer(e));
 
             EXPECT_EQ(unit->multiplexer(), e);
 
@@ -127,7 +130,7 @@ TEST_P(TestADS1115, Configration) {
         EXPECT_TRUE(std::isfinite(prev_c));
 
         for (auto&& e : gain_table) {
-            EXPECT_TRUE(unit->setGain(e));
+            EXPECT_TRUE(unit->writeGain(e));
 
             EXPECT_EQ(unit->gain(), e);
 
@@ -171,7 +174,7 @@ TEST_P(TestADS1115, Configration) {
         EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, prev, 0));
 
         for (auto&& e : rate_table) {
-            EXPECT_TRUE(unit->setSamplingRate(e));
+            EXPECT_TRUE(unit->writeSamplingRate(e));
 
             EXPECT_EQ(unit->samplingRate(), e);
 
@@ -187,7 +190,7 @@ TEST_P(TestADS1115, Configration) {
         EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, prev, 0));
 
         for (auto&& e : bool_table) {
-            EXPECT_TRUE(unit->setComparatorMode(e));
+            EXPECT_TRUE(unit->writeComparatorMode(e));
 
             EXPECT_EQ(unit->comparatorMode(), e);
 
@@ -202,7 +205,7 @@ TEST_P(TestADS1115, Configration) {
         EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, prev, 0));
 
         for (auto&& e : bool_table) {
-            EXPECT_TRUE(unit->setComparatorPolarity(e));
+            EXPECT_TRUE(unit->writeComparatorPolarity(e));
 
             EXPECT_EQ(unit->comparatorPolarity(), e);
 
@@ -217,7 +220,7 @@ TEST_P(TestADS1115, Configration) {
         EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, prev, 0));
 
         for (auto&& e : bool_table) {
-            EXPECT_TRUE(unit->setLatchingComparator(e));
+            EXPECT_TRUE(unit->writeLatchingComparator(e));
 
             EXPECT_EQ(unit->latchingComparator(), e);
 
@@ -239,13 +242,24 @@ TEST_P(TestADS1115, Configration) {
         EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, prev, 0));
 
         for (auto&& e : que_table) {
-            EXPECT_TRUE(unit->setComparatorQueue(e));
+            EXPECT_TRUE(unit->writeComparatorQueue(e));
 
             EXPECT_EQ(unit->comparatorQueue(), e);
 
             EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, now, 0));
             EXPECT_NE(now, prev);
             prev = now;
+        }
+    }
+
+    {
+        std::pair<int16_t, int16_t> thres_table[] = {{100, -100}, {1000, -1000}, {0x7FFF, 0x8000}};
+        for (auto&& e : thres_table) {
+            EXPECT_TRUE(unit->writeThreshold(e.first, e.second));
+            int16_t high{}, low{};
+            EXPECT_TRUE(unit->readThreshold(high, low));
+            EXPECT_EQ(high, e.first);
+            EXPECT_EQ(low, e.second);
         }
     }
 }

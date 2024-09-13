@@ -23,7 +23,7 @@ const types::uid_t UnitADS1113::uid{"UnitADS1113"_mmh3};
 const types::uid_t UnitADS1113::attr{0};
 bool UnitADS1113::on_begin() {
     M5_LIB_LOGV("mux, gain, and comp_que  not support");
-    return setSamplingRate(_cfg.rate);
+    return writeSamplingRate(_cfg.rate);
 }
 }  // namespace unit
 }  // namespace m5

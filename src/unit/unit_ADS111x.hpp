@@ -263,13 +263,13 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
     ///@{
     /*! @brief Gets the input multiplexer */
     inline ads111x::Mux multiplexer() const {
-        return _adsCfg.mux();
+        return _ads_cfg.mux();
     }
     //! @brief Gets the programmable gain amplifier
     ads111x::Gain gain() const;
     //! @brief Gets the sampling rate
     inline ads111x::Sampling samplingRate() const {
-        return _adsCfg.dr();
+        return _ads_cfg.dr();
     }
     /*!
       @brief Gets the comparator mode
@@ -277,7 +277,7 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
       @retval false Traditional comparator
      */
     inline bool comparatorMode() const {
-        return _adsCfg.comp_mode();
+        return _ads_cfg.comp_mode();
     }
     /*!
       @brief Gets the comparator polarity
@@ -285,7 +285,7 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
       @retval false Active low
      */
     inline bool comparatorPolarity() const {
-        return _adsCfg.comp_pol();
+        return _ads_cfg.comp_pol();
     }
     /*!
       @brief Gets the Latching comparator
@@ -293,32 +293,31 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
       @retval false Nonlatching comparator
     */
     inline bool latchingComparator() const {
-        return _adsCfg.comp_lat();
+        return _ads_cfg.comp_lat();
     }
     //! @brief Gets the comparator queue
     inline ads111x::ComparatorQueue comparatorQueue() const {
-        return _adsCfg.comp_que();
+        return _ads_cfg.comp_que();
     }
 
-    //! @brief Set the input multiplexer
-    virtual bool setMultiplexer(const ads111x::Mux mux) = 0;
+    //! @brief Write the input multiplexer
+    virtual bool writeMultiplexer(const ads111x::Mux mux) = 0;
     /*!
-      @brief Set the programmable gain amplifier
-      @warning the threshould values  must be updated whenever the PGA settings
-      are changed
-      @sa setThreshould
+      @brief Write the programmable gain amplifier
+      @warning the threshould values  must be updated whenever the PGA settings are changed
+      @sa writeThreshold
      */
-    virtual bool setGain(const ads111x::Gain gain) = 0;
-    /*! @brief Set the data rate  */
-    bool setSamplingRate(const ads111x::Sampling rate);
-    //! @brief Set the comparator mode
-    virtual bool setComparatorMode(const bool b) = 0;
-    //! @brief Set the comparator polarity
-    virtual bool setComparatorPolarity(const bool b) = 0;
-    //! @brief Set the latching comparator
-    virtual bool setLatchingComparator(const bool b) = 0;
-    //! @brief Set the comparator queue
-    virtual bool setComparatorQueue(const ads111x::ComparatorQueue c) = 0;
+    virtual bool writeGain(const ads111x::Gain gain) = 0;
+    /*! @brief Write the data rate  */
+    bool writeSamplingRate(const ads111x::Sampling rate);
+    //! @brief Write the comparator mode
+    virtual bool writeComparatorMode(const bool b) = 0;
+    //! @brief Write the comparator polarity
+    virtual bool writeComparatorPolarity(const bool b) = 0;
+    //! @brief Write the latching comparator
+    virtual bool writeLatchingComparator(const bool b) = 0;
+    //! @brief Write the comparator queue
+    virtual bool writeComparatorQueue(const ads111x::ComparatorQueue c) = 0;
     ///@}
 
     ///@name Single shot measurement
@@ -339,27 +338,26 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
     ///@name Threshold
     ///@{
     /*!
-      @brief Reads the threshould values
-      @param[out] high upper thresould value
-      @param[out] low lower thresould value
+      @brief Reads the threshold values
+      @param[out] high upper threshold value
+      @param[out] low lower threshold value
       @return True if successful
     */
-    bool readThreshould(int16_t& high, int16_t& low);
+    bool readThreshold(int16_t& high, int16_t& low);
     /*!
-      @brief Set the threshould values
-      @param high upper thresould value
-      @param low lower thresould value
+      @brief Write the threshold values
+      @param high upper threshold value
+      @param low lower threshold value
       @return True if successful
       @warning The high value must always be greater than the low value
     */
-    bool setThreshould(const int16_t high, const int16_t low);
+    bool writeThreshold(const int16_t high, const int16_t low);
     ///@}
 
     /*!
       @brief General reset
       @details Reset using I2C general call
-      @warning This is a reset by General command, the command is also sent to
-      all devices with I2C connections
+      @warning This is a reset by General command, the command is also sent to all devices with I2C connections
      */
     bool generalReset();
 
@@ -398,19 +396,19 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
     void apply_interval(const ads111x::Sampling rate);
     virtual void apply_coefficient(const ads111x::Gain gain);
 
-    bool set_multiplexer(const ads111x::Mux mux);
-    bool set_gain(const ads111x::Gain gain);
-    bool set_comparator_mode(const bool b);
-    bool set_comparator_polarity(const bool b);
-    bool set_latching_comparator(const bool b);
-    bool set_comparator_queue(const ads111x::ComparatorQueue c);
+    bool write_multiplexer(const ads111x::Mux mux);
+    bool write_gain(const ads111x::Gain gain);
+    bool write_comparator_mode(const bool b);
+    bool write_comparator_polarity(const bool b);
+    bool write_latching_comparator(const bool b);
+    bool write_comparator_queue(const ads111x::ComparatorQueue c);
 
     M5_UNIT_COMPONENT_PERIODIC_MEASUREMENT_ADAPTER_HPP_BUILDER(UnitADS111x, ads111x::Data);
 
    protected:
     std::unique_ptr<m5::container::CircularBuffer<ads111x::Data>> _data{};
     float _coefficient{};
-    ads111x::Config _adsCfg{};
+    ads111x::Config _ads_cfg{};
 
     config_t _cfg{};
 };

@@ -30,28 +30,28 @@ class UnitADS1114 : public UnitADS111x {
     ///@name Configration
     ///@{
     /*!  @brief Not support @warning Not support */
-    virtual bool setMultiplexer(const ads111x::Mux) override {
+    virtual bool writeMultiplexer(const ads111x::Mux) override {
         return false;
     }
-    //! @brief Set the programmable gain amplifier
-    virtual bool setGain(const ads111x::Gain gain) override {
-        return set_gain(gain);
+    //! @brief Write the programmable gain amplifier
+    virtual bool writeGain(const ads111x::Gain gain) override {
+        return write_gain(gain);
     }
-    //! @brief Set the comparator mode
-    virtual bool setComparatorMode(const bool b) override {
-        return set_comparator_mode(b);
+    //! @brief Write the comparator mode
+    virtual bool writeComparatorMode(const bool b) override {
+        return write_comparator_mode(b);
     }
-    //! @brief Set the comparator polarity
-    virtual bool setComparatorPolarity(const bool b) override {
-        return set_comparator_polarity(b);
+    //! @brief Write the comparator polarity
+    virtual bool writeComparatorPolarity(const bool b) override {
+        return write_comparator_polarity(b);
     }
-    //! @brief Set the latching comparator
-    virtual bool setLatchingComparator(const bool b) override {
-        return set_latching_comparator(b);
+    //! @brief Write the latching comparator
+    virtual bool writeLatchingComparator(const bool b) override {
+        return write_latching_comparator(b);
     }
-    //! @brief Set the comparator queue
-    virtual bool setComparatorQueue(const ads111x::ComparatorQueue c) override {
-        return set_comparator_queue(c);
+    //! @brief Write the comparator queue
+    virtual bool writeComparatorQueue(const ads111x::ComparatorQueue c) override {
+        return write_comparator_queue(c);
     }
     ///@}
 

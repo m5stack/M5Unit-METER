@@ -14,7 +14,6 @@
 
 namespace m5 {
 namespace unit {
-
 /*!
   @class  UnitADS1113
   @brief ADS1113 unit
@@ -31,27 +30,27 @@ class UnitADS1113 : public UnitADS111x {
     ///@name Configration
     ///@{
     /*! @brief Not support @warning Not support */
-    virtual bool setMultiplexer(const ads111x::Mux) override {
+    virtual bool writeMultiplexer(const ads111x::Mux) override {
         return false;
     }
     //!  @brief Not support @warning Not support
-    virtual bool setGain(const ads111x::Gain) override {
+    virtual bool writeGain(const ads111x::Gain) override {
         return false;
     }
     //!  @brief Not support @warning Not support
-    virtual bool setComparatorMode(const bool) override {
+    virtual bool writeComparatorMode(const bool) override {
         return false;
     }
     //!  @brief Not support @warning Not support
-    virtual bool setComparatorPolarity(const bool) override {
+    virtual bool writeComparatorPolarity(const bool) override {
         return false;
     }
     //!  @brief Not support @warning Not support
-    virtual bool setLatchingComparator(const bool) override {
+    virtual bool writeLatchingComparator(const bool) override {
         return false;
     }
     //!  @brief Not support @warning Not support
-    virtual bool setComparatorQueue(const ads111x::ComparatorQueue) override {
+    virtual bool writeComparatorQueue(const ads111x::ComparatorQueue) override {
         return false;
     }
     ///@}

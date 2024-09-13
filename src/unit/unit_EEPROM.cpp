@@ -18,7 +18,6 @@ constexpr uint8_t DATA_ADDRESS{0xD0};
 constexpr Gain gain_table[] = {
     Gain::PGA_6144, Gain::PGA_4096, Gain::PGA_2048, Gain::PGA_1024, Gain::PGA_512, Gain::PGA_256,
 };
-
 };  // namespace
 
 namespace m5 {

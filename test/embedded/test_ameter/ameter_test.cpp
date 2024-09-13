@@ -57,7 +57,7 @@ TEST_P(TestAmeter, Correction) {
     EXPECT_TRUE(std::isfinite(prev));
 
     for (auto&& e : gain_table) {
-        EXPECT_TRUE(unit->setGain(e));
+        EXPECT_TRUE(unit->writeGain(e));
         auto now = unit->correction();
 
         EXPECT_TRUE(std::isfinite(now));
