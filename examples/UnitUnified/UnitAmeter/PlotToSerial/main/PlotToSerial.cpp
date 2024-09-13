@@ -25,7 +25,6 @@ m5::unit::UnitUnified Units;
 m5::unit::UnitAmeter unit;
 
 Sampling rate{Sampling::Rate32};
-constexpr uint16_t sps_table[] = {8, 16, 32, 64, 128, 250, 475, 860};
 
 }  // namespace
 
@@ -61,7 +60,7 @@ void setup() {
 #else
 #pragma message "Using Wire"
     // Using TwoWire
-    Wire.begin(pin_num_sda, pin_num_scl, 100000U);
+    Wire.begin(pin_num_sda, pin_num_scl, 400000U);
     if (!Units.add(unit, Wire) || !Units.begin()) {
         M5_LOGE("Failed to begin");
         lcd.clear(TFT_RED);
@@ -92,8 +91,8 @@ void loop() {
 
     if (M5.BtnA.wasClicked()) {
         rate = static_cast<Sampling>((m5::stl::to_underlying(rate) + 1) & 0x07);
-        if (!unit.setSamplingRate(rate)) {
-            M5_LOGE("Failed to setSamplingRate");
+        if (!unit.writeSamplingRate(rate)) {
+            M5_LOGE("Failed to writeSamplingRate");
         }
     }
 }
