@@ -70,12 +70,6 @@ bool UnitADS111x::begin() {
         return false;
     }
 
-    // Processing of the derived class
-    if (!on_begin()) {
-        M5_LIB_LOGE("Failed to on_begin in derived class");
-        return false;
-    }
-
     if (!read_config(_ads_cfg)) {
         M5_LIB_LOGE("Failed to get config");
         return false;
@@ -83,7 +77,8 @@ bool UnitADS111x::begin() {
     apply_interval(_ads_cfg.dr());
     apply_coefficient(_ads_cfg.pga());
 
-    return _cfg.start_periodic ? startPeriodicMeasurement() : stopPeriodicMeasurement();
+    return _cfg.start_periodic ? startPeriodicMeasurement(_cfg.rate, _cfg.mux, _cfg.gain, _cfg.comp_que)
+                               : stopPeriodicMeasurement();
 }
 
 void UnitADS111x::update(const bool force) {
@@ -134,10 +129,6 @@ bool UnitADS111x::start_periodic_measurement() {
         return _periodic;
     }
     return false;
-}
-
-bool UnitADS111x::start_periodic_measurement(const ads111x::Sampling rate) {
-    return !inPeriodic() && writeSamplingRate(rate) && start_periodic_measurement();
 }
 
 bool UnitADS111x::stop_periodic_measurement() {

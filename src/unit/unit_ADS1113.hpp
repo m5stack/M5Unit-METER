@@ -56,7 +56,8 @@ class UnitADS1113 : public UnitADS111x {
     ///@}
 
    protected:
-    virtual bool on_begin() override;
+    virtual bool start_periodic_measurement(const ads111x::Sampling rate, const ads111x::Mux mux,
+                                            const ads111x::Gain gain, const ads111x::ComparatorQueue comp_que) override;
 };
 }  // namespace unit
 }  // namespace m5

@@ -285,7 +285,8 @@ TEST_P(TestADS1115, Periodic) {
             Sampling rate{};
             std::tie(s, rate) = e;
             SCOPED_TRACE(s);
-            EXPECT_TRUE(unit->startPeriodicMeasurement(rate));
+            EXPECT_TRUE(unit->writeSamplingRate(rate));
+            EXPECT_TRUE(unit->startPeriodicMeasurement());
             EXPECT_TRUE(unit->inPeriodic());
 
             test_periodic_measurement(unit.get(), 4, check_measurement_values);

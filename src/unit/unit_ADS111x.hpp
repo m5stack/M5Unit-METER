@@ -71,8 +71,7 @@ enum class Sampling : uint8_t {
 
 /*!
   @enum ComparatorQueue
-  @brief the value determines the number of successive conversions exceeding the
-  upper orlower threshold required
+  @brief the value determines the number of successive conversions exceeding the upper orlower threshold required
   @warning This feature serve nofunction on the ADS1113
 */
 enum class ComparatorQueue : uint8_t {
@@ -206,12 +205,16 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
       @struct config_t
       @brief Settings for begin
      */
-    struct config_t : public Component::config_t {
+    struct config_t {
+        //! Start periodic measurement on begin?
         bool start_periodic{true};
+        //!  sampling rate if start on begin
         ads111x::Sampling rate{ads111x::Sampling::Rate128};
-        // The following items are not supported by some classes
+        //! Mux if start on begin (Not supported in some classes)
         ads111x::Mux mux{ads111x::Mux::AIN_01};
+        //! Gain if start on begin (Not supported in some classes)
         ads111x::Gain gain{ads111x::Gain::PGA_2048};
+        //! ComparatorQueue if start on begin (Not supported in some classes)
         ads111x::ComparatorQueue comp_que{ads111x::ComparatorQueue::Disable};
     };
 
@@ -255,6 +258,37 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
     //! @brief Oldest measured ADC
     inline int16_t adc() const {
         return !empty() ? oldest().adc() : std::numeric_limits<int16_t>::min();
+    }
+    ///@}
+
+    ///@name Periodic measurement
+    ///@{
+    /*!
+      @brief Start periodic measurement in the current settings
+      @return True if successful
+    */
+    inline bool startPeriodicMeasurement() {
+        return PeriodicMeasurementAdapter<UnitADS111x, ads111x::Data>::startPeriodicMeasurement();
+    }
+    /*!
+      @brief Start periodic measurement
+      @paraa rate Sampling rate
+      @param mux Input multiplexer (Not supported in some classes)
+      @param gain Programmable gain amplifier (Not supported in some classes)
+      @param comp_que Comparator queue (Not supported in some classes)
+      @return True if successful
+    */
+    inline bool startPeriodicMeasurement(const ads111x::Sampling rate, const ads111x::Mux mux, const ads111x::Gain gain,
+                                         const ads111x::ComparatorQueue comp_que) {
+        return PeriodicMeasurementAdapter<UnitADS111x, ads111x::Data>::startPeriodicMeasurement(rate, mux, gain,
+                                                                                                comp_que);
+    }
+    /*!
+      @brief Stop periodic measurement
+      @return True if successful
+     */
+    inline bool stopPeriodicMeasurement() {
+        return PeriodicMeasurementAdapter<UnitADS111x, ads111x::Data>::stopPeriodicMeasurement();
     }
     ///@}
 
@@ -332,7 +366,7 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
       @warning Until it can be measured, it will be blocked until the timeout
       time
     */
-    bool measureSingleshot(ads111x::Data& d, const uint32_t timeoutMillis = 1000);
+    bool measureSingleshot(ads111x::Data& d, const uint32_t timeoutMillis = 1000U);
     ///@}
 
     ///@name Threshold
@@ -362,30 +396,10 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
     bool generalReset();
 
    protected:
-    ///@note Call via startPeriodicMeasurement/stopPeriodicMeasurement
-    ///@name Periodic measurement
-    ///@{
-    /*!
-      @brief Start periodic measurement
-      @details Measuring in the current settings
-      @return True if successful
-    */
     bool start_periodic_measurement();
-    /*!
-      @brief Start periodic measurement
-      @details Specify settings and measure
-      @param rate Data sampling rate
-      @return True if successful
-    */
-    bool start_periodic_measurement(const ads111x::Sampling rate);
-    /*!
-      @brief Stop periodic measurement
-      @return True if successful
-    */
+    virtual bool start_periodic_measurement(const ads111x::Sampling rate, const ads111x::Mux mux,
+                                            const ads111x::Gain gain, const ads111x::ComparatorQueue comp_que) = 0;
     bool stop_periodic_measurement();
-    ///@}
-
-    virtual bool on_begin() = 0;  // Call in begin
 
     bool read_adc_raw(ads111x::Data& d);
     bool start_single_measurement();

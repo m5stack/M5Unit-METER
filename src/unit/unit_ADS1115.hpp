@@ -57,7 +57,8 @@ class UnitADS1115 : public UnitADS111x {
     ///@}
 
    protected:
-    virtual bool on_begin() override;
+    virtual bool start_periodic_measurement(const ads111x::Sampling rate, const ads111x::Mux mux,
+                                            const ads111x::Gain gain, const ads111x::ComparatorQueue comp_que) override;
 };
 
 /*!
@@ -72,6 +73,8 @@ class UnitAVmeterBase : public UnitADS1115 {
     virtual ~UnitAVmeterBase() {
     }
 
+    virtual bool begin();
+    
     inline float calibrationFactor() const {
         return _calibrationFactor;
     }
@@ -80,7 +83,6 @@ class UnitAVmeterBase : public UnitADS1115 {
 
    protected:
     virtual Adapter* duplicate_adapter(const uint8_t ch) override;
-    virtual bool on_begin() override;
     void apply_calibration(const ads111x::Gain gain);
     bool validChild() const {
         return _valid;
