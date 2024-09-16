@@ -73,8 +73,8 @@ class UnitAVmeterBase : public UnitADS1115 {
     virtual ~UnitAVmeterBase() {
     }
 
-    virtual bool begin();
-    
+    virtual bool begin() override;
+
     inline float calibrationFactor() const {
         return _calibrationFactor;
     }

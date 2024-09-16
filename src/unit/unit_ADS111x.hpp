@@ -245,7 +245,7 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
     ///@name Properties
     ///@{
     /*!
-      @breif Coefficient value
+      @brief Coefficient value
       @note Changes as gain changes
     */
     inline float coefficient() const {
@@ -272,7 +272,7 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
     }
     /*!
       @brief Start periodic measurement
-      @paraa rate Sampling rate
+      @param rate Sampling rate
       @param mux Input multiplexer (Not supported in some classes)
       @param gain Programmable gain amplifier (Not supported in some classes)
       @param comp_que Comparator queue (Not supported in some classes)
