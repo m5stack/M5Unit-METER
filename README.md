@@ -2,11 +2,8 @@
 
 ## Overview
 
-Library for AMeter/VMeter using M5UnitUnified.  
-
-The M5UnitUnified version of the library is located under [src/unit](src/unit).  
-M5UnitUnfied has a unified API and can control multiple units via PaHub, etc.
-
+Library for AMeter/VMeter using [M5UnitUnified](https://github.com/m5stack/M5UnitUnified).  
+M5UnitUnified is a library for unified handling of various M5 units products.
 
 ### SKU:U086 & SKU:U087
 
@@ -28,6 +25,7 @@ In order to ensure the measurement accuracy, there is a built-in DC-DC isolated 
 This prevents noise and surges on the data bus or other circuits from entering the local ground terminal to interfere or damage sensitive circuits. Each Unit is individually calibrated when leaving the factory, initial accuracy of 0.1%FS, ±1 count, and a maximum measurement voltage of ±36V.
 
 ## Related Link
+See also examples using conventional methods here.
 
 - [Unit Ameter & Datasheet](https://docs.m5stack.com/en/unit/ameter)
 - [Unit Vmeter & Datasheet](https://docs.m5stack.com/en/unit/vmeter)
@@ -60,3 +58,4 @@ If you want to output Git commit hashes to html, do it for the git cloned folder
 - [Doxyegn](https://www.doxygen.nl/)
 - [pcregrep](https://formulae.brew.sh/formula/pcre2)
 - [Git](https://git-scm.com/) (Output commit hash to html)
+
