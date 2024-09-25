@@ -24,11 +24,11 @@
   @brief Top level namespace of M5stack
  */
 namespace m5 {
-
 /*!
   @namespace unit
   @brief Unit-related namespace
  */
-namespace unit {}  // namespace unit
+namespace unit { /* empty */
+}  // namespace unit
 }  // namespace m5
 #endif
