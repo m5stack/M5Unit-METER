@@ -21,41 +21,49 @@ namespace unit {
 class UnitADS1113 : public UnitADS111x {
     M5_UNIT_COMPONENT_HPP_BUILDER(UnitADS1113, 0x00);
 
-   public:
-    explicit UnitADS1113(const uint8_t addr = DEFAULT_ADDRESS) : UnitADS111x(addr) {
+public:
+    explicit UnitADS1113(const uint8_t addr = DEFAULT_ADDRESS) : UnitADS111x(addr)
+    {
     }
-    virtual ~UnitADS1113() {
+    virtual ~UnitADS1113()
+    {
     }
 
     ///@name Configration
     ///@{
     /*! @brief Not support @warning Not support */
-    virtual bool writeMultiplexer(const ads111x::Mux) override {
+    virtual bool writeMultiplexer(const ads111x::Mux) override
+    {
         return false;
     }
     //!  @brief Not support @warning Not support
-    virtual bool writeGain(const ads111x::Gain) override {
+    virtual bool writeGain(const ads111x::Gain) override
+    {
         return false;
     }
     //!  @brief Not support @warning Not support
-    virtual bool writeComparatorMode(const bool) override {
+    virtual bool writeComparatorMode(const bool) override
+    {
         return false;
     }
     //!  @brief Not support @warning Not support
-    virtual bool writeComparatorPolarity(const bool) override {
+    virtual bool writeComparatorPolarity(const bool) override
+    {
         return false;
     }
     //!  @brief Not support @warning Not support
-    virtual bool writeLatchingComparator(const bool) override {
+    virtual bool writeLatchingComparator(const bool) override
+    {
         return false;
     }
     //!  @brief Not support @warning Not support
-    virtual bool writeComparatorQueue(const ads111x::ComparatorQueue) override {
+    virtual bool writeComparatorQueue(const ads111x::ComparatorQueue) override
+    {
         return false;
     }
     ///@}
 
-   protected:
+protected:
     virtual bool start_periodic_measurement(const ads111x::Sampling rate, const ads111x::Mux mux,
                                             const ads111x::Gain gain, const ads111x::ComparatorQueue comp_que) override;
 };

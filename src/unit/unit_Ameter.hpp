@@ -22,35 +22,40 @@ namespace unit {
 class UnitAmeter : public UnitAVmeterBase {
     M5_UNIT_COMPONENT_HPP_BUILDER(UnitAmeter, 0x48);
 
-   public:
+public:
     constexpr static uint8_t DEFAULT_EEPROM_ADDRESS{0x51};
     constexpr static float PRESSURE_COEFFICIENT{0.05f};
 
     explicit UnitAmeter(const uint8_t addr = DEFAULT_ADDRESS, const uint8_t eepromAddr = DEFAULT_EEPROM_ADDRESS)
-        : UnitAVmeterBase(addr, eepromAddr) {
+        : UnitAVmeterBase(addr, eepromAddr)
+    {
         // component_config().clock is set at ADS111x constructor
     }
-    virtual ~UnitAmeter() {
+    virtual ~UnitAmeter()
+    {
     }
 
     //! @brief Resolution of 1 LSB
-    inline float resolution() const {
+    inline float resolution() const
+    {
         return coefficient() / PRESSURE_COEFFICIENT;
     }
     //! @brief Gets the correction value
-    inline float correction() const {
+    inline float correction() const
+    {
         return _correction;
     }
 
     //! @brief Oldest current (mA)
-    inline float current() const {
+    inline float current() const
+    {
         return !empty() ? correction() * adc() : std::numeric_limits<float>::quiet_NaN();
     }
 
-   protected:
+protected:
     virtual void apply_coefficient(const ads111x::Gain gain) override;
 
-   private:
+private:
     float _correction{1.0f};
 };
 }  // namespace unit

@@ -53,7 +53,8 @@ const char UnitADS111x::name[] = "UnitADS111x";
 const types::uid_t UnitADS111x::uid{"UnitADS111x"_mmh3};
 const types::uid_t UnitADS111x::attr{0};
 
-bool UnitADS111x::begin() {
+bool UnitADS111x::begin()
+{
     auto ssize = stored_size();
     assert(ssize && "stored_size must be greater than zero");
     if (ssize != _data->capacity()) {
@@ -81,7 +82,8 @@ bool UnitADS111x::begin() {
                                : stopPeriodicMeasurement();
 }
 
-void UnitADS111x::update(const bool force) {
+void UnitADS111x::update(const bool force)
+{
     _updated = false;
     if (inPeriodic()) {
         elapsed_time_t at{m5::utility::millis()};
@@ -99,11 +101,13 @@ void UnitADS111x::update(const bool force) {
     }
 }
 
-Gain UnitADS111x::gain() const {
+Gain UnitADS111x::gain() const
+{
     return gain_table[m5::stl::to_underlying(_ads_cfg.pga())];
 }
 
-bool UnitADS111x::writeSamplingRate(ads111x::Sampling rate) {
+bool UnitADS111x::writeSamplingRate(ads111x::Sampling rate)
+{
     Config c{};
     if (read_config(c)) {
         c.dr(rate);
@@ -115,7 +119,8 @@ bool UnitADS111x::writeSamplingRate(ads111x::Sampling rate) {
     return false;
 }
 
-bool UnitADS111x::start_periodic_measurement() {
+bool UnitADS111x::start_periodic_measurement()
+{
     if (inPeriodic()) {
         return false;
     }
@@ -131,7 +136,8 @@ bool UnitADS111x::start_periodic_measurement() {
     return false;
 }
 
-bool UnitADS111x::stop_periodic_measurement() {
+bool UnitADS111x::stop_periodic_measurement()
+{
     Config c{};
     if (read_config(c)) {
         c.mode(true);
@@ -143,7 +149,8 @@ bool UnitADS111x::stop_periodic_measurement() {
     return false;
 }
 
-bool UnitADS111x::measureSingleshot(ads111x::Data& d, const uint32_t timeoutMillis) {
+bool UnitADS111x::measureSingleshot(ads111x::Data& d, const uint32_t timeoutMillis)
+{
     if (inPeriodic()) {
         M5_LIB_LOGW("Periodic measurements are running");
         return false;
@@ -162,7 +169,8 @@ bool UnitADS111x::measureSingleshot(ads111x::Data& d, const uint32_t timeoutMill
     return false;
 }
 
-bool UnitADS111x::start_single_measurement() {
+bool UnitADS111x::start_single_measurement()
+{
     if (inPeriodic()) {
         M5_LIB_LOGW("Periodic measurements are running");
         return false;
@@ -179,19 +187,22 @@ bool UnitADS111x::start_single_measurement() {
     return false;
 }
 
-bool UnitADS111x::in_conversion() {
+bool UnitADS111x::in_conversion()
+{
     Config c{};
     return read_config(c) && !c.os();
 }
 
-bool UnitADS111x::read_adc_raw(ads111x::Data& d) {
+bool UnitADS111x::read_adc_raw(ads111x::Data& d)
+{
     if (readRegister16(CONVERSION_REG, d.raw, 0)) {
         return true;
     }
     return false;
 }
 
-bool UnitADS111x::generalReset() {
+bool UnitADS111x::generalReset()
+{
     uint8_t cmd{0x06};  // reset command
     generalCall(&cmd, 1);
 
@@ -214,7 +225,8 @@ bool UnitADS111x::generalReset() {
     return done;
 }
 
-bool UnitADS111x::readThreshold(int16_t& high, int16_t& low) {
+bool UnitADS111x::readThreshold(int16_t& high, int16_t& low)
+{
     uint16_t hh{}, ll{};
     if (readRegister16(HIGH_THRESHOLD_REG, hh, 0) && readRegister16(LOW_THRESHOLD_REG, ll, 0)) {
         high = hh;
@@ -224,7 +236,8 @@ bool UnitADS111x::readThreshold(int16_t& high, int16_t& low) {
     return false;
 }
 
-bool UnitADS111x::writeThreshold(const int16_t high, const int16_t low) {
+bool UnitADS111x::writeThreshold(const int16_t high, const int16_t low)
+{
     if (high <= low) {
         M5_LIB_LOGW("high must be greater than low");
         return false;
@@ -233,11 +246,13 @@ bool UnitADS111x::writeThreshold(const int16_t high, const int16_t low) {
 }
 
 //
-bool UnitADS111x::read_config(ads111x::Config& c) {
+bool UnitADS111x::read_config(ads111x::Config& c)
+{
     return readRegister16(CONFIG_REG, c.value, 0);
 }
 
-bool UnitADS111x::write_config(const ads111x::Config& c) {
+bool UnitADS111x::write_config(const ads111x::Config& c)
+{
     if (writeRegister16(CONFIG_REG, c.value)) {
         _ads_cfg = c;
         return true;
@@ -245,20 +260,23 @@ bool UnitADS111x::write_config(const ads111x::Config& c) {
     return false;
 }
 
-void UnitADS111x::apply_interval(const ads111x::Sampling rate) {
+void UnitADS111x::apply_interval(const ads111x::Sampling rate)
+{
     auto idx = m5::stl::to_underlying(rate);
     assert(idx < m5::stl::size(interval_table) && "Illegal value");
     _interval = interval_table[idx];
     M5_LIB_LOGV("interval %u", _interval);
 }
 
-void UnitADS111x::apply_coefficient(const ads111x::Gain gain) {
+void UnitADS111x::apply_coefficient(const ads111x::Gain gain)
+{
     auto idx = m5::stl::to_underlying(gain);
     assert(idx < m5::stl::size(coefficient_table) && "Illegal value");
     _coefficient = coefficient_table[idx];
 }
 
-bool UnitADS111x::write_multiplexer(const ads111x::Mux mux) {
+bool UnitADS111x::write_multiplexer(const ads111x::Mux mux)
+{
     Config c{};
     if (read_config(c)) {
         c.mux(mux);
@@ -267,7 +285,8 @@ bool UnitADS111x::write_multiplexer(const ads111x::Mux mux) {
     return false;
 }
 
-bool UnitADS111x::write_gain(const ads111x::Gain gain) {
+bool UnitADS111x::write_gain(const ads111x::Gain gain)
+{
     Config c{};
     if (read_config(c)) {
         c.pga(gain);
@@ -279,7 +298,8 @@ bool UnitADS111x::write_gain(const ads111x::Gain gain) {
     return false;
 }
 
-bool UnitADS111x::write_comparator_mode(const bool b) {
+bool UnitADS111x::write_comparator_mode(const bool b)
+{
     Config c{};
     if (read_config(c)) {
         c.comp_mode(b);
@@ -288,7 +308,8 @@ bool UnitADS111x::write_comparator_mode(const bool b) {
     return false;
 }
 
-bool UnitADS111x::write_comparator_polarity(const bool b) {
+bool UnitADS111x::write_comparator_polarity(const bool b)
+{
     Config c{};
     if (read_config(c)) {
         c.comp_pol(b);
@@ -297,7 +318,8 @@ bool UnitADS111x::write_comparator_polarity(const bool b) {
     return false;
 }
 
-bool UnitADS111x::write_latching_comparator(const bool b) {
+bool UnitADS111x::write_latching_comparator(const bool b)
+{
     Config c{};
     if (read_config(c)) {
         c.comp_lat(b);
@@ -306,7 +328,8 @@ bool UnitADS111x::write_latching_comparator(const bool b) {
     return false;
 }
 
-bool UnitADS111x::write_comparator_queue(const ads111x::ComparatorQueue q) {
+bool UnitADS111x::write_comparator_queue(const ads111x::ComparatorQueue q)
+{
     Config c{};
     if (read_config(c)) {
         c.comp_que(q);

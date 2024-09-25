@@ -28,7 +28,8 @@ const char UnitADS1115::name[] = "UnitADS1115";
 const types::uid_t UnitADS1115::uid{"UnitADS1115"_mmh3};
 const types::uid_t UnitADS1115::attr{0};
 bool UnitADS1115::start_periodic_measurement(const ads111x::Sampling rate, const ads111x::Mux mux,
-                                             const ads111x::Gain gain, const ads111x::ComparatorQueue comp_que) {
+                                             const ads111x::Gain gain, const ads111x::ComparatorQueue comp_que)
+{
     return writeSamplingRate(_cfg.rate) && writeMultiplexer(_cfg.mux) && writeGain(_cfg.gain) &&
            writeComparatorQueue(_cfg.comp_que) && UnitADS111x::start_periodic_measurement();
 }
@@ -38,8 +39,8 @@ const char UnitAVmeterBase::name[] = "UnitAVmeterBase";
 const types::uid_t UnitAVmeterBase::uid{"UnitAVmeterBase"_mmh3};
 const types::uid_t UnitAVmeterBase::attr{0};
 
-UnitAVmeterBase::UnitAVmeterBase(const uint8_t addr, const uint8_t eepromAddr)
-    : UnitADS1115(addr), _eeprom(eepromAddr) {
+UnitAVmeterBase::UnitAVmeterBase(const uint8_t addr, const uint8_t eepromAddr) : UnitADS1115(addr), _eeprom(eepromAddr)
+{
     // Form a parent-child relationship
     auto cfg         = component_config();
     cfg.max_children = 1;
@@ -47,7 +48,8 @@ UnitAVmeterBase::UnitAVmeterBase(const uint8_t addr, const uint8_t eepromAddr)
     _valid = add(_eeprom, 0) && m5::utility::isValidI2CAddress(_eeprom.address());
 }
 
-bool UnitAVmeterBase::begin() {
+bool UnitAVmeterBase::begin()
+{
     if (!validChild()) {
         M5_LIB_LOGE("Child unit is invalid %x", _eeprom.address());
         return false;
@@ -60,7 +62,8 @@ bool UnitAVmeterBase::begin() {
     return UnitADS111x::begin();
 }
 
-bool UnitAVmeterBase::writeGain(const ads111x::Gain gain) {
+bool UnitAVmeterBase::writeGain(const ads111x::Gain gain)
+{
     if (UnitADS1115::writeGain(gain)) {
         apply_calibration(gain);
         return true;
@@ -68,7 +71,8 @@ bool UnitAVmeterBase::writeGain(const ads111x::Gain gain) {
     return false;
 }
 
-Adapter* UnitAVmeterBase::duplicate_adapter(const uint8_t ch) {
+Adapter* UnitAVmeterBase::duplicate_adapter(const uint8_t ch)
+{
     if (ch != 0) {
         M5_LIB_LOGE("Invalid channel %u", ch);
         return nullptr;
@@ -77,7 +81,8 @@ Adapter* UnitAVmeterBase::duplicate_adapter(const uint8_t ch) {
     return myadapter ? myadapter->duplicate(_eeprom.address()) : nullptr;
 }
 
-void UnitAVmeterBase::apply_calibration(const Gain gain) {
+void UnitAVmeterBase::apply_calibration(const Gain gain)
+{
     _calibrationFactor = _eeprom.calibrationFactor(gain);
 }
 

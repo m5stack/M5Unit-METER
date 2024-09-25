@@ -31,28 +31,33 @@ namespace meter {
 class UnitEEPROM : public Component {
     M5_UNIT_COMPONENT_HPP_BUILDER(UnitEEPROM, 0x00);
 
-   public:
-    explicit UnitEEPROM(const uint8_t addr = DEFAULT_ADDRESS) : Component(addr) {
+public:
+    explicit UnitEEPROM(const uint8_t addr = DEFAULT_ADDRESS) : Component(addr)
+    {
     }
-    virtual ~UnitEEPROM() {
+    virtual ~UnitEEPROM()
+    {
     }
 
-    inline int16_t hope(m5::unit::ads111x::Gain gain) const {
+    inline int16_t hope(m5::unit::ads111x::Gain gain) const
+    {
         return _calibration[m5::stl::to_underlying(gain)].hope;
     }
-    inline int16_t actual(m5::unit::ads111x::Gain gain) const {
+    inline int16_t actual(m5::unit::ads111x::Gain gain) const
+    {
         return _calibration[m5::stl::to_underlying(gain)].actual;
     }
-    inline float calibrationFactor(m5::unit::ads111x::Gain gain) const {
+    inline float calibrationFactor(m5::unit::ads111x::Gain gain) const
+    {
         return actual(gain) ? (float)hope(gain) / actual(gain) : 1.0f;
     }
 
     bool readCalibration();
 
-   protected:
+protected:
     bool read_calibration(const m5::unit::ads111x::Gain gain, int16_t& hope, int16_t& actual);
 
-   private:
+private:
     struct Calibration {
         int16_t hope{1};
         int16_t actual{1};

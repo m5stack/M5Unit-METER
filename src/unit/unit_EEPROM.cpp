@@ -28,7 +28,8 @@ const char UnitEEPROM::name[] = "UnitEEPROMforMeter";
 const types::uid_t UnitEEPROM::uid{"UnitEEPROMforMeter"_mmh3};
 const types::uid_t UnitEEPROM::attr{0};
 
-bool UnitEEPROM::readCalibration() {
+bool UnitEEPROM::readCalibration()
+{
     int idx{};
     _calibration.fill({});
 
@@ -45,7 +46,8 @@ bool UnitEEPROM::readCalibration() {
     return true;
 }
 
-bool UnitEEPROM::read_calibration(const Gain gain, int16_t& hope, int16_t& actual) {
+bool UnitEEPROM::read_calibration(const Gain gain, int16_t& hope, int16_t& actual)
+{
     uint8_t reg = DATA_ADDRESS + m5::stl::to_underlying(gain) * 8;
     std::array<uint8_t, 8> buf{};
     hope = actual = 1;

@@ -28,7 +28,8 @@ Sampling rate{Sampling::Rate32};
 
 }  // namespace
 
-void setup() {
+void setup()
+{
     M5.begin();
 
     // Settings
@@ -79,7 +80,8 @@ void setup() {
     lcd.clear(TFT_DARKGREEN);
 }
 
-void loop() {
+void loop()
+{
     M5.update();
     Units.update();
     if (unit.updated()) {

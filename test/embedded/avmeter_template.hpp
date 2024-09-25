@@ -31,8 +31,9 @@ using namespace m5::unit;
 using namespace m5::unit::ads111x;
 
 class TestADS1115 : public ComponentTestBase<UnitAVmeterBase, TestParams> {
-   protected:
-    virtual UnitAVmeterBase* get_instance() override {
+protected:
+    virtual UnitAVmeterBase* get_instance() override
+    {
         TestParams tp = GetParam();
         auto ptr      = new m5::unit::UnitAVmeterBase(tp.reg, tp.reg_eeprom);
         if (ptr) {
@@ -42,24 +43,28 @@ class TestADS1115 : public ComponentTestBase<UnitAVmeterBase, TestParams> {
         }
         return ptr;
     }
-    virtual bool is_using_hal() const override {
+    virtual bool is_using_hal() const override
+    {
         return GetParam().hal;
     };
 };
 
 namespace {
-inline void check_measurement_values(m5::unit::UnitAVmeterBase* u) {
+inline void check_measurement_values(m5::unit::UnitAVmeterBase* u)
+{
     EXPECT_NE(u->adc(), std::numeric_limits<int16_t>::min());
 }
 }  // namespace
 
-TEST_P(TestADS1115, Address) {
+TEST_P(TestADS1115, Address)
+{
     SCOPED_TRACE(ustr);
     m5::unit::UnitAVmeterBase tmp(0x00, 0x00);
     EXPECT_FALSE(tmp.begin());
 }
 
-TEST_P(TestADS1115, GeneralReset) {
+TEST_P(TestADS1115, GeneralReset)
+{
     SCOPED_TRACE(ustr);
 
     EXPECT_TRUE(unit->stopPeriodicMeasurement());
@@ -95,7 +100,8 @@ TEST_P(TestADS1115, GeneralReset) {
     EXPECT_EQ(low, default_low);
 }
 
-TEST_P(TestADS1115, Configration) {
+TEST_P(TestADS1115, Configration)
+{
     SCOPED_TRACE(ustr);
 
     uint16_t prev{}, now{};
@@ -264,7 +270,8 @@ TEST_P(TestADS1115, Configration) {
     }
 }
 
-TEST_P(TestADS1115, Periodic) {
+TEST_P(TestADS1115, Periodic)
+{
     SCOPED_TRACE(ustr);
 
     std::tuple<const char*, Sampling> table[] = {
@@ -301,7 +308,8 @@ TEST_P(TestADS1115, Periodic) {
     }
 }
 
-TEST_P(TestADS1115, SingleShot) {
+TEST_P(TestADS1115, SingleShot)
+{
     SCOPED_TRACE(ustr);
 
     m5::unit::ads111x::Data d{};

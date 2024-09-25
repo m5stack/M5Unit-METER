@@ -23,7 +23,8 @@ const types::uid_t UnitADS1113::uid{"UnitADS1113"_mmh3};
 const types::uid_t UnitADS1113::attr{0};
 
 bool UnitADS1113::start_periodic_measurement(const ads111x::Sampling rate, const ads111x::Mux, const ads111x::Gain,
-                                             const ads111x::ComparatorQueue) {
+                                             const ads111x::ComparatorQueue)
+{
     M5_LIB_LOGW("mux, gain, and comp_que not support");
     return writeSamplingRate(rate) && UnitADS111x::start_periodic_measurement();
 }

@@ -90,88 +90,106 @@ struct Config {
     ///@name Getter
     ///@{
     /*! @brief Operational status */
-    inline bool os() const {
+    inline bool os() const
+    {
         return value & (1U << 15);
     }
     /*!
       @brief Input multiplexer
       @warning This feature serve nofunction on the ADS1113 and ADS1114
     */
-    inline Mux mux() const {
+    inline Mux mux() const
+    {
         return static_cast<Mux>((value >> 12) & 0x07);
     }
     /*!
       @brief Programmable gain amplifier
       @warning This feature serve nofunction on the ADS1113
     */
-    inline Gain pga() const {
+    inline Gain pga() const
+    {
         return static_cast<Gain>((value >> 9) & 0x07);
     }
     //! @brief Device operating mode
-    inline bool mode() const {
+    inline bool mode() const
+    {
         return value & (1U << 8);
     }
     //! @brief Sampling rate
-    inline Sampling dr() const {
+    inline Sampling dr() const
+    {
         return static_cast<Sampling>((value >> 5) & 0x07);
     }
     /*!
       @brief Comparator mode
       @warning This feature serve nofunction on the ADS1113
     */
-    inline bool comp_mode() const {
+    inline bool comp_mode() const
+    {
         return value & (1U << 4);
     }
     /*!
       @brief Comparator polarity
       @warning This feature serve nofunction on the ADS1113
     */
-    inline bool comp_pol() const {
+    inline bool comp_pol() const
+    {
         return value & (1U << 3);
     }
     /*!
       @brief Latching comparator
       @warning This feature serve nofunction on the ADS1113
     */
-    inline bool comp_lat() const {
+    inline bool comp_lat() const
+    {
         return value & (1U << 2);
     }
     /*!
       @brief Comparator queue
       @warning This feature serve nofunction on the ADS1113
     */
-    inline ComparatorQueue comp_que() const {
+    inline ComparatorQueue comp_que() const
+    {
         return static_cast<ComparatorQueue>(value & 0x03);
     }
     ///@}
 
     ///@name Setter
     ///@{
-    inline void os(const bool b) {
+    inline void os(const bool b)
+    {
         value = (value & ~(1U << 15)) | ((b ? 1U : 0) << 15);
     }
-    inline void mux(const Mux m) {
+    inline void mux(const Mux m)
+    {
         value = (value & ~(0x07 << 12)) | ((m5::stl::to_underlying(m) & 0x07) << 12);
     }
-    inline void pga(const Gain g) {
+    inline void pga(const Gain g)
+    {
         value = (value & ~(0x07 << 9)) | ((m5::stl::to_underlying(g) & 0x07) << 9);
     }
-    inline void mode(const bool b) {
+    inline void mode(const bool b)
+    {
         value = (value & ~(1U << 8)) | ((b ? 1U : 0) << 8);
     }
-    inline void dr(const Sampling r) {
+    inline void dr(const Sampling r)
+    {
         value = (value & ~(0x07 << 5)) | ((m5::stl::to_underlying(r) & 0x07) << 5);
     }
-    inline void comp_mode(const bool b) {
+    inline void comp_mode(const bool b)
+    {
         value = (value & ~(1U << 4)) | ((b ? 1U : 0) << 4);
     }
-    inline void comp_pol(const bool b) {
+    inline void comp_pol(const bool b)
+    {
         value = (value & ~(1U << 3)) | ((b ? 1U : 0) << 3);
     }
-    inline void comp_lat(const bool b) {
+    inline void comp_lat(const bool b)
+    {
         value = (value & ~(1U << 2)) | ((b ? 1U : 0) << 2);
     }
-    inline void comp_que(const ComparatorQueue c) {
+    inline void comp_que(const ComparatorQueue c)
+    {
         value = (value & ~0x03U) | (m5::stl::to_underlying(c) & 0x03);
     }
     ///@}
@@ -186,7 +204,8 @@ struct Config {
 struct Data {
     uint16_t raw{};
     //! @brief ADC
-    inline int16_t adc() const {
+    inline int16_t adc() const
+    {
         return static_cast<int16_t>(raw);
     }
 };
@@ -200,7 +219,7 @@ struct Data {
 class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS111x, ads111x::Data> {
     M5_UNIT_COMPONENT_HPP_BUILDER(UnitADS111x, 0x00);
 
-   public:
+public:
     /*!
       @struct config_t
       @brief Settings for begin
@@ -219,12 +238,14 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
     };
 
     explicit UnitADS111x(const uint8_t addr = DEFAULT_ADDRESS)
-        : Component(addr), _data{new m5::container::CircularBuffer<ads111x::Data>(1)} {
+        : Component(addr), _data{new m5::container::CircularBuffer<ads111x::Data>(1)}
+    {
         auto ccfg  = component_config();
         ccfg.clock = 400 * 1000U;
         component_config(ccfg);
     }
-    virtual ~UnitADS111x() {
+    virtual ~UnitADS111x()
+    {
     }
 
     virtual bool begin() override;
@@ -233,11 +254,13 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
     ///@name Settings for begin
     ///@{
     /*! @brief Gets the configration */
-    inline config_t config() {
+    inline config_t config()
+    {
         return _cfg;
     }
     //! @brief Set the configration
-    inline void config(const config_t& cfg) {
+    inline void config(const config_t& cfg)
+    {
         _cfg = cfg;
     }
     ///@}
@@ -248,7 +271,8 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
       @brief Coefficient value
       @note Changes as gain changes
     */
-    inline float coefficient() const {
+    inline float coefficient() const
+    {
         return _coefficient;
     }
     ///@}
@@ -256,7 +280,8 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
     ///@name Measurement data by periodic
     ///@{
     //! @brief Oldest measured ADC
-    inline int16_t adc() const {
+    inline int16_t adc() const
+    {
         return !empty() ? oldest().adc() : std::numeric_limits<int16_t>::min();
     }
     ///@}
@@ -267,7 +292,8 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
       @brief Start periodic measurement in the current settings
       @return True if successful
     */
-    inline bool startPeriodicMeasurement() {
+    inline bool startPeriodicMeasurement()
+    {
         return PeriodicMeasurementAdapter<UnitADS111x, ads111x::Data>::startPeriodicMeasurement();
     }
     /*!
@@ -279,7 +305,8 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
       @return True if successful
     */
     inline bool startPeriodicMeasurement(const ads111x::Sampling rate, const ads111x::Mux mux, const ads111x::Gain gain,
-                                         const ads111x::ComparatorQueue comp_que) {
+                                         const ads111x::ComparatorQueue comp_que)
+    {
         return PeriodicMeasurementAdapter<UnitADS111x, ads111x::Data>::startPeriodicMeasurement(rate, mux, gain,
                                                                                                 comp_que);
     }
@@ -287,7 +314,8 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
       @brief Stop periodic measurement
       @return True if successful
      */
-    inline bool stopPeriodicMeasurement() {
+    inline bool stopPeriodicMeasurement()
+    {
         return PeriodicMeasurementAdapter<UnitADS111x, ads111x::Data>::stopPeriodicMeasurement();
     }
     ///@}
@@ -296,13 +324,15 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
     ///@name Configration
     ///@{
     /*! @brief Gets the input multiplexer */
-    inline ads111x::Mux multiplexer() const {
+    inline ads111x::Mux multiplexer() const
+    {
         return _ads_cfg.mux();
     }
     //! @brief Gets the programmable gain amplifier
     ads111x::Gain gain() const;
     //! @brief Gets the sampling rate
-    inline ads111x::Sampling samplingRate() const {
+    inline ads111x::Sampling samplingRate() const
+    {
         return _ads_cfg.dr();
     }
     /*!
@@ -310,7 +340,8 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
       @retval true Window comparator
       @retval false Traditional comparator
      */
-    inline bool comparatorMode() const {
+    inline bool comparatorMode() const
+    {
         return _ads_cfg.comp_mode();
     }
     /*!
@@ -318,7 +349,8 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
       @retval true Active high
       @retval false Active low
      */
-    inline bool comparatorPolarity() const {
+    inline bool comparatorPolarity() const
+    {
         return _ads_cfg.comp_pol();
     }
     /*!
@@ -326,11 +358,13 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
       @retval true Latching comparator
       @retval false Nonlatching comparator
     */
-    inline bool latchingComparator() const {
+    inline bool latchingComparator() const
+    {
         return _ads_cfg.comp_lat();
     }
     //! @brief Gets the comparator queue
-    inline ads111x::ComparatorQueue comparatorQueue() const {
+    inline ads111x::ComparatorQueue comparatorQueue() const
+    {
         return _ads_cfg.comp_que();
     }
 
@@ -395,7 +429,7 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
      */
     bool generalReset();
 
-   protected:
+protected:
     bool start_periodic_measurement();
     virtual bool start_periodic_measurement(const ads111x::Sampling rate, const ads111x::Mux mux,
                                             const ads111x::Gain gain, const ads111x::ComparatorQueue comp_que) = 0;
@@ -419,7 +453,7 @@ class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS1
 
     M5_UNIT_COMPONENT_PERIODIC_MEASUREMENT_ADAPTER_HPP_BUILDER(UnitADS111x, ads111x::Data);
 
-   protected:
+protected:
     std::unique_ptr<m5::container::CircularBuffer<ads111x::Data>> _data{};
     float _coefficient{};
     ads111x::Config _ads_cfg{};

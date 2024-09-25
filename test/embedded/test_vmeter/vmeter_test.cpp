@@ -25,8 +25,9 @@ INSTANTIATE_TEST_SUITE_P(ParamValues, TestADS1115,
 
 // For UnitVmeter-specific testing
 class TestVmeter : public ComponentTestBase<UnitVmeter, bool> {
-   protected:
-    virtual UnitVmeter* get_instance() override {
+protected:
+    virtual UnitVmeter* get_instance() override
+    {
         auto ptr = new m5::unit::UnitVmeter();
         if (ptr) {
             auto cfg = ptr->config();
@@ -34,7 +35,8 @@ class TestVmeter : public ComponentTestBase<UnitVmeter, bool> {
         }
         return ptr;
     }
-    virtual bool is_using_hal() const override {
+    virtual bool is_using_hal() const override
+    {
         return GetParam();
     };
 };
@@ -44,7 +46,8 @@ class TestVmeter : public ComponentTestBase<UnitVmeter, bool> {
 //  INSTANTIATE_TEST_SUITE_P(ParamValues, TestVmeter, ::testing::Values(true));
 INSTANTIATE_TEST_SUITE_P(ParamValues, TestVmeter, ::testing::Values(false));
 
-TEST_P(TestVmeter, Correction) {
+TEST_P(TestVmeter, Correction)
+{
     SCOPED_TRACE(ustr);
 
     constexpr Gain gain_table[] = {

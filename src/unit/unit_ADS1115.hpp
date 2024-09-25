@@ -22,41 +22,49 @@ namespace unit {
 class UnitADS1115 : public UnitADS111x {
     M5_UNIT_COMPONENT_HPP_BUILDER(UnitADS1115, 0x00);
 
-   public:
-    explicit UnitADS1115(const uint8_t addr = DEFAULT_ADDRESS) : UnitADS111x(addr) {
+public:
+    explicit UnitADS1115(const uint8_t addr = DEFAULT_ADDRESS) : UnitADS111x(addr)
+    {
     }
-    virtual ~UnitADS1115() {
+    virtual ~UnitADS1115()
+    {
     }
 
     ///@name Configration
     ///@{
     /*! @brief Write the input multiplexer */
-    virtual bool writeMultiplexer(const ads111x::Mux mux) override {
+    virtual bool writeMultiplexer(const ads111x::Mux mux) override
+    {
         return write_multiplexer(mux);
     }
     //! @brief Write the programmable gain amplifier
-    virtual bool writeGain(const ads111x::Gain gain) override {
+    virtual bool writeGain(const ads111x::Gain gain) override
+    {
         return write_gain(gain);
     }
     //! @brief Write the comparator mode
-    virtual bool writeComparatorMode(const bool b) override {
+    virtual bool writeComparatorMode(const bool b) override
+    {
         return write_comparator_mode(b);
     }
     //! @brief Write the comparator polarity
-    virtual bool writeComparatorPolarity(const bool b) override {
+    virtual bool writeComparatorPolarity(const bool b) override
+    {
         return write_comparator_polarity(b);
     }
     //! @brief Write the latching comparator
-    virtual bool writeLatchingComparator(const bool b) override {
+    virtual bool writeLatchingComparator(const bool b) override
+    {
         return write_latching_comparator(b);
     }
     //! @brief Write the comparator queue
-    virtual bool writeComparatorQueue(const ads111x::ComparatorQueue c) override {
+    virtual bool writeComparatorQueue(const ads111x::ComparatorQueue c) override
+    {
         return write_comparator_queue(c);
     }
     ///@}
 
-   protected:
+protected:
     virtual bool start_periodic_measurement(const ads111x::Sampling rate, const ads111x::Mux mux,
                                             const ads111x::Gain gain, const ads111x::ComparatorQueue comp_que) override;
 };
@@ -68,30 +76,33 @@ class UnitADS1115 : public UnitADS111x {
 class UnitAVmeterBase : public UnitADS1115 {
     M5_UNIT_COMPONENT_HPP_BUILDER(UnitAVmeterBase, 0x00);
 
-   public:
+public:
     explicit UnitAVmeterBase(const uint8_t addr = DEFAULT_ADDRESS, const uint8_t eepromAddr = 0x00);
-    virtual ~UnitAVmeterBase() {
+    virtual ~UnitAVmeterBase()
+    {
     }
 
     virtual bool begin() override;
 
-    inline float calibrationFactor() const {
+    inline float calibrationFactor() const
+    {
         return _calibrationFactor;
     }
 
     virtual bool writeGain(const ads111x::Gain gain) override;
 
-   protected:
+protected:
     virtual Adapter* duplicate_adapter(const uint8_t ch) override;
     void apply_calibration(const ads111x::Gain gain);
-    bool validChild() const {
+    bool validChild() const
+    {
         return _valid;
     }
 
-   protected:
+protected:
     m5::unit::meter::UnitEEPROM _eeprom{};
 
-   private:
+private:
     float _calibrationFactor{1.0f};
     bool _valid{};  // Did the constructor correctly add the child unit?
 };

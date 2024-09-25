@@ -20,7 +20,8 @@ const char UnitAmeter::name[] = "UnitAmeter";
 const types::uid_t UnitAmeter::uid{"UnitAmeter"_mmh3};
 const types::uid_t UnitAmeter::attr{0};
 
-void UnitAmeter::apply_coefficient(const ads111x::Gain gain) {
+void UnitAmeter::apply_coefficient(const ads111x::Gain gain)
+{
     UnitADS111x::apply_coefficient(gain);
     _correction = resolution() * calibrationFactor();
 }
