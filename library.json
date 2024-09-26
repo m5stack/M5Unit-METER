@@ -22,7 +22,7 @@
     "platforms": [
         "espressif32"
     ],
-    "headers": "M5UnitUnifiedMETER.h"
+    "headers": "M5UnitUnifiedMETER.h",
     "license": "MIT",
     "export": {
         "exclude":
