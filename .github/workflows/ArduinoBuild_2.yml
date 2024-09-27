@@ -3,8 +3,8 @@ name: ArduinoBuild(platform-version 2.x)
 env:
   SKETCH_NAMES_FIND_START: ./examples/UnitUnified
   REQUIRED_LIBRARIES: M5Unified
-#  M5UNITUNIFIED_BRANCH: main
-  M5UNITUNIFIED_BRANCH: develop
+  M5UNITUNIFIED_BRANCH: main
+#  M5UNITUNIFIED_BRANCH: develop
 
 on:
   push:
@@ -40,6 +40,7 @@ jobs:
         unit:
           - UnitAmeter
           - UnitVmeter
+          - UnitKMeterISO
 
         sketch:
           - PlotToSerial
@@ -82,7 +83,6 @@ jobs:
 
       # Checkout library from specific URL and branch
       # Note that dependent libraries are not automatically installed.
-
 
       - name: Checkout M5Utility
         uses: actions/checkout@v3

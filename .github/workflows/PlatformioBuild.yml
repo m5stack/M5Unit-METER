@@ -35,6 +35,7 @@ jobs:
         unit:
           - UnitAmeter
           - UnitVmeter
+          - UnitKmeterISO
 
         example:
           - PlotToSerial

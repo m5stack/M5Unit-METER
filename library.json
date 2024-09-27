@@ -11,9 +11,7 @@
         "url": "https://github.com/m5stack/M5Unit-METER.git"
     },
     "dependencies": {
-        "M5UnitUnified": "https://github.com/m5stack/M5UnitUnified.git",
-        "M5Utility": "https://github.com/m5stack/M5Utility.git",
-        "M5HAL": "https://github.com/m5stack/M5HAL.git"
+        "M5UnitUnified": "https://github.com/m5stack/M5UnitUnified.git"
     },
     "version": "0.0.1",
     "frameworks": [
