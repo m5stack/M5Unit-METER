@@ -19,6 +19,8 @@
 #include "unit/unit_Ameter.hpp"
 #include "unit/unit_Vmeter.hpp"
 
+#include "unit/unit_KmeterISO.hpp"
+
 /*!
   @namespace m5
   @brief Top level namespace of M5stack
