@@ -1,9 +1,4 @@
 var searchData=
 [
-  ['pga_5f1024_0',['PGA_1024',['../unit___a_d_s111x_8hpp.html#ac482a60d7c757148d4a5016b4024f5e0a06bdac86af858bc28c031b36908b2222',1,'m5::unit::ads111x']]],
-  ['pga_5f2048_1',['PGA_2048',['../unit___a_d_s111x_8hpp.html#ac482a60d7c757148d4a5016b4024f5e0a56a2b199d749021e89c90b9bfd7318ab',1,'m5::unit::ads111x']]],
-  ['pga_5f256_2',['PGA_256',['../unit___a_d_s111x_8hpp.html#ac482a60d7c757148d4a5016b4024f5e0a77feaba03323734f6ab5f5516522be2c',1,'m5::unit::ads111x']]],
-  ['pga_5f4096_3',['PGA_4096',['../unit___a_d_s111x_8hpp.html#ac482a60d7c757148d4a5016b4024f5e0ae19561d0972272b4f88e1d1af299d832',1,'m5::unit::ads111x']]],
-  ['pga_5f512_4',['PGA_512',['../unit___a_d_s111x_8hpp.html#ac482a60d7c757148d4a5016b4024f5e0a2bd7a9eb60bb047859c6223555d5a8a5',1,'m5::unit::ads111x']]],
-  ['pga_5f6144_5',['PGA_6144',['../unit___a_d_s111x_8hpp.html#ac482a60d7c757148d4a5016b4024f5e0afb859fc4d4a2e873b8ad63c882122ba9',1,'m5::unit::ads111x']]]
+  ['one_0',['One',['../unit___a_d_s111x_8hpp.html#aa7b7de5d60e1a10ad0763e15a2e27986a06c2cea18679d64399783748fa367bdd',1,'m5::unit::ads111x']]]
 ];

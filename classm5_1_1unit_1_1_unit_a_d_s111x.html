@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">M5Unit-METER<span id="projectnumber">&#160;0.0.0 git rev:8753588</span>
+   <div id="projectname">M5Unit-METER<span id="projectnumber">&#160;0.0.1 git rev:c161930</span>
    </div>
   </td>
  </tr>
@@ -119,7 +119,7 @@ Inheritance diagram for m5::unit::UnitADS111x:</div>
 <area href="classm5_1_1unit_1_1_unit_a_d_s1113.html" title="ADS1113 unit." alt="m5::unit::UnitADS1113" shape="rect" coords="0,112,366,136"/>
 <area href="classm5_1_1unit_1_1_unit_a_d_s1114.html" title="ADS1114 unit." alt="m5::unit::UnitADS1114" shape="rect" coords="376,112,742,136"/>
 <area href="classm5_1_1unit_1_1_unit_a_d_s1115.html" title="ADS1115 unit." alt="m5::unit::UnitADS1115" shape="rect" coords="752,112,1118,136"/>
-<area href="classm5_1_1unit_1_1_unit_a_d_s1115_with_e_e_p_r_o_m.html" title="EEPROM holds calibration data." alt="m5::unit::UnitADS1115WithEEPROM" shape="rect" coords="752,168,1118,192"/>
+<area href="classm5_1_1unit_1_1_unit_a_vmeter_base.html" title="ADS1115 with EEPROM." alt="m5::unit::UnitAVmeterBase" shape="rect" coords="752,168,1118,192"/>
 <area href="classm5_1_1unit_1_1_unit_ameter.html" title="Ameter Unit is a current meter that can monitor the current in real time." alt="m5::unit::UnitAmeter" shape="rect" coords="564,224,930,248"/>
 <area href="classm5_1_1unit_1_1_unit_vmeter.html" title="Voltmeter Unit is a voltage meter that can monitor the voltage in real time." alt="m5::unit::UnitVmeter" shape="rect" coords="940,224,1306,248"/>
   </map>
@@ -156,12 +156,23 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>config</b> (const <a 
 <tr class="separator:ab8d6e7dfe3420f1e943f6499ffde1d66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Properties</div></td></tr>
 <tr class="memitem:a75fdc754b8488e5ea9217e0eef9d63ae" id="r_a75fdc754b8488e5ea9217e0eef9d63ae"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a75fdc754b8488e5ea9217e0eef9d63ae">coefficient</a> () const</td></tr>
+<tr class="memdesc:a75fdc754b8488e5ea9217e0eef9d63ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Coefficient value.  <br /></td></tr>
 <tr class="separator:a75fdc754b8488e5ea9217e0eef9d63ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Measurement data by periodic</div></td></tr>
 <tr class="memitem:ac9638bee4d38e8184d550c81651815db" id="r_ac9638bee4d38e8184d550c81651815db"><td class="memItemLeft" align="right" valign="top"><a id="ac9638bee4d38e8184d550c81651815db" name="ac9638bee4d38e8184d550c81651815db"></a>
 int16_t&#160;</td><td class="memItemRight" valign="bottom"><b>adc</b> () const</td></tr>
 <tr class="memdesc:ac9638bee4d38e8184d550c81651815db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Oldest measured ADC. <br /></td></tr>
 <tr class="separator:ac9638bee4d38e8184d550c81651815db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Periodic measurement</div></td></tr>
+<tr class="memitem:a32774995b903d7c20cb9b74a08cdcce6" id="r_a32774995b903d7c20cb9b74a08cdcce6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a32774995b903d7c20cb9b74a08cdcce6">startPeriodicMeasurement</a> ()</td></tr>
+<tr class="memdesc:a32774995b903d7c20cb9b74a08cdcce6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start periodic measurement in the current settings.  <br /></td></tr>
+<tr class="separator:a32774995b903d7c20cb9b74a08cdcce6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aceedb3a7e7db537554868d85d26c3e2a" id="r_aceedb3a7e7db537554868d85d26c3e2a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aceedb3a7e7db537554868d85d26c3e2a">startPeriodicMeasurement</a> (const <a class="el" href="unit___a_d_s111x_8hpp.html#a80091ab36ea2000ca4e9e0f9ef335bec">ads111x::Sampling</a> rate, const <a class="el" href="unit___a_d_s111x_8hpp.html#a9376bdb1e48395373ab8292cd63a35c4">ads111x::Mux</a> mux, const <a class="el" href="unit___a_d_s111x_8hpp.html#ac482a60d7c757148d4a5016b4024f5e0">ads111x::Gain</a> <a class="el" href="#ae517d65928a97ad204e96d0c79c04b4e">gain</a>, const <a class="el" href="unit___a_d_s111x_8hpp.html#aa7b7de5d60e1a10ad0763e15a2e27986">ads111x::ComparatorQueue</a> comp_que)</td></tr>
+<tr class="memdesc:aceedb3a7e7db537554868d85d26c3e2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start periodic measurement.  <br /></td></tr>
+<tr class="separator:aceedb3a7e7db537554868d85d26c3e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6baa43a281191374ad077c4e49e2b7d9" id="r_a6baa43a281191374ad077c4e49e2b7d9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6baa43a281191374ad077c4e49e2b7d9">stopPeriodicMeasurement</a> ()</td></tr>
+<tr class="memdesc:a6baa43a281191374ad077c4e49e2b7d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop periodic measurement.  <br /></td></tr>
+<tr class="separator:a6baa43a281191374ad077c4e49e2b7d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Configration</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><dl class="section warning"><dt>Warning</dt><dd>ADS1113, ADS1114 and ADS1115 differ in the items that can be set </dd></dl>
 </div></td></tr>
@@ -190,46 +201,52 @@ int16_t&#160;</td><td class="memItemRight" valign="bottom"><b>adc</b> () const</
 <a class="el" href="unit___a_d_s111x_8hpp.html#aa7b7de5d60e1a10ad0763e15a2e27986">ads111x::ComparatorQueue</a>&#160;</td><td class="memItemRight" valign="bottom"><b>comparatorQueue</b> () const</td></tr>
 <tr class="memdesc:a24ed453ccc9f1575f9f069f3f50f08a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the comparator queue. <br /></td></tr>
 <tr class="separator:a24ed453ccc9f1575f9f069f3f50f08a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7eac842451d6e75695d177b45d07da88" id="r_a7eac842451d6e75695d177b45d07da88"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7eac842451d6e75695d177b45d07da88">setMultiplexer</a> (const <a class="el" href="unit___a_d_s111x_8hpp.html#a9376bdb1e48395373ab8292cd63a35c4">ads111x::Mux</a> mux)=0</td></tr>
-<tr class="memdesc:a7eac842451d6e75695d177b45d07da88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the input multiplexer.  <br /></td></tr>
-<tr class="separator:a7eac842451d6e75695d177b45d07da88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0faa2a91e3cddd8fb63e974bd8e85115" id="r_a0faa2a91e3cddd8fb63e974bd8e85115"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0faa2a91e3cddd8fb63e974bd8e85115">setGain</a> (const <a class="el" href="unit___a_d_s111x_8hpp.html#ac482a60d7c757148d4a5016b4024f5e0">ads111x::Gain</a> <a class="el" href="#ae517d65928a97ad204e96d0c79c04b4e">gain</a>)=0</td></tr>
-<tr class="memdesc:a0faa2a91e3cddd8fb63e974bd8e85115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the programmable gain amplifier.  <br /></td></tr>
-<tr class="separator:a0faa2a91e3cddd8fb63e974bd8e85115"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac575d86ef23896c6861d06a1aeb92aa2" id="r_ac575d86ef23896c6861d06a1aeb92aa2"><td class="memItemLeft" align="right" valign="top"><a id="ac575d86ef23896c6861d06a1aeb92aa2" name="ac575d86ef23896c6861d06a1aeb92aa2"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>setSamplingRate</b> (const <a class="el" href="unit___a_d_s111x_8hpp.html#a80091ab36ea2000ca4e9e0f9ef335bec">ads111x::Sampling</a> rate)</td></tr>
-<tr class="memdesc:ac575d86ef23896c6861d06a1aeb92aa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the data rate <br  />
+<tr class="memitem:a34190c8e36c7946176d1dfd93ca450e2" id="r_a34190c8e36c7946176d1dfd93ca450e2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a34190c8e36c7946176d1dfd93ca450e2">writeMultiplexer</a> (const <a class="el" href="unit___a_d_s111x_8hpp.html#a9376bdb1e48395373ab8292cd63a35c4">ads111x::Mux</a> mux)=0</td></tr>
+<tr class="memdesc:a34190c8e36c7946176d1dfd93ca450e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the input multiplexer.  <br /></td></tr>
+<tr class="separator:a34190c8e36c7946176d1dfd93ca450e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e835f9b38260918eb903e88b8fd9b2f" id="r_a8e835f9b38260918eb903e88b8fd9b2f"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e835f9b38260918eb903e88b8fd9b2f">writeGain</a> (const <a class="el" href="unit___a_d_s111x_8hpp.html#ac482a60d7c757148d4a5016b4024f5e0">ads111x::Gain</a> <a class="el" href="#ae517d65928a97ad204e96d0c79c04b4e">gain</a>)=0</td></tr>
+<tr class="memdesc:a8e835f9b38260918eb903e88b8fd9b2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the programmable gain amplifier.  <br /></td></tr>
+<tr class="separator:a8e835f9b38260918eb903e88b8fd9b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30f61af5aff38e849b67af00bf37030a" id="r_a30f61af5aff38e849b67af00bf37030a"><td class="memItemLeft" align="right" valign="top"><a id="a30f61af5aff38e849b67af00bf37030a" name="a30f61af5aff38e849b67af00bf37030a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>writeSamplingRate</b> (const <a class="el" href="unit___a_d_s111x_8hpp.html#a80091ab36ea2000ca4e9e0f9ef335bec">ads111x::Sampling</a> rate)</td></tr>
+<tr class="memdesc:a30f61af5aff38e849b67af00bf37030a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the data rate <br  />
  <br /></td></tr>
-<tr class="separator:ac575d86ef23896c6861d06a1aeb92aa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2331db46cb372d82826bd72039e9de0" id="r_ae2331db46cb372d82826bd72039e9de0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae2331db46cb372d82826bd72039e9de0">setComparatorMode</a> (const bool b)=0</td></tr>
-<tr class="memdesc:ae2331db46cb372d82826bd72039e9de0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the comparator mode.  <br /></td></tr>
-<tr class="separator:ae2331db46cb372d82826bd72039e9de0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c423207f7c993a70fa3f96f8db5e78c" id="r_a1c423207f7c993a70fa3f96f8db5e78c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c423207f7c993a70fa3f96f8db5e78c">setComparatorPolarity</a> (const bool b)=0</td></tr>
-<tr class="memdesc:a1c423207f7c993a70fa3f96f8db5e78c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the comparator polarity.  <br /></td></tr>
-<tr class="separator:a1c423207f7c993a70fa3f96f8db5e78c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a42c04e41ad7ca6c96bd1769dcb702d" id="r_a9a42c04e41ad7ca6c96bd1769dcb702d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a42c04e41ad7ca6c96bd1769dcb702d">setLatchingComparator</a> (const bool b)=0</td></tr>
-<tr class="memdesc:a9a42c04e41ad7ca6c96bd1769dcb702d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the latching comparator.  <br /></td></tr>
-<tr class="separator:a9a42c04e41ad7ca6c96bd1769dcb702d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f25368b3a45fe9673c7cf719479c174" id="r_a8f25368b3a45fe9673c7cf719479c174"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8f25368b3a45fe9673c7cf719479c174">setComparatorQueue</a> (const <a class="el" href="unit___a_d_s111x_8hpp.html#aa7b7de5d60e1a10ad0763e15a2e27986">ads111x::ComparatorQueue</a> c)=0</td></tr>
-<tr class="memdesc:a8f25368b3a45fe9673c7cf719479c174"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the comparator queue.  <br /></td></tr>
-<tr class="separator:a8f25368b3a45fe9673c7cf719479c174"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a30f61af5aff38e849b67af00bf37030a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20907e1b7ed3e5cdccf5d0d86a857be7" id="r_a20907e1b7ed3e5cdccf5d0d86a857be7"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a20907e1b7ed3e5cdccf5d0d86a857be7">writeComparatorMode</a> (const bool b)=0</td></tr>
+<tr class="memdesc:a20907e1b7ed3e5cdccf5d0d86a857be7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the comparator mode.  <br /></td></tr>
+<tr class="separator:a20907e1b7ed3e5cdccf5d0d86a857be7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a742f62a74bba6f460c4f9a7bc55aec91" id="r_a742f62a74bba6f460c4f9a7bc55aec91"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a742f62a74bba6f460c4f9a7bc55aec91">writeComparatorPolarity</a> (const bool b)=0</td></tr>
+<tr class="memdesc:a742f62a74bba6f460c4f9a7bc55aec91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the comparator polarity.  <br /></td></tr>
+<tr class="separator:a742f62a74bba6f460c4f9a7bc55aec91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bd6227b21532c4c613b07dbb88602a4" id="r_a8bd6227b21532c4c613b07dbb88602a4"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8bd6227b21532c4c613b07dbb88602a4">writeLatchingComparator</a> (const bool b)=0</td></tr>
+<tr class="memdesc:a8bd6227b21532c4c613b07dbb88602a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the latching comparator.  <br /></td></tr>
+<tr class="separator:a8bd6227b21532c4c613b07dbb88602a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31c144541ac59c62e0656ef76f50e3db" id="r_a31c144541ac59c62e0656ef76f50e3db"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a31c144541ac59c62e0656ef76f50e3db">writeComparatorQueue</a> (const <a class="el" href="unit___a_d_s111x_8hpp.html#aa7b7de5d60e1a10ad0763e15a2e27986">ads111x::ComparatorQueue</a> c)=0</td></tr>
+<tr class="memdesc:a31c144541ac59c62e0656ef76f50e3db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the comparator queue.  <br /></td></tr>
+<tr class="separator:a31c144541ac59c62e0656ef76f50e3db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Single shot measurement</div></td></tr>
-<tr class="memitem:a953399e302751ff6c907c8f56b67fb4e" id="r_a953399e302751ff6c907c8f56b67fb4e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a953399e302751ff6c907c8f56b67fb4e">measureSingleshot</a> (<a class="el" href="structm5_1_1unit_1_1ads111x_1_1_data.html">ads111x::Data</a> &amp;d, const uint32_t timeoutMillis=1000)</td></tr>
-<tr class="memdesc:a953399e302751ff6c907c8f56b67fb4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Measurement single shot.  <br /></td></tr>
-<tr class="separator:a953399e302751ff6c907c8f56b67fb4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44a1efc61b35279f4971dda91af2d190" id="r_a44a1efc61b35279f4971dda91af2d190"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a44a1efc61b35279f4971dda91af2d190">measureSingleshot</a> (<a class="el" href="structm5_1_1unit_1_1ads111x_1_1_data.html">ads111x::Data</a> &amp;d, const uint32_t timeoutMillis=1000U)</td></tr>
+<tr class="memdesc:a44a1efc61b35279f4971dda91af2d190"><td class="mdescLeft">&#160;</td><td class="mdescRight">Measurement single shot.  <br /></td></tr>
+<tr class="separator:a44a1efc61b35279f4971dda91af2d190"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Threshold</div></td></tr>
-<tr class="memitem:a27bdaa11ea02c3d5b7176aeea575d82d" id="r_a27bdaa11ea02c3d5b7176aeea575d82d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a27bdaa11ea02c3d5b7176aeea575d82d">readThreshould</a> (int16_t &amp;high, int16_t &amp;low)</td></tr>
-<tr class="memdesc:a27bdaa11ea02c3d5b7176aeea575d82d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the threshould values.  <br /></td></tr>
-<tr class="separator:a27bdaa11ea02c3d5b7176aeea575d82d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27efe58297ae273fb2751a0b5e30ef9a" id="r_a27efe58297ae273fb2751a0b5e30ef9a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a27efe58297ae273fb2751a0b5e30ef9a">setThreshould</a> (const int16_t high, const int16_t low)</td></tr>
-<tr class="memdesc:a27efe58297ae273fb2751a0b5e30ef9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the threshould values.  <br /></td></tr>
-<tr class="separator:a27efe58297ae273fb2751a0b5e30ef9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a073e1e5a8dee4a487e812347af206b6c" id="r_a073e1e5a8dee4a487e812347af206b6c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a073e1e5a8dee4a487e812347af206b6c">readThreshold</a> (int16_t &amp;high, int16_t &amp;low)</td></tr>
+<tr class="memdesc:a073e1e5a8dee4a487e812347af206b6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the threshold values.  <br /></td></tr>
+<tr class="separator:a073e1e5a8dee4a487e812347af206b6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e393fdafbfd639cbb2095ce6b5e190a" id="r_a9e393fdafbfd639cbb2095ce6b5e190a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9e393fdafbfd639cbb2095ce6b5e190a">writeThreshold</a> (const int16_t high, const int16_t low)</td></tr>
+<tr class="memdesc:a9e393fdafbfd639cbb2095ce6b5e190a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the threshold values.  <br /></td></tr>
+<tr class="separator:a9e393fdafbfd639cbb2095ce6b5e190a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a877e17d0fe9c58cd088745b38b8f680d" id="r_a877e17d0fe9c58cd088745b38b8f680d"><td class="memItemLeft" align="right" valign="top"><a id="a877e17d0fe9c58cd088745b38b8f680d" name="a877e17d0fe9c58cd088745b38b8f680d"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>on_begin</b> ()=0</td></tr>
-<tr class="separator:a877e17d0fe9c58cd088745b38b8f680d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2e7aac3579e60918758335471afd75c" id="r_ab2e7aac3579e60918758335471afd75c"><td class="memItemLeft" align="right" valign="top"><a id="ab2e7aac3579e60918758335471afd75c" name="ab2e7aac3579e60918758335471afd75c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>start_periodic_measurement</b> ()</td></tr>
+<tr class="separator:ab2e7aac3579e60918758335471afd75c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a940c7361048cb5aef55520dbe40b0ed9" id="r_a940c7361048cb5aef55520dbe40b0ed9"><td class="memItemLeft" align="right" valign="top"><a id="a940c7361048cb5aef55520dbe40b0ed9" name="a940c7361048cb5aef55520dbe40b0ed9"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>start_periodic_measurement</b> (const <a class="el" href="unit___a_d_s111x_8hpp.html#a80091ab36ea2000ca4e9e0f9ef335bec">ads111x::Sampling</a> rate, const <a class="el" href="unit___a_d_s111x_8hpp.html#a9376bdb1e48395373ab8292cd63a35c4">ads111x::Mux</a> mux, const <a class="el" href="unit___a_d_s111x_8hpp.html#ac482a60d7c757148d4a5016b4024f5e0">ads111x::Gain</a> <a class="el" href="#ae517d65928a97ad204e96d0c79c04b4e">gain</a>, const <a class="el" href="unit___a_d_s111x_8hpp.html#aa7b7de5d60e1a10ad0763e15a2e27986">ads111x::ComparatorQueue</a> comp_que)=0</td></tr>
+<tr class="separator:a940c7361048cb5aef55520dbe40b0ed9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67d0700881baf2782ea1db10ff14a9f1" id="r_a67d0700881baf2782ea1db10ff14a9f1"><td class="memItemLeft" align="right" valign="top"><a id="a67d0700881baf2782ea1db10ff14a9f1" name="a67d0700881baf2782ea1db10ff14a9f1"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>stop_periodic_measurement</b> ()</td></tr>
+<tr class="separator:a67d0700881baf2782ea1db10ff14a9f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a30966cf7af18a88c823d546dcb7be5a4" id="r_a30966cf7af18a88c823d546dcb7be5a4"><td class="memItemLeft" align="right" valign="top"><a id="a30966cf7af18a88c823d546dcb7be5a4" name="a30966cf7af18a88c823d546dcb7be5a4"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>read_adc_raw</b> (<a class="el" href="structm5_1_1unit_1_1ads111x_1_1_data.html">ads111x::Data</a> &amp;d)</td></tr>
 <tr class="separator:a30966cf7af18a88c823d546dcb7be5a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -251,39 +268,27 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>apply_interval</b> (c
 <tr class="memitem:a53da800f944a8851c701dbce9bb96cab" id="r_a53da800f944a8851c701dbce9bb96cab"><td class="memItemLeft" align="right" valign="top"><a id="a53da800f944a8851c701dbce9bb96cab" name="a53da800f944a8851c701dbce9bb96cab"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>apply_coefficient</b> (const <a class="el" href="unit___a_d_s111x_8hpp.html#ac482a60d7c757148d4a5016b4024f5e0">ads111x::Gain</a> <a class="el" href="#ae517d65928a97ad204e96d0c79c04b4e">gain</a>)</td></tr>
 <tr class="separator:a53da800f944a8851c701dbce9bb96cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa585167d45fdbf5614498a0b4469b72d" id="r_aa585167d45fdbf5614498a0b4469b72d"><td class="memItemLeft" align="right" valign="top"><a id="aa585167d45fdbf5614498a0b4469b72d" name="aa585167d45fdbf5614498a0b4469b72d"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>set_multiplexer</b> (const <a class="el" href="unit___a_d_s111x_8hpp.html#a9376bdb1e48395373ab8292cd63a35c4">ads111x::Mux</a> mux)</td></tr>
-<tr class="separator:aa585167d45fdbf5614498a0b4469b72d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a917c6b060b0ad9329fb4c9f9e5a45596" id="r_a917c6b060b0ad9329fb4c9f9e5a45596"><td class="memItemLeft" align="right" valign="top"><a id="a917c6b060b0ad9329fb4c9f9e5a45596" name="a917c6b060b0ad9329fb4c9f9e5a45596"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>set_gain</b> (const <a class="el" href="unit___a_d_s111x_8hpp.html#ac482a60d7c757148d4a5016b4024f5e0">ads111x::Gain</a> <a class="el" href="#ae517d65928a97ad204e96d0c79c04b4e">gain</a>)</td></tr>
-<tr class="separator:a917c6b060b0ad9329fb4c9f9e5a45596"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0421a4796a3eb0c15bd416e63d0b0d7e" id="r_a0421a4796a3eb0c15bd416e63d0b0d7e"><td class="memItemLeft" align="right" valign="top"><a id="a0421a4796a3eb0c15bd416e63d0b0d7e" name="a0421a4796a3eb0c15bd416e63d0b0d7e"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>set_comparator_mode</b> (const bool b)</td></tr>
-<tr class="separator:a0421a4796a3eb0c15bd416e63d0b0d7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c938e0696f7ff91fc04727420dd9d86" id="r_a2c938e0696f7ff91fc04727420dd9d86"><td class="memItemLeft" align="right" valign="top"><a id="a2c938e0696f7ff91fc04727420dd9d86" name="a2c938e0696f7ff91fc04727420dd9d86"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>set_comparator_polarity</b> (const bool b)</td></tr>
-<tr class="separator:a2c938e0696f7ff91fc04727420dd9d86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acde1bb266a06ed4946ced9b3fd67f993" id="r_acde1bb266a06ed4946ced9b3fd67f993"><td class="memItemLeft" align="right" valign="top"><a id="acde1bb266a06ed4946ced9b3fd67f993" name="acde1bb266a06ed4946ced9b3fd67f993"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>set_latching_comparator</b> (const bool b)</td></tr>
-<tr class="separator:acde1bb266a06ed4946ced9b3fd67f993"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f3efe703f31c5f645ae8038bcfc9b9f" id="r_a8f3efe703f31c5f645ae8038bcfc9b9f"><td class="memItemLeft" align="right" valign="top"><a id="a8f3efe703f31c5f645ae8038bcfc9b9f" name="a8f3efe703f31c5f645ae8038bcfc9b9f"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>set_comparator_queue</b> (const <a class="el" href="unit___a_d_s111x_8hpp.html#aa7b7de5d60e1a10ad0763e15a2e27986">ads111x::ComparatorQueue</a> c)</td></tr>
-<tr class="separator:a8f3efe703f31c5f645ae8038bcfc9b9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58f68f8fe460cb57933504abbdee2c52" id="r_a58f68f8fe460cb57933504abbdee2c52"><td class="memItemLeft" align="right" valign="top"><a id="a58f68f8fe460cb57933504abbdee2c52" name="a58f68f8fe460cb57933504abbdee2c52"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>write_multiplexer</b> (const <a class="el" href="unit___a_d_s111x_8hpp.html#a9376bdb1e48395373ab8292cd63a35c4">ads111x::Mux</a> mux)</td></tr>
+<tr class="separator:a58f68f8fe460cb57933504abbdee2c52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa01322b33844c6b5aeb32b70eee84133" id="r_aa01322b33844c6b5aeb32b70eee84133"><td class="memItemLeft" align="right" valign="top"><a id="aa01322b33844c6b5aeb32b70eee84133" name="aa01322b33844c6b5aeb32b70eee84133"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>write_gain</b> (const <a class="el" href="unit___a_d_s111x_8hpp.html#ac482a60d7c757148d4a5016b4024f5e0">ads111x::Gain</a> <a class="el" href="#ae517d65928a97ad204e96d0c79c04b4e">gain</a>)</td></tr>
+<tr class="separator:aa01322b33844c6b5aeb32b70eee84133"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b52e9f3c98a55bac216f5192e6071ad" id="r_a9b52e9f3c98a55bac216f5192e6071ad"><td class="memItemLeft" align="right" valign="top"><a id="a9b52e9f3c98a55bac216f5192e6071ad" name="a9b52e9f3c98a55bac216f5192e6071ad"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>write_comparator_mode</b> (const bool b)</td></tr>
+<tr class="separator:a9b52e9f3c98a55bac216f5192e6071ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff4e443a0672b59733fcc140ce52609a" id="r_aff4e443a0672b59733fcc140ce52609a"><td class="memItemLeft" align="right" valign="top"><a id="aff4e443a0672b59733fcc140ce52609a" name="aff4e443a0672b59733fcc140ce52609a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>write_comparator_polarity</b> (const bool b)</td></tr>
+<tr class="separator:aff4e443a0672b59733fcc140ce52609a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18c06a40e2c2588de8ac42291ea2d834" id="r_a18c06a40e2c2588de8ac42291ea2d834"><td class="memItemLeft" align="right" valign="top"><a id="a18c06a40e2c2588de8ac42291ea2d834" name="a18c06a40e2c2588de8ac42291ea2d834"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>write_latching_comparator</b> (const bool b)</td></tr>
+<tr class="separator:a18c06a40e2c2588de8ac42291ea2d834"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefdc1b019592b48c860c81b979e58d0a" id="r_aefdc1b019592b48c860c81b979e58d0a"><td class="memItemLeft" align="right" valign="top"><a id="aefdc1b019592b48c860c81b979e58d0a" name="aefdc1b019592b48c860c81b979e58d0a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>write_comparator_queue</b> (const <a class="el" href="unit___a_d_s111x_8hpp.html#aa7b7de5d60e1a10ad0763e15a2e27986">ads111x::ComparatorQueue</a> c)</td></tr>
+<tr class="separator:aefdc1b019592b48c860c81b979e58d0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a786b63761c885e1694a4708f1f1df4af" id="r_a786b63761c885e1694a4708f1f1df4af"><td class="memItemLeft" align="right" valign="top"><a id="a786b63761c885e1694a4708f1f1df4af" name="a786b63761c885e1694a4708f1f1df4af"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>M5_UNIT_COMPONENT_PERIODIC_MEASUREMENT_ADAPTER_HPP_BUILDER</b> (<a class="el" href="classm5_1_1unit_1_1_unit_a_d_s111x.html">UnitADS111x</a>, <a class="el" href="structm5_1_1unit_1_1ads111x_1_1_data.html">ads111x::Data</a>)</td></tr>
 <tr class="separator:a786b63761c885e1694a4708f1f1df4af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">Periodic measurement</div></td></tr>
-<tr><td colspan="2"><div class="groupText"><dl class="section note"><dt>Note</dt><dd>Call via startPeriodicMeasurement/stopPeriodicMeasurement </dd></dl>
-</div></td></tr>
-<tr class="memitem:ab2e7aac3579e60918758335471afd75c" id="r_ab2e7aac3579e60918758335471afd75c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab2e7aac3579e60918758335471afd75c">start_periodic_measurement</a> ()</td></tr>
-<tr class="memdesc:ab2e7aac3579e60918758335471afd75c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start periodic measurement.  <br /></td></tr>
-<tr class="separator:ab2e7aac3579e60918758335471afd75c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab64cc4b3053c9415d4c19e3d450400fd" id="r_ab64cc4b3053c9415d4c19e3d450400fd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab64cc4b3053c9415d4c19e3d450400fd">start_periodic_measurement</a> (const <a class="el" href="unit___a_d_s111x_8hpp.html#a80091ab36ea2000ca4e9e0f9ef335bec">ads111x::Sampling</a> rate)</td></tr>
-<tr class="memdesc:ab64cc4b3053c9415d4c19e3d450400fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start periodic measurement.  <br /></td></tr>
-<tr class="separator:ab64cc4b3053c9415d4c19e3d450400fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67d0700881baf2782ea1db10ff14a9f1" id="r_a67d0700881baf2782ea1db10ff14a9f1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67d0700881baf2782ea1db10ff14a9f1">stop_periodic_measurement</a> ()</td></tr>
-<tr class="memdesc:a67d0700881baf2782ea1db10ff14a9f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop periodic measurement.  <br /></td></tr>
-<tr class="separator:a67d0700881baf2782ea1db10ff14a9f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -293,9 +298,9 @@ std::unique_ptr&lt; m5::container::CircularBuffer&lt; <a class="el" href="struct
 <tr class="memitem:a6991a3432fbab6dda7bc10038223cfb2" id="r_a6991a3432fbab6dda7bc10038223cfb2"><td class="memItemLeft" align="right" valign="top"><a id="a6991a3432fbab6dda7bc10038223cfb2" name="a6991a3432fbab6dda7bc10038223cfb2"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>_coefficient</b> {}</td></tr>
 <tr class="separator:a6991a3432fbab6dda7bc10038223cfb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a882ae2360a69606ce10ab8ffa99bd644" id="r_a882ae2360a69606ce10ab8ffa99bd644"><td class="memItemLeft" align="right" valign="top"><a id="a882ae2360a69606ce10ab8ffa99bd644" name="a882ae2360a69606ce10ab8ffa99bd644"></a>
-<a class="el" href="structm5_1_1unit_1_1ads111x_1_1_config.html">ads111x::Config</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_adsCfg</b> {}</td></tr>
-<tr class="separator:a882ae2360a69606ce10ab8ffa99bd644"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a702e0c9daf492328143b9da89466137b" id="r_a702e0c9daf492328143b9da89466137b"><td class="memItemLeft" align="right" valign="top"><a id="a702e0c9daf492328143b9da89466137b" name="a702e0c9daf492328143b9da89466137b"></a>
+<a class="el" href="structm5_1_1unit_1_1ads111x_1_1_config.html">ads111x::Config</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_ads_cfg</b> {}</td></tr>
+<tr class="separator:a702e0c9daf492328143b9da89466137b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73a2e62e86d7d6fbce3d7e96ef9b028d" id="r_a73a2e62e86d7d6fbce3d7e96ef9b028d"><td class="memItemLeft" align="right" valign="top"><a id="a73a2e62e86d7d6fbce3d7e96ef9b028d" name="a73a2e62e86d7d6fbce3d7e96ef9b028d"></a>
 <a class="el" href="structm5_1_1unit_1_1_unit_a_d_s111x_1_1config__t.html">config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_cfg</b> {}</td></tr>
 <tr class="separator:a73a2e62e86d7d6fbce3d7e96ef9b028d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -325,7 +330,9 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>_coefficient</b> {}<
   </tr>
 </table>
 </div><div class="memdoc">
-<p>@breif Coefficient value </p><dl class="section note"><dt>Note</dt><dd>Changes as gain changes </dd></dl>
+
+<p>Coefficient value. </p>
+<dl class="section note"><dt>Note</dt><dd>Changes as gain changes </dd></dl>
 
 </div>
 </div>
@@ -451,8 +458,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>_coefficient</b> {}<
 
 </div>
 </div>
-<a id="a953399e302751ff6c907c8f56b67fb4e" name="a953399e302751ff6c907c8f56b67fb4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a953399e302751ff6c907c8f56b67fb4e">&#9670;&#160;</a></span>measureSingleshot()</h2>
+<a id="a44a1efc61b35279f4971dda91af2d190" name="a44a1efc61b35279f4971dda91af2d190"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44a1efc61b35279f4971dda91af2d190">&#9670;&#160;</a></span>measureSingleshot()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -465,7 +472,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>_coefficient</b> {}<
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const uint32_t</td>          <td class="paramname"><span class="paramname"><em>timeoutMillis</em></span><span class="paramdefsep"> = </span><span class="paramdefval">1000</span>&#160;)</td>
+          <td class="paramtype">const uint32_t</td>          <td class="paramname"><span class="paramname"><em>timeoutMillis</em></span><span class="paramdefsep"> = </span><span class="paramdefval">1000U</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -485,14 +492,14 @@ Until it can be measured, it will be blocked until the timeout time </dd></dl>
 
 </div>
 </div>
-<a id="a27bdaa11ea02c3d5b7176aeea575d82d" name="a27bdaa11ea02c3d5b7176aeea575d82d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27bdaa11ea02c3d5b7176aeea575d82d">&#9670;&#160;</a></span>readThreshould()</h2>
+<a id="a073e1e5a8dee4a487e812347af206b6c" name="a073e1e5a8dee4a487e812347af206b6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a073e1e5a8dee4a487e812347af206b6c">&#9670;&#160;</a></span>readThreshold()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool m5::unit::UnitADS111x::readThreshould </td>
+          <td class="memname">bool m5::unit::UnitADS111x::readThreshold </td>
           <td>(</td>
           <td class="paramtype">int16_t &amp;</td>          <td class="paramname"><span class="paramname"><em>high</em></span>, </td>
         </tr>
@@ -504,11 +511,11 @@ Until it can be measured, it will be blocked until the timeout time </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Reads the threshould values. </p>
+<p>Reads the threshold values. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">high</td><td>upper thresould value </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">low</td><td>lower thresould value </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">high</td><td>upper threshold value </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">low</td><td>lower threshold value </td></tr>
   </table>
   </dd>
 </dl>
@@ -516,8 +523,8 @@ Until it can be measured, it will be blocked until the timeout time </dd></dl>
 
 </div>
 </div>
-<a id="ae2331db46cb372d82826bd72039e9de0" name="ae2331db46cb372d82826bd72039e9de0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae2331db46cb372d82826bd72039e9de0">&#9670;&#160;</a></span>setComparatorMode()</h2>
+<a id="a32774995b903d7c20cb9b74a08cdcce6" name="a32774995b903d7c20cb9b74a08cdcce6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32774995b903d7c20cb9b74a08cdcce6">&#9670;&#160;</a></span>startPeriodicMeasurement() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -526,7 +533,114 @@ Until it can be measured, it will be blocked until the timeout time </dd></dl>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool m5::unit::UnitADS111x::setComparatorMode </td>
+          <td class="memname">bool m5::unit::UnitADS111x::startPeriodicMeasurement </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Start periodic measurement in the current settings. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if successful </dd></dl>
+
+</div>
+</div>
+<a id="aceedb3a7e7db537554868d85d26c3e2a" name="aceedb3a7e7db537554868d85d26c3e2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aceedb3a7e7db537554868d85d26c3e2a">&#9670;&#160;</a></span>startPeriodicMeasurement() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool m5::unit::UnitADS111x::startPeriodicMeasurement </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="unit___a_d_s111x_8hpp.html#a80091ab36ea2000ca4e9e0f9ef335bec">ads111x::Sampling</a></td>          <td class="paramname"><span class="paramname"><em>rate</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="unit___a_d_s111x_8hpp.html#a9376bdb1e48395373ab8292cd63a35c4">ads111x::Mux</a></td>          <td class="paramname"><span class="paramname"><em>mux</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="unit___a_d_s111x_8hpp.html#ac482a60d7c757148d4a5016b4024f5e0">ads111x::Gain</a></td>          <td class="paramname"><span class="paramname"><em>gain</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="unit___a_d_s111x_8hpp.html#aa7b7de5d60e1a10ad0763e15a2e27986">ads111x::ComparatorQueue</a></td>          <td class="paramname"><span class="paramname"><em>comp_que</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Start periodic measurement. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rate</td><td>Sampling rate </td></tr>
+    <tr><td class="paramname">mux</td><td>Input multiplexer (Not supported in some classes) </td></tr>
+    <tr><td class="paramname">gain</td><td>Programmable gain amplifier (Not supported in some classes) </td></tr>
+    <tr><td class="paramname">comp_que</td><td>Comparator queue (Not supported in some classes) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if successful </dd></dl>
+
+</div>
+</div>
+<a id="a6baa43a281191374ad077c4e49e2b7d9" name="a6baa43a281191374ad077c4e49e2b7d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6baa43a281191374ad077c4e49e2b7d9">&#9670;&#160;</a></span>stopPeriodicMeasurement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool m5::unit::UnitADS111x::stopPeriodicMeasurement </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stop periodic measurement. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if successful </dd></dl>
+
+</div>
+</div>
+<a id="a20907e1b7ed3e5cdccf5d0d86a857be7" name="a20907e1b7ed3e5cdccf5d0d86a857be7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20907e1b7ed3e5cdccf5d0d86a857be7">&#9670;&#160;</a></span>writeComparatorMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool m5::unit::UnitADS111x::writeComparatorMode </td>
           <td>(</td>
           <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>b</em></span></td><td>)</td>
           <td></td>
@@ -539,14 +653,14 @@ Until it can be measured, it will be blocked until the timeout time </dd></dl>
 </table>
 </div><div class="memdoc">
 
-<p>Set the comparator mode. </p>
+<p>Write the comparator mode. </p>
 
-<p>Implemented in <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1113.html#aaa99822e05b4474c0825e232e241e43f">m5::unit::UnitADS1113</a>, <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1114.html#a633c4f6cecd4fce6eb4d415a7b9f580c">m5::unit::UnitADS1114</a>, and <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1115.html#a53a89d0abe18ffaba7ddfaaa1eeac934">m5::unit::UnitADS1115</a>.</p>
+<p>Implemented in <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1113.html#a7bcdc63660872e0286b22e00d9f3d640">m5::unit::UnitADS1113</a>, <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1114.html#a9e1268e57fbd2df3a96e0b38009a5f34">m5::unit::UnitADS1114</a>, and <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1115.html#ac61243cbe779bce649148401504fc285">m5::unit::UnitADS1115</a>.</p>
 
 </div>
 </div>
-<a id="a1c423207f7c993a70fa3f96f8db5e78c" name="a1c423207f7c993a70fa3f96f8db5e78c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c423207f7c993a70fa3f96f8db5e78c">&#9670;&#160;</a></span>setComparatorPolarity()</h2>
+<a id="a742f62a74bba6f460c4f9a7bc55aec91" name="a742f62a74bba6f460c4f9a7bc55aec91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a742f62a74bba6f460c4f9a7bc55aec91">&#9670;&#160;</a></span>writeComparatorPolarity()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -555,7 +669,7 @@ Until it can be measured, it will be blocked until the timeout time </dd></dl>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool m5::unit::UnitADS111x::setComparatorPolarity </td>
+          <td class="memname">virtual bool m5::unit::UnitADS111x::writeComparatorPolarity </td>
           <td>(</td>
           <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>b</em></span></td><td>)</td>
           <td></td>
@@ -568,14 +682,14 @@ Until it can be measured, it will be blocked until the timeout time </dd></dl>
 </table>
 </div><div class="memdoc">
 
-<p>Set the comparator polarity. </p>
+<p>Write the comparator polarity. </p>
 
-<p>Implemented in <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1113.html#a62acce026ea72b4af473be32fe88041e">m5::unit::UnitADS1113</a>, <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1114.html#a9721c54b9db6816dd4260ad7769216c8">m5::unit::UnitADS1114</a>, and <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1115.html#a7c197e336db3b21c10e3d61b1c79a68c">m5::unit::UnitADS1115</a>.</p>
+<p>Implemented in <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1113.html#a36dd9f17e4b7f5f7b1f930086271832d">m5::unit::UnitADS1113</a>, <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1114.html#ae1a68df28b597455e74d6007b477f405">m5::unit::UnitADS1114</a>, and <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1115.html#af0d3b11efcb984408d4e3164c3ff8b53">m5::unit::UnitADS1115</a>.</p>
 
 </div>
 </div>
-<a id="a8f25368b3a45fe9673c7cf719479c174" name="a8f25368b3a45fe9673c7cf719479c174"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f25368b3a45fe9673c7cf719479c174">&#9670;&#160;</a></span>setComparatorQueue()</h2>
+<a id="a31c144541ac59c62e0656ef76f50e3db" name="a31c144541ac59c62e0656ef76f50e3db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31c144541ac59c62e0656ef76f50e3db">&#9670;&#160;</a></span>writeComparatorQueue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -584,7 +698,7 @@ Until it can be measured, it will be blocked until the timeout time </dd></dl>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool m5::unit::UnitADS111x::setComparatorQueue </td>
+          <td class="memname">virtual bool m5::unit::UnitADS111x::writeComparatorQueue </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="unit___a_d_s111x_8hpp.html#aa7b7de5d60e1a10ad0763e15a2e27986">ads111x::ComparatorQueue</a></td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
           <td></td>
@@ -597,14 +711,14 @@ Until it can be measured, it will be blocked until the timeout time </dd></dl>
 </table>
 </div><div class="memdoc">
 
-<p>Set the comparator queue. </p>
+<p>Write the comparator queue. </p>
 
-<p>Implemented in <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1113.html#a7f99941fbc5fd64d4e15a75c3c89b1c9">m5::unit::UnitADS1113</a>, <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1114.html#a2eae029e48a08c3c415cd4371962875e">m5::unit::UnitADS1114</a>, and <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1115.html#a0908d1fd26ed3494bdc75da7a80ccb59">m5::unit::UnitADS1115</a>.</p>
+<p>Implemented in <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1113.html#acaa9150a8817be36577023166b40446c">m5::unit::UnitADS1113</a>, <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1114.html#a4f3f9cd4d2d3fcef016489ec25a2b36c">m5::unit::UnitADS1114</a>, and <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1115.html#ac8ab2a1a01de0baeb0774e92cdee66d5">m5::unit::UnitADS1115</a>.</p>
 
 </div>
 </div>
-<a id="a0faa2a91e3cddd8fb63e974bd8e85115" name="a0faa2a91e3cddd8fb63e974bd8e85115"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0faa2a91e3cddd8fb63e974bd8e85115">&#9670;&#160;</a></span>setGain()</h2>
+<a id="a8e835f9b38260918eb903e88b8fd9b2f" name="a8e835f9b38260918eb903e88b8fd9b2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e835f9b38260918eb903e88b8fd9b2f">&#9670;&#160;</a></span>writeGain()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -613,7 +727,7 @@ Until it can be measured, it will be blocked until the timeout time </dd></dl>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool m5::unit::UnitADS111x::setGain </td>
+          <td class="memname">virtual bool m5::unit::UnitADS111x::writeGain </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="unit___a_d_s111x_8hpp.html#ac482a60d7c757148d4a5016b4024f5e0">ads111x::Gain</a></td>          <td class="paramname"><span class="paramname"><em>gain</em></span></td><td>)</td>
           <td></td>
@@ -626,16 +740,16 @@ Until it can be measured, it will be blocked until the timeout time </dd></dl>
 </table>
 </div><div class="memdoc">
 
-<p>Set the programmable gain amplifier. </p>
+<p>Write the programmable gain amplifier. </p>
 <dl class="section warning"><dt>Warning</dt><dd>the threshould values must be updated whenever the PGA settings are changed </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a27efe58297ae273fb2751a0b5e30ef9a" title="Set the threshould values.">setThreshould</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a9e393fdafbfd639cbb2095ce6b5e190a" title="Write the threshold values.">writeThreshold</a> </dd></dl>
 
-<p>Implemented in <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1113.html#a9e36e5494303fe1c43addb6c7522a52e">m5::unit::UnitADS1113</a>, <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1114.html#a3b5cc604c84f4540b744bf6d872b005d">m5::unit::UnitADS1114</a>, <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1115.html#acc9ebdd598ac55eeb20f82eb86a5770f">m5::unit::UnitADS1115</a>, and <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1115_with_e_e_p_r_o_m.html#a17797c30acaf0ff2aebf0bb6ec9ae221">m5::unit::UnitADS1115WithEEPROM</a>.</p>
+<p>Implemented in <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1113.html#a54d7fbd0370cee56d4295b2f7eb30e8c">m5::unit::UnitADS1113</a>, <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1114.html#ab3e7e8c3fb7edc1c737bdcfe398cec2f">m5::unit::UnitADS1114</a>, <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1115.html#aa35b091545ce995f58f9c7e3d1b72c35">m5::unit::UnitADS1115</a>, and <a class="el" href="classm5_1_1unit_1_1_unit_a_vmeter_base.html#a494de465cbc4dc6f7a2540d109370754">m5::unit::UnitAVmeterBase</a>.</p>
 
 </div>
 </div>
-<a id="a9a42c04e41ad7ca6c96bd1769dcb702d" name="a9a42c04e41ad7ca6c96bd1769dcb702d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9a42c04e41ad7ca6c96bd1769dcb702d">&#9670;&#160;</a></span>setLatchingComparator()</h2>
+<a id="a8bd6227b21532c4c613b07dbb88602a4" name="a8bd6227b21532c4c613b07dbb88602a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bd6227b21532c4c613b07dbb88602a4">&#9670;&#160;</a></span>writeLatchingComparator()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -644,7 +758,7 @@ Until it can be measured, it will be blocked until the timeout time </dd></dl>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool m5::unit::UnitADS111x::setLatchingComparator </td>
+          <td class="memname">virtual bool m5::unit::UnitADS111x::writeLatchingComparator </td>
           <td>(</td>
           <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>b</em></span></td><td>)</td>
           <td></td>
@@ -657,14 +771,14 @@ Until it can be measured, it will be blocked until the timeout time </dd></dl>
 </table>
 </div><div class="memdoc">
 
-<p>Set the latching comparator. </p>
+<p>Write the latching comparator. </p>
 
-<p>Implemented in <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1113.html#ad38ef0634d62d07180850bdd2a161d34">m5::unit::UnitADS1113</a>, <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1114.html#a4df6e51ded57958e22382108a4cf2eeb">m5::unit::UnitADS1114</a>, and <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1115.html#a42cb988d70bb3c633372beb4e6d2c18c">m5::unit::UnitADS1115</a>.</p>
+<p>Implemented in <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1113.html#a3d2221fcb2f866bd7c4154647f26a229">m5::unit::UnitADS1113</a>, <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1114.html#a4727288754f554558709c8d7951f9da8">m5::unit::UnitADS1114</a>, and <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1115.html#ab0658ae9c86c8d7e7efd43c71f81b0cc">m5::unit::UnitADS1115</a>.</p>
 
 </div>
 </div>
-<a id="a7eac842451d6e75695d177b45d07da88" name="a7eac842451d6e75695d177b45d07da88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7eac842451d6e75695d177b45d07da88">&#9670;&#160;</a></span>setMultiplexer()</h2>
+<a id="a34190c8e36c7946176d1dfd93ca450e2" name="a34190c8e36c7946176d1dfd93ca450e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34190c8e36c7946176d1dfd93ca450e2">&#9670;&#160;</a></span>writeMultiplexer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -673,7 +787,7 @@ Until it can be measured, it will be blocked until the timeout time </dd></dl>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool m5::unit::UnitADS111x::setMultiplexer </td>
+          <td class="memname">virtual bool m5::unit::UnitADS111x::writeMultiplexer </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="unit___a_d_s111x_8hpp.html#a9376bdb1e48395373ab8292cd63a35c4">ads111x::Mux</a></td>          <td class="paramname"><span class="paramname"><em>mux</em></span></td><td>)</td>
           <td></td>
@@ -686,20 +800,20 @@ Until it can be measured, it will be blocked until the timeout time </dd></dl>
 </table>
 </div><div class="memdoc">
 
-<p>Set the input multiplexer. </p>
+<p>Write the input multiplexer. </p>
 
-<p>Implemented in <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1113.html#aac6105f6c806533c067122f46a15e5f9">m5::unit::UnitADS1113</a>, <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1114.html#a8da444d1b8b3795191e44e41848cd313">m5::unit::UnitADS1114</a>, and <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1115.html#aba8960bf6373263d58851020d97c9a88">m5::unit::UnitADS1115</a>.</p>
+<p>Implemented in <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1113.html#a8703a37b68093a086abdf0285b1a6873">m5::unit::UnitADS1113</a>, <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1114.html#a6f5739276500effcd2cf3add3c3e6e79">m5::unit::UnitADS1114</a>, and <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s1115.html#a0d91affb0be3dac4d9452b5d5a1593b0">m5::unit::UnitADS1115</a>.</p>
 
 </div>
 </div>
-<a id="a27efe58297ae273fb2751a0b5e30ef9a" name="a27efe58297ae273fb2751a0b5e30ef9a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27efe58297ae273fb2751a0b5e30ef9a">&#9670;&#160;</a></span>setThreshould()</h2>
+<a id="a9e393fdafbfd639cbb2095ce6b5e190a" name="a9e393fdafbfd639cbb2095ce6b5e190a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e393fdafbfd639cbb2095ce6b5e190a">&#9670;&#160;</a></span>writeThreshold()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool m5::unit::UnitADS111x::setThreshould </td>
+          <td class="memname">bool m5::unit::UnitADS111x::writeThreshold </td>
           <td>(</td>
           <td class="paramtype">const int16_t</td>          <td class="paramname"><span class="paramname"><em>high</em></span>, </td>
         </tr>
@@ -711,106 +825,16 @@ Until it can be measured, it will be blocked until the timeout time </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Set the threshould values. </p>
+<p>Write the threshold values. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">high</td><td>upper thresould value </td></tr>
-    <tr><td class="paramname">low</td><td>lower thresould value </td></tr>
+    <tr><td class="paramname">high</td><td>upper threshold value </td></tr>
+    <tr><td class="paramname">low</td><td>lower threshold value </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if successful </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>The high value must always be greater than the low value </dd></dl>
-
-</div>
-</div>
-<a id="ab2e7aac3579e60918758335471afd75c" name="ab2e7aac3579e60918758335471afd75c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2e7aac3579e60918758335471afd75c">&#9670;&#160;</a></span>start_periodic_measurement() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool m5::unit::UnitADS111x::start_periodic_measurement </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Start periodic measurement. </p>
-<p>Measuring in the current settings </p><dl class="section return"><dt>Returns</dt><dd>True if successful </dd></dl>
-
-</div>
-</div>
-<a id="ab64cc4b3053c9415d4c19e3d450400fd" name="ab64cc4b3053c9415d4c19e3d450400fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab64cc4b3053c9415d4c19e3d450400fd">&#9670;&#160;</a></span>start_periodic_measurement() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool m5::unit::UnitADS111x::start_periodic_measurement </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="unit___a_d_s111x_8hpp.html#a80091ab36ea2000ca4e9e0f9ef335bec">ads111x::Sampling</a></td>          <td class="paramname"><span class="paramname"><em>rate</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Start periodic measurement. </p>
-<p>Specify settings and measure </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">rate</td><td>Data sampling rate </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True if successful </dd></dl>
-
-</div>
-</div>
-<a id="a67d0700881baf2782ea1db10ff14a9f1" name="a67d0700881baf2782ea1db10ff14a9f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67d0700881baf2782ea1db10ff14a9f1">&#9670;&#160;</a></span>stop_periodic_measurement()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool m5::unit::UnitADS111x::stop_periodic_measurement </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Stop periodic measurement. </p>
-<dl class="section return"><dt>Returns</dt><dd>True if successful </dd></dl>
 
 </div>
 </div>

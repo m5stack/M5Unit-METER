@@ -1,9 +1,9 @@
 var classm5_1_1unit_1_1_unit_a_d_s1113 =
 [
-    [ "setComparatorMode", "classm5_1_1unit_1_1_unit_a_d_s1113.html#aaa99822e05b4474c0825e232e241e43f", null ],
-    [ "setComparatorPolarity", "classm5_1_1unit_1_1_unit_a_d_s1113.html#a62acce026ea72b4af473be32fe88041e", null ],
-    [ "setComparatorQueue", "classm5_1_1unit_1_1_unit_a_d_s1113.html#a7f99941fbc5fd64d4e15a75c3c89b1c9", null ],
-    [ "setGain", "classm5_1_1unit_1_1_unit_a_d_s1113.html#a9e36e5494303fe1c43addb6c7522a52e", null ],
-    [ "setLatchingComparator", "classm5_1_1unit_1_1_unit_a_d_s1113.html#ad38ef0634d62d07180850bdd2a161d34", null ],
-    [ "setMultiplexer", "classm5_1_1unit_1_1_unit_a_d_s1113.html#aac6105f6c806533c067122f46a15e5f9", null ]
+    [ "writeComparatorMode", "classm5_1_1unit_1_1_unit_a_d_s1113.html#a7bcdc63660872e0286b22e00d9f3d640", null ],
+    [ "writeComparatorPolarity", "classm5_1_1unit_1_1_unit_a_d_s1113.html#a36dd9f17e4b7f5f7b1f930086271832d", null ],
+    [ "writeComparatorQueue", "classm5_1_1unit_1_1_unit_a_d_s1113.html#acaa9150a8817be36577023166b40446c", null ],
+    [ "writeGain", "classm5_1_1unit_1_1_unit_a_d_s1113.html#a54d7fbd0370cee56d4295b2f7eb30e8c", null ],
+    [ "writeLatchingComparator", "classm5_1_1unit_1_1_unit_a_d_s1113.html#a3d2221fcb2f866bd7c4154647f26a229", null ],
+    [ "writeMultiplexer", "classm5_1_1unit_1_1_unit_a_d_s1113.html#a8703a37b68093a086abdf0285b1a6873", null ]
 ];

@@ -1,4 +1,29 @@
 var searchData=
 [
-  ['voltage_0',['voltage',['../classm5_1_1unit_1_1_unit_vmeter.html#ad468159ed863811c42342455f7a08c3e',1,'m5::unit::UnitVmeter']]]
+  ['unit_0',['unit',['../namespaceunit.html',1,'']]],
+  ['unit_5fads1113_2ecpp_1',['unit_ADS1113.cpp',['../unit___a_d_s1113_8cpp.html',1,'']]],
+  ['unit_5fads1113_2ehpp_2',['unit_ADS1113.hpp',['../unit___a_d_s1113_8hpp.html',1,'']]],
+  ['unit_5fads1114_2ecpp_3',['unit_ADS1114.cpp',['../unit___a_d_s1114_8cpp.html',1,'']]],
+  ['unit_5fads1114_2ehpp_4',['unit_ADS1114.hpp',['../unit___a_d_s1114_8hpp.html',1,'']]],
+  ['unit_5fads1115_2ecpp_5',['unit_ADS1115.cpp',['../unit___a_d_s1115_8cpp.html',1,'']]],
+  ['unit_5fads1115_2ehpp_6',['unit_ADS1115.hpp',['../unit___a_d_s1115_8hpp.html',1,'']]],
+  ['unit_5fads111x_2ecpp_7',['unit_ADS111x.cpp',['../unit___a_d_s111x_8cpp.html',1,'']]],
+  ['unit_5fads111x_2ehpp_8',['unit_ADS111x.hpp',['../unit___a_d_s111x_8hpp.html',1,'']]],
+  ['unit_5fameter_2ecpp_9',['unit_Ameter.cpp',['../unit___ameter_8cpp.html',1,'']]],
+  ['unit_5fameter_2ehpp_10',['unit_Ameter.hpp',['../unit___ameter_8hpp.html',1,'']]],
+  ['unit_5feeprom_2ecpp_11',['unit_EEPROM.cpp',['../unit___e_e_p_r_o_m_8cpp.html',1,'']]],
+  ['unit_5feeprom_2ehpp_12',['unit_EEPROM.hpp',['../unit___e_e_p_r_o_m_8hpp.html',1,'']]],
+  ['unit_5fkmeteriso_2ecpp_13',['unit_KmeterISO.cpp',['../unit___kmeter_i_s_o_8cpp.html',1,'']]],
+  ['unit_5fkmeteriso_2ehpp_14',['unit_KmeterISO.hpp',['../unit___kmeter_i_s_o_8hpp.html',1,'']]],
+  ['unit_5fvmeter_2ecpp_15',['unit_Vmeter.cpp',['../unit___vmeter_8cpp.html',1,'']]],
+  ['unit_5fvmeter_2ehpp_16',['unit_Vmeter.hpp',['../unit___vmeter_8hpp.html',1,'']]],
+  ['unitads1113_17',['UnitADS1113',['../classm5_1_1unit_1_1_unit_a_d_s1113.html',1,'m5::unit']]],
+  ['unitads1114_18',['UnitADS1114',['../classm5_1_1unit_1_1_unit_a_d_s1114.html',1,'m5::unit']]],
+  ['unitads1115_19',['UnitADS1115',['../classm5_1_1unit_1_1_unit_a_d_s1115.html',1,'m5::unit']]],
+  ['unitads111x_20',['UnitADS111x',['../classm5_1_1unit_1_1_unit_a_d_s111x.html',1,'m5::unit']]],
+  ['unitameter_21',['UnitAmeter',['../classm5_1_1unit_1_1_unit_ameter.html',1,'m5::unit']]],
+  ['unitavmeterbase_22',['UnitAVmeterBase',['../classm5_1_1unit_1_1_unit_a_vmeter_base.html',1,'m5::unit']]],
+  ['uniteeprom_23',['UnitEEPROM',['../classm5_1_1unit_1_1meter_1_1_unit_e_e_p_r_o_m.html',1,'m5::unit::meter']]],
+  ['unitkmeteriso_24',['UnitKmeterISO',['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html',1,'m5::unit']]],
+  ['unitvmeter_25',['UnitVmeter',['../classm5_1_1unit_1_1_unit_vmeter.html',1,'m5::unit']]]
 ];
