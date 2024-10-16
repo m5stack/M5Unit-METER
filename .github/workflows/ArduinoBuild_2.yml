@@ -8,20 +8,40 @@ env:
 
 on:
   push:
+    tags-ignore:
+      - '*.*.*'
+    branches:
+      - '*'
     paths:
-      - '**.ino'
-      - '**.cpp'
-      - '**.hpp'
-      - '**.h'
-      - '**.c'
+      - 'src/unit/**.cpp'
+      - 'src/unit/**.hpp'
+      - 'src/unit/**.h'
+      - 'src/unit/**.c'
+      - 'test/**.cpp'
+      - 'test/**.hpp'
+      - 'test/**.h'
+      - 'test/**.c'
+      - 'examples/UnitUnified/**.ino'
+      - 'examples/UnitUnified/**.cpp'
+      - 'examples/UnitUnified/**.hpp'
+      - 'examples/UnitUnified/**.h'
+      - 'examples/UnitUnified/**.c'
       - '**ArduinoBuild_2.yml'
   pull_request:
     paths:
-      - '**.ino'
-      - '**.cpp'
-      - '**.hpp'
-      - '**.h'
-      - '**.c'
+      - 'src/unit/**.cpp'
+      - 'src/unit/**.hpp'
+      - 'src/unit/**.h'
+      - 'src/unit/**.c'
+      - 'test/**.cpp'
+      - 'test/**.hpp'
+      - 'test/**.h'
+      - 'test/**.c'
+      - 'examples/UnitUnified/**.ino'
+      - 'examples/UnitUnified/**.cpp'
+      - 'examples/UnitUnified/**.hpp'
+      - 'examples/UnitUnified/**.h'
+      - 'examples/UnitUnified/**.c'
       - '**ArduinoBuild_2.yml'
   workflow_dispatch:
 
@@ -63,19 +83,6 @@ jobs:
           - esp32
 
     steps:
-
-      - name: Running on GitHub Actions
-        if: env.ACT != 'true'
-        run: echo "This is running on GitHub Actions."
-
-      - name: Running locally with act
-        if: env.ACT == 'true'
-        run: echo "This is running locally with act."
-
-#      - name: Configure git for authentication (Until each repository is published)
-#        run: |
-#          git config --global url."https://${{ secrets.TOKEN_M5UNITUNIFIED }}@github.com/".insteadOf "https://github.com/"
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -85,28 +92,28 @@ jobs:
       # Note that dependent libraries are not automatically installed.
 
       - name: Checkout M5Utility
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: m5stack/M5Utility
           ref: ${{ env.M5UNITUNIFIED_BRANCH }}
           path: CustomLibrary_M5Utility # must contain string "Custom"
-          token: ${{ secrets.TOKEN_M5UNITUNIFIED }} # Only required during development in private repo
+          #token: ${{ secrets.TOKEN_M5UNITUNIFIED }} # Only required during development in private repo
 
       - name: Checkout M5HAL
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: m5stack/M5HAL
           ref: ${{ env.M5UNITUNIFIED_BRANCH }}
           path: CustomLibrary_M5HAL # must contain string "Custom"
-          token: ${{ secrets.TOKEN_M5UNITUNIFIED }} # Only required during development in private repo
+          #token: ${{ secrets.TOKEN_M5UNITUNIFIED }} # Only required during development in private repo
 
       - name: Checkout M5UnitUnified
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: m5stack/M5UnitUnified
           ref: ${{ env.M5UNITUNIFIED_BRANCH }}
           path: CustomLibrary_M5UnitUnified
-          token: ${{ secrets.TOKEN_M5UNITUNIFIED }} # Only required during development in private repo
+          #token: ${{ secrets.TOKEN_M5UNITUNIFIED }} # Only required during development in private repo
 
       # Build 
       - name: Compile examples
