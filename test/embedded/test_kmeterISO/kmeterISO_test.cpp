@@ -148,6 +148,8 @@ TEST_P(TestKmeterISO, I2CAddress)
     EXPECT_TRUE(unit->changeI2CAddress(0x08));
     EXPECT_TRUE(unit->readI2CAddress(addr));
     EXPECT_EQ(addr, 0x08);
+    EXPECT_EQ(unit->address(), 0x08);
+
     EXPECT_TRUE(unit->readFirmwareVersion(ver));
     EXPECT_NE(ver, 0x00);
     EXPECT_TRUE(unit->measureSingleshot(d));
@@ -156,6 +158,8 @@ TEST_P(TestKmeterISO, I2CAddress)
     EXPECT_TRUE(unit->changeI2CAddress(0x77));
     EXPECT_TRUE(unit->readI2CAddress(addr));
     EXPECT_EQ(addr, 0x77);
+    EXPECT_EQ(unit->address(), 0x77);
+
     EXPECT_TRUE(unit->readFirmwareVersion(ver));
     EXPECT_NE(ver, 0x00);
     EXPECT_TRUE(unit->measureSingleshot(d));
@@ -164,6 +168,8 @@ TEST_P(TestKmeterISO, I2CAddress)
     EXPECT_TRUE(unit->changeI2CAddress(0x52));
     EXPECT_TRUE(unit->readI2CAddress(addr));
     EXPECT_EQ(addr, 0x52);
+    EXPECT_EQ(unit->address(), 0528);
+
     EXPECT_TRUE(unit->readFirmwareVersion(ver));
     EXPECT_NE(ver, 0x00);
     EXPECT_TRUE(unit->measureSingleshot(d));
@@ -172,6 +178,8 @@ TEST_P(TestKmeterISO, I2CAddress)
     EXPECT_TRUE(unit->changeI2CAddress(UnitKmeterISO::DEFAULT_ADDRESS));
     EXPECT_TRUE(unit->readI2CAddress(addr));
     EXPECT_EQ(addr, +UnitKmeterISO::DEFAULT_ADDRESS);
+    EXPECT_EQ(unit->address(), +UnitKmeterISO::DEFAULT_ADDRESS);
+
     EXPECT_TRUE(unit->readFirmwareVersion(ver));
     EXPECT_NE(ver, 0x00);
     EXPECT_TRUE(unit->measureSingleshot(d));
