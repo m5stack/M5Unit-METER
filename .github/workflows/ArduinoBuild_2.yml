@@ -60,7 +60,7 @@ jobs:
         unit:
           - UnitAmeter
           - UnitVmeter
-          - UnitKMeterISO
+          - UnitKmeterISO
 
         sketch:
           - PlotToSerial
