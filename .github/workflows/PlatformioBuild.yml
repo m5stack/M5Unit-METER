@@ -115,10 +115,6 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
-#      - name: Configure git for authentication (Until each repository is published)
-#        run: |
-#          git config --global url."https://${{ secrets.TOKEN_M5UNITUNIFIED }}@github.com/".insteadOf "https://github.com/"
-
       - name: Build examples
         uses: karniv00l/platformio-run-action@v1
         with:
