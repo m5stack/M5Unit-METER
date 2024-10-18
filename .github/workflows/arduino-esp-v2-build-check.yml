@@ -70,7 +70,7 @@ jobs:
           - m5stack-core2
 #          - m5stack-coreink
           - m5stack-cores3
-#          - m5stack-fire
+          - m5stack-fire
 #          - m5stack-station
 #          - m5stack-timer-cam
 #          - m5stamp-pico
