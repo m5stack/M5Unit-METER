@@ -3,11 +3,11 @@ name: Build(arduino-esp32:3.x)
 env:
   SKETCH_NAMES_FIND_START: ./examples/UnitUnified
   REQUIRED_LIBRARIES: M5Unified,M5UnitUnified
-
 on:
   push:
     tags-ignore:
       - '*.*.*'
+      - 'v*.*.*'
     branches:
       - '*'
     paths:
@@ -70,10 +70,9 @@ jobs:
 #          - m5stack_cardputer
           - m5stack_core
           - m5stack_core2
-#          - m5stack_coreink
+          - m5stack_coreink
           - m5stack_cores3
           - m5stack_dial
-#          - m5stack_dinmeter
           - m5stack_fire
           - m5stack_nanoc6
           - m5stack_paper

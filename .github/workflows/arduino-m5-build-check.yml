@@ -8,6 +8,7 @@ on:
   push:
     tags-ignore:
       - '*.*.*'
+      - 'v*.*.*'
     branches:
       - '*'
     paths:
@@ -59,9 +60,10 @@ jobs:
           - PlotToSerial
 
         unit:
-          - UnitAmeter
-          - UnitVmeter
-          - UnitKmeterISO
+          - UnitCO2
+          - UnitENVIII
+          - UnitTVOC
+          - UnitENVPro
 
         board:
           - m5stack_atom
@@ -71,10 +73,10 @@ jobs:
 #          - m5stack_cardputer
           - m5stack_core
           - m5stack_core2
-#          - m5stack_coreink
+          - m5stack_coreink
           - m5stack_cores3
           - m5stack_dial
-#          - m5stack_dinmeter
+          - m5stack_dinmeter
           - m5stack_fire
           - m5stack_paper
 #          - m5stack_poe_cam

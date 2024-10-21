@@ -51,13 +51,6 @@ void setup()
 #pragma message "Using Wire"
     // Using TwoWire
     Wire.begin(pin_num_sda, pin_num_scl, 100000U);
-    for (int i = 0; i < 10; ++i) {
-        Wire.beginTransmission(unit.address());
-        auto wret = Wire.endTransmission();
-        M5_LOGW(">>%d", wret);
-        delay(10);
-    }
-
     if (!Units.add(unit, Wire) || !Units.begin()) {
         M5_LOGE("Failed to begin");
         lcd.clear(TFT_RED);
