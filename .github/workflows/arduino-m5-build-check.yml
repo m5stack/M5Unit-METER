@@ -60,10 +60,9 @@ jobs:
           - PlotToSerial
 
         unit:
-          - UnitCO2
-          - UnitENVIII
-          - UnitTVOC
-          - UnitENVPro
+          - UnitAmeter
+          - UnitVmeter
+          - UnitKmeterISO
 
         board:
           - m5stack_atom

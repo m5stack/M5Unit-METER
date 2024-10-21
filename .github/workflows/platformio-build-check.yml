@@ -56,10 +56,9 @@ jobs:
           - PlotToSerial
 
         unit:
-          - UnitCO2
-          - UnitENVIII
-          - UnitTVOC
-          - UnitENVPro
+          - UnitAmeter
+          - UnitVmeter
+          - UnitKmeterISO
 
         board:
           - Core
