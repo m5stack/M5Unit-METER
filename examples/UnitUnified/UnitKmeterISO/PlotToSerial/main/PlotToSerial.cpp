@@ -26,8 +26,6 @@ void setup()
 {
     M5.begin();
 
-    m5::utility::delay(3000);
-
     auto pin_num_sda = M5.getPin(m5::pin_name_t::port_a_sda);
     auto pin_num_scl = M5.getPin(m5::pin_name_t::port_a_scl);
     M5_LOGI("getPin: SDA:%u SCL:%u", pin_num_sda, pin_num_scl);
