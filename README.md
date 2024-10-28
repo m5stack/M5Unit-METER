@@ -49,12 +49,14 @@ See also examples using conventional methods here.
 
 ## License
 
-- [M5Unit-METER- MIT](LICENSE)
+- [M5Unit-METER - MIT](LICENSE)
 
 ## Examples
 See also [examples/UnitUnified](examples/UnitUnified)
 
 ## Doxygen document
+[GitHub Pages](https://m5stack.github.io/M5Unit-METER/)
+
 If you want to generate documents on your local machine, execute the following command
 
 ```

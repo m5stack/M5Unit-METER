@@ -160,8 +160,8 @@ bool UnitKmeterISO::changeI2CAddress(const uint8_t i2c_address)
         bool done{};
         auto timeout_at = m5::utility::millis() + 1000;
         do {
-            done = readRegister8(I2C_ADDRESS_REG, v, 0) && v == i2c_address;
             m5::utility::delay(1);
+            done = readRegister8(I2C_ADDRESS_REG, v, 0) && v == i2c_address;
         } while (!done && m5::utility::millis() <= timeout_at);
         return done;
     }

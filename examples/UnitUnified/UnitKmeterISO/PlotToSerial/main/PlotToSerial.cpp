@@ -26,8 +26,6 @@ void setup()
 {
     M5.begin();
 
-    m5::utility::delay(3000);
-
     auto pin_num_sda = M5.getPin(m5::pin_name_t::port_a_sda);
     auto pin_num_scl = M5.getPin(m5::pin_name_t::port_a_scl);
     M5_LOGI("getPin: SDA:%u SCL:%u", pin_num_sda, pin_num_scl);
@@ -51,13 +49,6 @@ void setup()
 #pragma message "Using Wire"
     // Using TwoWire
     Wire.begin(pin_num_sda, pin_num_scl, 100000U);
-    for (int i = 0; i < 10; ++i) {
-        Wire.beginTransmission(unit.address());
-        auto wret = Wire.endTransmission();
-        M5_LOGW(">>%d", wret);
-        delay(10);
-    }
-
     if (!Units.add(unit, Wire) || !Units.begin()) {
         M5_LOGE("Failed to begin");
         lcd.clear(TFT_RED);
