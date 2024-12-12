@@ -85,8 +85,7 @@ void Plotter::push(LovyanGFX* dst, const int32_t x, const int32_t y)
 
         while (it != itend && left < _wid) {
             int32_t s{*it}, e{*(++it)};
-            dst->drawLine(left, y + hh - hh * (s - _min) / range, left + 1, y + hh - hh * (e - _min) / range,
-                          _lineClr);
+            dst->drawLine(left, y + hh - hh * (s - _min) / range, left + 1, y + hh - hh * (e - _min) / range, _lineClr);
             ++left;
         }
     }

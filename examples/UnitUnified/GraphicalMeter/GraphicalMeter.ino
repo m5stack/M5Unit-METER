@@ -8,6 +8,3 @@
   The core must be equipped with LCD
 */
 #include "main/GraphicalMeter.cpp"
-
-
-
