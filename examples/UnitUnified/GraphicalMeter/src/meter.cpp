@@ -72,11 +72,11 @@ void draw_meter(LGFX_Sprite& spr, const int32_t offset, const char* tag, const c
     spr.setFont(wid >= 240 ? &fonts::FreeSansBold12pt7b : &fonts::FreeSansBold9pt7b);
 
     spr.setTextDatum(textdatum_t::middle_left);
-    spr.drawString(tag, x, y + 32 / 2);
+    spr.drawString(tag, x, y + hgt / 2);
 
     auto s = m5::utility::formatString("%.2f", 0.01f * plotter->latest());
     spr.setTextDatum(textdatum_t::middle_right);
-    spr.drawString(s.c_str(), x + wid, y + 32 / 2);
+    spr.drawString(s.c_str(), x + wid, y + hgt / 2);
 
     spr.setTextDatum(td);
     spr.setFont(f);
