@@ -78,7 +78,7 @@ public:
     {
         push(_parent, x, y);
     }
-    virtual void push(LovyanGFX* dst, const int32_t x, const int32_t y);
+    void push(LovyanGFX* dst, const int32_t x, const int32_t y);
 
 protected:
     m5gfx::rgb565_t lineColor() const
