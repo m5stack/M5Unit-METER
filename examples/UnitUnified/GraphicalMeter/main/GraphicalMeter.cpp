@@ -13,7 +13,7 @@
 #include <M5GFX.h>
 #include <M5UnitUnified.h>
 #include <M5UnitUnifiedMETER.h>
-#include "meter.hpp"
+#include "../src/meter.hpp"
 #include <cassert>
 
 // ********************************************************************************
