@@ -7,8 +7,8 @@
   @file unit_Ameter.hpp
   @brief Ameter (ADS1115 + CA-IS3020S) Unit for M5UnitUnified
 */
-#ifndef M5_UNIT_METER_UNIT_A_METER_HPP
-#define M5_UNIT_METER_UNIT_A_METER_HPP
+#ifndef M5_UNIT_METER_UNIT_AMETER_HPP
+#define M5_UNIT_METER_UNIT_AMETER_HPP
 
 #include "unit_ADS1115.hpp"
 #include <limits>  // NaN

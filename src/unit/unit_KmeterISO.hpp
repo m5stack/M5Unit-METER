@@ -7,8 +7,8 @@
   @file unit_KmeterISO.hpp
   @brief KmeterISO Unit for M5UnitUnified
 */
-#ifndef M5_UNIT_UNIFIED_KMETERISO_UNIT_KMETERISO_HPP
-#define M5_UNIT_UNIFIED_KMETERISO_UNIT_KMETERISO_HPP
+#ifndef M5_UNIT_METER_UNIT_KMETERISO_HPP
+#define M5_UNIT_METER_UNIT_KMETERISO_HPP
 
 #include <M5UnitComponent.hpp>
 #include <m5_utility/container/circular_buffer.hpp>

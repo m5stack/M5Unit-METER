@@ -7,8 +7,8 @@
   @file unit_Vmeter.hpp
   @brief Vmeter (ADS1115 + CA-IS3020S) Unit for M5UnitUnified
 */
-#ifndef M5_UNIT_METER_UNIT_V_METER_HPP
-#define M5_UNIT_METER_UNIT_V_METER_HPP
+#ifndef M5_UNIT_METER_UNIT_VMETER_HPP
+#define M5_UNIT_METER_UNIT_VMETER_HPP
 
 #include "unit_ADS1115.hpp"
 #include <limits>  // NaN
