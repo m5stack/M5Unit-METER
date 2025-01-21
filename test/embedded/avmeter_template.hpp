@@ -86,7 +86,7 @@ TEST_P(TestADS1115, GeneralReset)
     EXPECT_EQ(unit->comparatorQueue(), ComparatorQueue::Disable);
 
     uint16_t v{};
-    EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, v, 0));
+    EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, v, 0));
     EXPECT_EQ(v, default_value);
 
     constexpr int16_t default_high = 0x7FFF;
@@ -108,14 +108,14 @@ TEST_P(TestADS1115, Configration)
         };
 
         SCOPED_TRACE("Mux");
-        EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, prev, 0));
+        EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, prev, 0));
 
         for (auto&& e : mux_table) {
             EXPECT_TRUE(unit->writeMultiplexer(e));
 
             EXPECT_EQ(unit->multiplexer(), e);
 
-            EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, now, 0));
+            EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, now, 0));
             EXPECT_NE(now, prev);
             prev = now;
         }
@@ -127,7 +127,7 @@ TEST_P(TestADS1115, Configration)
         };
 
         SCOPED_TRACE("Gain");
-        EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, prev, 0));
+        EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, prev, 0));
 
         auto prev_c = unit->coefficient();
         EXPECT_TRUE(std::isfinite(prev_c));
@@ -137,7 +137,7 @@ TEST_P(TestADS1115, Configration)
 
             EXPECT_EQ(unit->gain(), e);
 
-            EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, now, 0));
+            EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, now, 0));
             EXPECT_NE(now, prev);
             prev = now;
 
@@ -153,17 +153,17 @@ TEST_P(TestADS1115, Configration)
         EXPECT_TRUE(unit->stopPeriodicMeasurement());
         EXPECT_FALSE(unit->inPeriodic());
 
-        EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, prev, 0));
+        EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, prev, 0));
 
         EXPECT_TRUE(unit->startPeriodicMeasurement());
         EXPECT_TRUE(unit->inPeriodic());
-        EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, now, 0));
+        EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, now, 0));
         EXPECT_NE(now, prev);
         prev = now;
 
         EXPECT_TRUE(unit->stopPeriodicMeasurement());
         EXPECT_FALSE(unit->inPeriodic());
-        EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, now, 0));
+        EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, now, 0));
         EXPECT_NE(now, prev);
     }
 
@@ -174,14 +174,14 @@ TEST_P(TestADS1115, Configration)
         };
 
         SCOPED_TRACE("Rate");
-        EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, prev, 0));
+        EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, prev, 0));
 
         for (auto&& e : rate_table) {
             EXPECT_TRUE(unit->writeSamplingRate(e));
 
             EXPECT_EQ(unit->samplingRate(), e);
 
-            EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, now, 0));
+            EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, now, 0));
             EXPECT_NE(now, prev);
             prev = now;
         }
@@ -190,14 +190,14 @@ TEST_P(TestADS1115, Configration)
     constexpr bool bool_table[] = {true, false};
     {
         SCOPED_TRACE("COMP_MODE");
-        EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, prev, 0));
+        EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, prev, 0));
 
         for (auto&& e : bool_table) {
             EXPECT_TRUE(unit->writeComparatorMode(e));
 
             EXPECT_EQ(unit->comparatorMode(), e);
 
-            EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, now, 0));
+            EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, now, 0));
             EXPECT_NE(now, prev);
             prev = now;
         }
@@ -205,14 +205,14 @@ TEST_P(TestADS1115, Configration)
 
     {
         SCOPED_TRACE("COMP_POL");
-        EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, prev, 0));
+        EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, prev, 0));
 
         for (auto&& e : bool_table) {
             EXPECT_TRUE(unit->writeComparatorPolarity(e));
 
             EXPECT_EQ(unit->comparatorPolarity(), e);
 
-            EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, now, 0));
+            EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, now, 0));
             EXPECT_NE(now, prev);
             prev = now;
         }
@@ -220,14 +220,14 @@ TEST_P(TestADS1115, Configration)
 
     {
         SCOPED_TRACE("COMP_LAT");
-        EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, prev, 0));
+        EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, prev, 0));
 
         for (auto&& e : bool_table) {
             EXPECT_TRUE(unit->writeLatchingComparator(e));
 
             EXPECT_EQ(unit->latchingComparator(), e);
 
-            EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, now, 0));
+            EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, now, 0));
             EXPECT_NE(now, prev);
             prev = now;
         }
@@ -242,14 +242,14 @@ TEST_P(TestADS1115, Configration)
         };
 
         SCOPED_TRACE("COMP_QUE");
-        EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, prev, 0));
+        EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, prev, 0));
 
         for (auto&& e : que_table) {
             EXPECT_TRUE(unit->writeComparatorQueue(e));
 
             EXPECT_EQ(unit->comparatorQueue(), e);
 
-            EXPECT_TRUE(unit->readRegister16(command::CONFIG_REG, now, 0));
+            EXPECT_TRUE(unit->readRegister16BE(command::CONFIG_REG, now, 0));
             EXPECT_NE(now, prev);
             prev = now;
         }

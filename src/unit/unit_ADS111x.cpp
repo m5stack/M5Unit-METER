@@ -195,7 +195,7 @@ bool UnitADS111x::in_conversion()
 
 bool UnitADS111x::read_adc_raw(ads111x::Data& d)
 {
-    if (readRegister16(CONVERSION_REG, d.raw, 0)) {
+    if (readRegister16BE(CONVERSION_REG, d.raw, 0)) {
         return true;
     }
     return false;
@@ -228,7 +228,7 @@ bool UnitADS111x::generalReset()
 bool UnitADS111x::readThreshold(int16_t& high, int16_t& low)
 {
     uint16_t hh{}, ll{};
-    if (readRegister16(HIGH_THRESHOLD_REG, hh, 0) && readRegister16(LOW_THRESHOLD_REG, ll, 0)) {
+    if (readRegister16BE(HIGH_THRESHOLD_REG, hh, 0) && readRegister16BE(LOW_THRESHOLD_REG, ll, 0)) {
         high = hh;
         low  = ll;
         return true;
@@ -242,18 +242,18 @@ bool UnitADS111x::writeThreshold(const int16_t high, const int16_t low)
         M5_LIB_LOGW("high must be greater than low");
         return false;
     }
-    return writeRegister16(HIGH_THRESHOLD_REG, (uint16_t)high) && writeRegister16(LOW_THRESHOLD_REG, (uint16_t)low);
+    return writeRegister16BE(HIGH_THRESHOLD_REG, (uint16_t)high) && writeRegister16BE(LOW_THRESHOLD_REG, (uint16_t)low);
 }
 
 //
 bool UnitADS111x::read_config(ads111x::Config& c)
 {
-    return readRegister16(CONFIG_REG, c.value, 0);
+    return readRegister16BE(CONFIG_REG, c.value, 0);
 }
 
 bool UnitADS111x::write_config(const ads111x::Config& c)
 {
-    if (writeRegister16(CONFIG_REG, c.value)) {
+    if (writeRegister16BE(CONFIG_REG, c.value)) {
         _ads_cfg = c;
         return true;
     }

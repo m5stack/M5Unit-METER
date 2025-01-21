@@ -144,11 +144,11 @@ TEST_P(TestKmeterISO, I2CAddress)
     EXPECT_FALSE(unit->changeI2CAddress(0x07));  // Invalid
     EXPECT_FALSE(unit->changeI2CAddress(0x78));  // Invalid
 
-    // Change to 0x08
-    EXPECT_TRUE(unit->changeI2CAddress(0x08));
+    // Change to 0x10
+    EXPECT_TRUE(unit->changeI2CAddress(0x10));
     EXPECT_TRUE(unit->readI2CAddress(addr));
-    EXPECT_EQ(addr, 0x08);
-    EXPECT_EQ(unit->address(), 0x08);
+    EXPECT_EQ(addr, 0x10);
+    EXPECT_EQ(unit->address(), 0x10);
 
     EXPECT_TRUE(unit->readFirmwareVersion(ver));
     EXPECT_NE(ver, 0x00);
