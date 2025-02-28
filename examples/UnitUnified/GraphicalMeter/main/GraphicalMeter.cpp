@@ -9,6 +9,11 @@
   The core must be equipped with LCD
   Ameter,Vmeter,or KmeterISO unit must be connected
 */
+//#define USING_DISPLAY_MODULE
+
+#if defined(USING_DISPLAY_MODULE)
+#include <M5ModuleDisplay.h>
+#endif
 #include <M5Unified.h>
 #include <M5GFX.h>
 #include <M5UnitUnified.h>
@@ -16,13 +21,16 @@
 #include "../src/meter.hpp"
 #include <cassert>
 
-// ********************************************************************************
-// *** Select the unit (override this source or specify in the compile options) ***
-// ********************************************************************************
-#if !defined(USING_VMETER) && !defined(USING_AMETER) && !defined(USING_KMETER_ISO)
-#define USING_VMETER
-// #define USING_AMETER
-// #define USING_KMETER_ISO
+// *************************************************************
+// Choose one define symbol to match the unit you are using
+// *************************************************************
+#if !defined(USING_UNIT_VMETER) && !defined(USING_UNIT_AMETER) && !defined(USING_UNIT_KMETER_ISO)
+// For Vmeter
+// #define USING_UNIT_VMETER
+// For Ameter
+// #define USING_UNIT_AMETER
+// For KmeterISO
+// #define USING_UNIT_KMETER_ISO
 #endif
 
 namespace {
@@ -32,19 +40,19 @@ constexpr uint32_t SPLIT_NUM{4};
 int32_t strip_height{};
 
 m5::unit::UnitUnified Units;
-#if defined(USING_VMETER)
+#if defined(USING_UNIT_VMETER)
 #pragma message "Using Vmeter"
 m5::unit::UnitVmeter unit{};
 constexpr char tag[]      = "Voltage";
 constexpr char val_unit[] = "V";
 constexpr m5gfx::rgb565_t theme_clr{45, 136, 218};
-#elif defined(USING_AMETER)
+#elif defined(USING_UNIT_AMETER)
 #pragma message "Using Ameter"
 m5::unit::UnitAmeter unit{};
 constexpr char tag[]      = "Current";
 constexpr char val_unit[] = "A";
 constexpr m5gfx::rgb565_t theme_clr{254, 79, 147};
-#elif defined(USING_KMETER_ISO)
+#elif defined(USING_UNIT_KMETER_ISO)
 m5::unit::UnitKmeterISO unit{};
 #pragma message "Using KmeterISO"
 constexpr char tag[]      = "Temp";
@@ -62,11 +70,11 @@ void update_meter(void*)
         Units.update();
         if (xSemaphoreTake(_updateLock, 1)) {
             while (unit.available()) {
-#if defined(USING_VMETER)
+#if defined(USING_UNIT_VMETER)
                 store_value(unit.voltage());
-#elif defined(USING_AMETER)
+#elif defined(USING_UNIT_AMETER)
                 store_value(unit.current());
-#elif defined(USING_KMETER_ISO)
+#elif defined(USING_UNIT_KMETER_ISO)
                 store_value(unit.temperature());
 #else
 #error "Choose unit"
@@ -82,7 +90,12 @@ void update_meter(void*)
 
 void setup()
 {
-    M5.begin();
+    auto m5cfg = M5.config();
+#if defined(__M5GFX_M5MODULEDISPLAY__)
+    m5cfg.module_display.logical_width  = 320;
+    m5cfg.module_display.logical_height = 240;
+#endif
+    M5.begin(m5cfg);
 
     // No LCD or display device?
     if (lcd.width() == 0 || lcd.isEPD()) {
@@ -97,6 +110,19 @@ void setup()
     if (lcd.height() > lcd.width()) {
         lcd.setRotation(1);
     }
+
+#if defined(__M5GFX_M5MODULEDISPLAY__)
+    // Choose Display if Display module and cable connected
+    int32_t idx = M5.getDisplayIndex(m5gfx::board_M5ModuleDisplay);
+    M5_LOGI("ModuleDisplay?:%d", idx);
+    if (idx >= 0) {
+        uint8_t buf[256];
+        if (0 < ((lgfx::Panel_M5HDMI*)(M5.Displays(idx).panel()))->readEDID(buf, sizeof(buf))) {
+            M5_LOGI("Detected the display, Set Display primary");
+            M5.setPrimaryDisplay(idx);
+        }
+    }
+#endif
 
     // Make strips
     strip_height = (lcd.height() + SPLIT_NUM - 1) / SPLIT_NUM;
@@ -115,9 +141,9 @@ void setup()
     M5_LOGI("getPin: SDA:%u SCL:%u", pin_num_sda, pin_num_scl);
 
     auto cfg = unit.config();
-#if defined(USING_VMETER) || defined(USING_AMETER)
+#if defined(USING_UNIT_VMETER) || defined(USING_UNIT_AMETER)
     cfg.rate = m5::unit::ads111x::Sampling::Rate250;
-#elif defined(USING_KMETER_ISO)
+#elif defined(USING_UNIT_KMETER_ISO)
     cfg.interval = 1000 / 250;
 #else
 #error "Choose unit"

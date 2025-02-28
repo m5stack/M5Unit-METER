@@ -42,10 +42,19 @@ on:
       - '**platformio.ini'
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: ${{ matrix.unit }}:${{ matrix.example }}@${{ matrix.board }}:${{ matrix.framework }}:${{ matrix.espressif32 }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     strategy:
       fail-fast: false
@@ -115,11 +124,22 @@ jobs:
 #            espressif32: '4_4_0'
 
         include:
-          # Specific sketches for m5stack-core-esp32 only
+          # Specific sketches
           - example: GraphicalMeter
             board: Core
             framework: Arduino
             espressif32: latest
+            unit: UnitVmeter
+          - example: GraphicalMeter
+            board: Core
+            framework: Arduino
+            espressif32: latest
+            unit: UnitAmeter
+          - example: GraphicalMeter
+            board: Core
+            framework: Arduino
+            espressif32: latest
+            unit: UnitKmeterISO
 
     steps:
       - name: Checkout
