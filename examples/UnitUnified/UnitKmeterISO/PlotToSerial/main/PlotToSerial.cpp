@@ -68,7 +68,6 @@ void loop()
     M5.update();
     Units.update();
     if (unit.updated()) {
-        M5_LOGI("\n>Temperature:%f", unit.temperature());
-        ;
+        M5.Log.printf(">Temperature:%f\n", unit.temperature());
     }
 }
