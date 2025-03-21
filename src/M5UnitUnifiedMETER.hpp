@@ -18,8 +18,8 @@
 #include "unit/unit_ADS1115.hpp"
 #include "unit/unit_Ameter.hpp"
 #include "unit/unit_Vmeter.hpp"
-
 #include "unit/unit_KmeterISO.hpp"
+#include "unit/unit_DualKmeter.hpp"
 
 /*!
   @namespace m5
