@@ -133,6 +133,13 @@ jobs:
             archi: esp32
             board: m5stack_core
             build-properties: "-DUSING_UNIT_KMETER_ISO"
+          - sketch: GraphicalMeter
+            platform-url: https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json
+            platform-version: 2.1.2
+            platform: m5stack
+            archi: esp32
+            board: m5stack_core
+            build-properties: "-DUSING_UNIT_DUAL_KMETER"
 
         exclude:
           - unit: UnitDualMeter

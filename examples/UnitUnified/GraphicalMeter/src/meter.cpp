@@ -58,6 +58,11 @@ void store_value(const float val)
     //    plotter->push_back(val);
 }
 
+void clear_meter()
+{
+    plotter->clear();
+}
+
 void draw_meter(LGFX_Sprite& spr, const int32_t offset, const char* tag, const char* unit)
 {
     plotter->push(&spr, 0, offset);
