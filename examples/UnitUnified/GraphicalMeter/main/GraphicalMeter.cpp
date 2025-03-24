@@ -186,8 +186,7 @@ void setup()
     auto cfg = unit.config();
 
 #if defined(USING_UNIT_VMETER) || defined(USING_UNIT_AMETER)
-    cfg.rate = m5::unit::ads111x::Sampling::Rate250;
-
+    cfg.rate     = m5::unit::ads111x::Sampling::Rate250;
 #elif defined(USING_UNIT_KMETER_ISO) || defined(USING_UNIT_DUAL_KMETER)
     cfg.interval = 20;
 #else
