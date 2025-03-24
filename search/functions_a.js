@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['samplingrate_0',['samplingRate',['../classm5_1_1unit_1_1_unit_a_d_s111x.html#a4ce7f05471e7761f4e2133fed1ab5865',1,'m5::unit::UnitADS111x']]],
-  ['setmeasurementunit_1',['setMeasurementUnit',['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html#a0024307bd2437d923afd9545927d8afd',1,'m5::unit::UnitKmeterISO']]],
-  ['startperiodicmeasurement_2',['startPeriodicMeasurement',['../classm5_1_1unit_1_1_unit_a_d_s111x.html#a32774995b903d7c20cb9b74a08cdcce6',1,'m5::unit::UnitADS111x::startPeriodicMeasurement()'],['../classm5_1_1unit_1_1_unit_a_d_s111x.html#aceedb3a7e7db537554868d85d26c3e2a',1,'m5::unit::UnitADS111x::startPeriodicMeasurement(const ads111x::Sampling rate, const ads111x::Mux mux, const ads111x::Gain gain, const ads111x::ComparatorQueue comp_que)'],['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html#a7807963c818524af7fe0a573ce5dff76',1,'m5::unit::UnitKmeterISO::startPeriodicMeasurement()'],['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html#aa0c9884a42ab2bab9402675457edc3ab',1,'m5::unit::UnitKmeterISO::startPeriodicMeasurement(const uint32_t interval, const kmeterISO::MeasurementUnit munit=kmeterISO::Celsius)']]],
-  ['stopperiodicmeasurement_3',['stopPeriodicMeasurement',['../classm5_1_1unit_1_1_unit_a_d_s111x.html#a6baa43a281191374ad077c4e49e2b7d9',1,'m5::unit::UnitADS111x::stopPeriodicMeasurement()'],['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html#a4e267bf66c356a720cfd620c938f9619',1,'m5::unit::UnitKmeterISO::stopPeriodicMeasurement()']]]
+  ['temperature_0',['temperature',['../classm5_1_1unit_1_1_unit_dual_kmeter.html#a8dc6e2a3fa1f20264cee7be3016af67c',1,'m5::unit::UnitDualKmeter::temperature()'],['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html#af500c97292227c5c9de4c455237f6d04',1,'m5::unit::UnitKmeterISO::temperature()']]]
 ];

@@ -6,8 +6,11 @@ var annotated_dup =
           [ "Config", "structm5_1_1unit_1_1ads111x_1_1_config.html", "structm5_1_1unit_1_1ads111x_1_1_config" ],
           [ "Data", "structm5_1_1unit_1_1ads111x_1_1_data.html", "structm5_1_1unit_1_1ads111x_1_1_data" ]
         ] ],
-        [ "kmeterISO", null, [
-          [ "Data", "structm5_1_1unit_1_1kmeter_i_s_o_1_1_data.html", null ]
+        [ "dual_kmeter", null, [
+          [ "Data", "structm5_1_1unit_1_1dual__kmeter_1_1_data.html", "structm5_1_1unit_1_1dual__kmeter_1_1_data" ]
+        ] ],
+        [ "kmeter_iso", null, [
+          [ "Data", "structm5_1_1unit_1_1kmeter__iso_1_1_data.html", "structm5_1_1unit_1_1kmeter__iso_1_1_data" ]
         ] ],
         [ "meter", null, [
           [ "UnitEEPROM", "classm5_1_1unit_1_1meter_1_1_unit_e_e_p_r_o_m.html", null ]
@@ -18,6 +21,7 @@ var annotated_dup =
         [ "UnitADS111x", "classm5_1_1unit_1_1_unit_a_d_s111x.html", "classm5_1_1unit_1_1_unit_a_d_s111x" ],
         [ "UnitAmeter", "classm5_1_1unit_1_1_unit_ameter.html", "classm5_1_1unit_1_1_unit_ameter" ],
         [ "UnitAVmeterBase", "classm5_1_1unit_1_1_unit_a_vmeter_base.html", "classm5_1_1unit_1_1_unit_a_vmeter_base" ],
+        [ "UnitDualKmeter", "classm5_1_1unit_1_1_unit_dual_kmeter.html", "classm5_1_1unit_1_1_unit_dual_kmeter" ],
         [ "UnitKmeterISO", "classm5_1_1unit_1_1_unit_kmeter_i_s_o.html", "classm5_1_1unit_1_1_unit_kmeter_i_s_o" ],
         [ "UnitVmeter", "classm5_1_1unit_1_1_unit_vmeter.html", "classm5_1_1unit_1_1_unit_vmeter" ]
       ] ]

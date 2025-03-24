@@ -10,6 +10,8 @@ var dir_b9225a18e54a15d8544a67849bf5de50 =
     [ "unit_ADS111x.hpp", "unit___a_d_s111x_8hpp.html", "unit___a_d_s111x_8hpp" ],
     [ "unit_Ameter.cpp", "unit___ameter_8cpp.html", null ],
     [ "unit_Ameter.hpp", "unit___ameter_8hpp.html", "unit___ameter_8hpp" ],
+    [ "unit_DualKmeter.cpp", "unit___dual_kmeter_8cpp.html", null ],
+    [ "unit_DualKmeter.hpp", "unit___dual_kmeter_8hpp.html", "unit___dual_kmeter_8hpp" ],
     [ "unit_EEPROM.cpp", "unit___e_e_p_r_o_m_8cpp.html", null ],
     [ "unit_EEPROM.hpp", "unit___e_e_p_r_o_m_8hpp.html", "unit___e_e_p_r_o_m_8hpp" ],
     [ "unit_KmeterISO.cpp", "unit___kmeter_i_s_o_8cpp.html", null ],

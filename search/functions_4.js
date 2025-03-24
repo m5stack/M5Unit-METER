@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['isready_0',['isReady',['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html#a17cb4c4b81359005d03a901d7eb59f39',1,'m5::unit::UnitKmeterISO']]]
+  ['latchingcomparator_0',['latchingComparator',['../classm5_1_1unit_1_1_unit_a_d_s111x.html#a02474928fa93d2563d0015cf87c68213',1,'m5::unit::UnitADS111x']]]
 ];
