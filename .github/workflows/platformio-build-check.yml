@@ -68,6 +68,7 @@ jobs:
           - UnitAmeter
           - UnitVmeter
           - UnitKmeterISO
+          - UnitDualKmeter
 
         board:
           - Core
@@ -140,6 +141,28 @@ jobs:
             framework: Arduino
             espressif32: latest
             unit: UnitKmeterISO
+
+        exclude:
+          - unit: UnitDualKmeter
+            board: StampS3
+          - unit: UnitDualKmeter
+            board: Dial
+          - unit: UnitDualKmeter
+            board: AtomMatrix
+          - unit: UnitDualKmeter
+            board: AtomS3
+          - unit: UnitDualKmeter
+            board: AtomS3R
+          - unit: UnitDualKmeter
+            board: NanoC6
+          - unit: UnitDualKmeter
+            board: StickCPlus
+          - unit: UnitDualKmeter
+            board: StickCPlus2
+          - unit: UnitDualKmeter
+            board: Paper
+          - unit: UnitDualKmeter
+            board: CoreInk
 
     steps:
       - name: Checkout

@@ -72,6 +72,7 @@ jobs:
           - UnitAmeter
           - UnitVmeter
           - UnitKmeterISO
+          - UnitDualKmeter
 
         board:
           - m5stack_atom
@@ -132,6 +133,30 @@ jobs:
             archi: esp32
             board: m5stack_core
             build-properties: "-DUSING_UNIT_KMETER_ISO"
+
+        exclude:
+          - unit: UnitDualMeter
+            board: m5stack_atom
+          - unit: UnitDualMeter
+            board: m5stack_atoms3
+          - unit: UnitDualMeter
+            board: m5stack_atoms3e
+          - unit: UnitDualMeter
+            board: m5stack_capsule
+          - unit: UnitDualMeter
+            board: m5stack_coreink
+          - unit: UnitDualMeter
+            board: m5stack_dial
+          - unit: UnitDualMeter
+            board: m5stack_dinmeter
+          - unit: UnitDualMeter
+            board: m5stack_paper
+          - unit: UnitDualMeter
+            board: m5stack_stamp_s3
+          - unit: UnitDualMeter
+            board: m5stack_stickc_plus
+          - unit: UnitDualMeter
+            board: m5stack_stickc_plus2
 
     steps:
       - name: Checkout
