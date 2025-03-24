@@ -5,20 +5,21 @@
 Library for Meters using [M5UnitUnified](https://github.com/m5stack/M5UnitUnified).  
 M5UnitUnified is a library for unified handling of various M5 units products.
 
-### SKU:U086 & SKU:U087
+### SKU:U086
 
-Ameter(SKU:U086) Unit is a current meter that can monitor the current in real time. The 16-bit ADS1115 ADC (analog-to-digital) converter can be used to communicate through I2C protocol (By default the I2C address is 0X48 unless manually modified).
+Unit AMeter is a current meter that can monitor current in real-time. 
 
-In order to ensure the measurement accuracy, there is a built-in DC-DC isolated power supply.
+It uses a 16-bit ADC digital-to-analog converter ADS1115 internally and communicates via I2C (0X48). 
 
-The I2C interface is also electrically isolated through the low-power isolator module CA-IS3020S, This prevents noise and surges on the data bus or other circuits from entering the local ground terminal to interfere or damage sensitive circuits.
+To ensure measurement accuracy, it has a built-in DC-DC isolated power supply, and the I2C interface is electrically isolated using a low-power isolator CA-IS3020S to prevent noise and surges on the data bus or other circuits from entering the local ground and interfering with or damaging sensitive circuits. 
 
-Each Unit is factory calibrated with initial accuracy of 0.1%FS, ±1 count and resolution of 0.3mA.
+Each unit is individually calibrated at the factory, with an accuracy of 1% of full scale, ±1 digit reading, a resolution of 0.3mA, and a maximum measurement current of ±4A.
 
-The unit has a maximum measurement current of ±4A, and an internal integrated 4A fuse to prevent excessive measurement current from burning out the circuit.
+It has an internal 4A fuse to prevent circuit damage from excessive measurement current.
 
+### SKU:U087
 
-Voltmeter(SKU:U087) Unit is a voltage meter that can monitor the voltage in real time. The 16-bit ADC (analog-to-digital) converter ADS1115 is used internally to communicate through I2C (0X49).
+Voltmeter Unit is a voltage meter that can monitor the voltage in real time. The 16-bit ADC (analog-to-digital) converter ADS1115 is used internally to communicate through I2C (0X49).
 
 In order to ensure the measurement accuracy, there is a built-in DC-DC isolated power supply, and the I2C interface is also electrically isolated through the low-power isolator CA-IS3020S.
 
@@ -32,6 +33,16 @@ using CA-IS3641HW as a signal isolator. The unit supports access to thermocouple
 
 This module is widely used in application scenarios such as temperature collection, control, and monitoring in industrial automation, instrumentation, power and electrical, heat treatment and other fields.
 
+### SKU:M127
+
+The DualKmeter module13.2 is a dual-channel K-type temperature measurement module based on the MAX31855KASA+stm32f030f4p6+galvanic isolation. 
+
+The module has a built-in two-way K-type thermocouple sensor interface, which uses the signal relay to measure the temperature value of the two channels in turn, supporting a measurement range of -200°C to 1350°C, and a measurement accuracy of °C.
+
+At the same time, the module also has built-in voltage and signal isolation chips such as B0505LS-1WR2 and CA-IS3020S, ensuring the 'stability and safety' of the system. 
+
+In addition, the module has a built-in dial code on off, which can easily switch different I2C addresses to meet the different application needs of users. It can be applied to multiple scenarios such as industrial automation and instrument detection.
+
 
 ## Related Link
 See also examples using conventional methods here.
@@ -39,6 +50,7 @@ See also examples using conventional methods here.
 - [Unit Ameter & Datasheet](https://docs.m5stack.com/en/unit/ameter)
 - [Unit Vmeter & Datasheet](https://docs.m5stack.com/en/unit/vmeter)
 - [Unit KMeterISO & Datasheet](https://docs.m5stack.com/en/unit/KMeterISO%20Unit)
+- [Unit DualKmeter & Datasheet](https://docs.m5stack.switch-science.com/en/module/DualKmeter%20Module13.2)
 
 
 ## Required Libraries:
