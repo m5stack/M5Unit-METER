@@ -113,7 +113,7 @@ jobs:
             archi: esp32
             platform-version: 2.0.17
             board: m5stack-core-esp32
-            build-properties: "-DUSING_UNIT_DUAL_KMETER""
+            build-properties: "-DUSING_UNIT_DUAL_KMETER"
 
         exclude:
           - unit: UnitDualMeter
