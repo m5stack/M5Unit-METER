@@ -66,7 +66,7 @@ void loop()
                 M5.Log.printf("Single temperature %.2f\n", d.temperature());
             }
             if (unit.measureInternalSingleshot(d, unit.measurementChannel())) {
-                M5.Log.printf("Single:interbal temperature %.2f\n", d.temperature());
+                M5.Log.printf("Single:internal temperature %.2f\n", d.temperature());
             }
             lcd.clear(TFT_BLUE);
         } else {
