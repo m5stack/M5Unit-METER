@@ -42,10 +42,19 @@ on:
       - '**platformio.ini'
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: ${{ matrix.unit }}:${{ matrix.example }}@${{ matrix.board }}:${{ matrix.framework }}:${{ matrix.espressif32 }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     strategy:
       fail-fast: false
@@ -59,6 +68,7 @@ jobs:
           - UnitAmeter
           - UnitVmeter
           - UnitKmeterISO
+          - UnitDualKmeter
 
         board:
           - Core
@@ -115,11 +125,49 @@ jobs:
 #            espressif32: '4_4_0'
 
         include:
-          # Specific sketches for m5stack-core-esp32 only
+          # Specific sketches
           - example: GraphicalMeter
             board: Core
             framework: Arduino
             espressif32: latest
+            unit: UnitVmeter
+          - example: GraphicalMeter
+            board: Core
+            framework: Arduino
+            espressif32: latest
+            unit: UnitAmeter
+          - example: GraphicalMeter
+            board: Core
+            framework: Arduino
+            espressif32: latest
+            unit: UnitKmeterISO
+          - example: GraphicalMeter
+            board: Core
+            framework: Arduino
+            espressif32: latest
+            unit: UnitDualKmeter
+
+        exclude:
+          - unit: UnitDualKmeter
+            board: StampS3
+          - unit: UnitDualKmeter
+            board: Dial
+          - unit: UnitDualKmeter
+            board: AtomMatrix
+          - unit: UnitDualKmeter
+            board: AtomS3
+          - unit: UnitDualKmeter
+            board: AtomS3R
+          - unit: UnitDualKmeter
+            board: NanoC6
+          - unit: UnitDualKmeter
+            board: StickCPlus
+          - unit: UnitDualKmeter
+            board: StickCPlus2
+          - unit: UnitDualKmeter
+            board: Paper
+          - unit: UnitDualKmeter
+            board: CoreInk
 
     steps:
       - name: Checkout

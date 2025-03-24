@@ -44,10 +44,19 @@ on:
       - '**arduino-m5-build-check.yml'
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: ${{ matrix.unit }}:${{ matrix.sketch }}:${{matrix.board}}@${{matrix.platform-version}}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     strategy:
       fail-fast: false
@@ -63,6 +72,7 @@ jobs:
           - UnitAmeter
           - UnitVmeter
           - UnitKmeterISO
+          - UnitDualKmeter
 
         board:
           - m5stack_atom
@@ -101,13 +111,59 @@ jobs:
           - esp32
 
         include:
-          # Specific sketches for m5stack-core-esp32 only
+          # Specific sketches
           - sketch: GraphicalMeter
             platform-url: https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json
             platform-version: 2.1.2
             platform: m5stack
             archi: esp32
             board: m5stack_core
+            build-properties: "-DUSING_UNIT_VMETER"
+          - sketch: GraphicalMeter
+            platform-url: https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json
+            platform-version: 2.1.2
+            platform: m5stack
+            archi: esp32
+            board: m5stack_core
+            build-properties: "-DUSING_UNIT_AMETER"
+          - sketch: GraphicalMeter
+            platform-url: https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json
+            platform-version: 2.1.2
+            platform: m5stack
+            archi: esp32
+            board: m5stack_core
+            build-properties: "-DUSING_UNIT_KMETER_ISO"
+          - sketch: GraphicalMeter
+            platform-url: https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json
+            platform-version: 2.1.2
+            platform: m5stack
+            archi: esp32
+            board: m5stack_core
+            build-properties: "-DUSING_UNIT_DUAL_KMETER"
+
+        exclude:
+          - unit: UnitDualMeter
+            board: m5stack_atom
+          - unit: UnitDualMeter
+            board: m5stack_atoms3
+          - unit: UnitDualMeter
+            board: m5stack_atoms3e
+          - unit: UnitDualMeter
+            board: m5stack_capsule
+          - unit: UnitDualMeter
+            board: m5stack_coreink
+          - unit: UnitDualMeter
+            board: m5stack_dial
+          - unit: UnitDualMeter
+            board: m5stack_dinmeter
+          - unit: UnitDualMeter
+            board: m5stack_paper
+          - unit: UnitDualMeter
+            board: m5stack_stamp_s3
+          - unit: UnitDualMeter
+            board: m5stack_stickc_plus
+          - unit: UnitDualMeter
+            board: m5stack_stickc_plus2
 
     steps:
       - name: Checkout
@@ -124,7 +180,7 @@ jobs:
           platform-url: ${{ matrix.platform-url }}
           required-libraries: ${{ env.REQUIRED_LIBRARIES }}
           extra-arduino-cli-args: ${{ matrix.cli-args }}
-          #build-properties: ${{ toJson(matrix.build-properties) }}
+          build-properties: ${{ matrix.build-properties }}
           sketch-names: ${{ matrix.sketch }}.ino
           sketch-names-find-start: ${{ env.SKETCH_NAMES_FIND_START }}/${{ matrix.unit }}
           #sketches-exclude: ${{ matrix.sketches-exclude }}

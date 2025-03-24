@@ -73,6 +73,7 @@ public:
 
     void push_back(const float val);
     void push_back(const int32_t val);
+    void clear();
 
     inline void push(const int32_t x, const int32_t y)
     {

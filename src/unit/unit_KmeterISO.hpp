@@ -7,8 +7,8 @@
   @file unit_KmeterISO.hpp
   @brief KmeterISO Unit for M5UnitUnified
 */
-#ifndef M5_UNIT_UNIFIED_KMETERISO_UNIT_KMETERISO_HPP
-#define M5_UNIT_UNIFIED_KMETERISO_UNIT_KMETERISO_HPP
+#ifndef M5_UNIT_METER_UNIT_KMETERISO_HPP
+#define M5_UNIT_METER_UNIT_KMETERISO_HPP
 
 #include <M5UnitComponent.hpp>
 #include <m5_utility/container/circular_buffer.hpp>
@@ -18,15 +18,15 @@
 namespace m5 {
 namespace unit {
 
-namespace kmeterISO {
+namespace kmeter_iso {
 
 /*!
   @enum MeasurementUnit
   @brief measurement unit on periodic measurement
  */
-enum MeasurementUnit : uint8_t {
-    Celsius,     //!< Temperature is celsius
-    Fahrenheit,  //!< Temperature is fahrenheit
+enum class MeasurementUnit : uint8_t {
+    Celsius,     //!< Temperature unit is celsius
+    Fahrenheit,  //!< Temperature unit is fahrenheit
 };
 
 /*!
@@ -34,7 +34,9 @@ enum MeasurementUnit : uint8_t {
   @brief Measurement data group
  */
 struct Data {
-    std::array<uint8_t, 4> raw{};  // raw data
+    std::array<uint8_t, 4> raw{};  //!< Raw data
+
+    //@note Unit depends on setting
     inline float temperature() const
     {
         return static_cast<int32_t>(((uint32_t)raw[3] << 24) | ((uint32_t)raw[2] << 16) | ((uint32_t)raw[1] << 8) |
@@ -42,14 +44,13 @@ struct Data {
                0.01f;
     }
 };
-}  // namespace kmeterISO
+}  // namespace kmeter_iso
 
 /*!
-  @class UnitKmeterISO
-  @brief KMeterISO unitis an integrated K-type thermocouple sensor unit that integrates the functions of "acquisition +
-  isolation + communication"
+  @class m5::unit::UnitKmeterISO
+  @brief KMeterISO unit
  */
-class UnitKmeterISO : public Component, public PeriodicMeasurementAdapter<UnitKmeterISO, kmeterISO::Data> {
+class UnitKmeterISO : public Component, public PeriodicMeasurementAdapter<UnitKmeterISO, kmeter_iso::Data> {
     M5_UNIT_COMPONENT_HPP_BUILDER(UnitKmeterISO, 0x66);
 
 public:
@@ -63,11 +64,11 @@ public:
         //! periodic interval(ms) if start on begin
         uint32_t interval{100};
         //! //!< measurement unit if start on begin
-        kmeterISO::MeasurementUnit measurement_unit{kmeterISO::MeasurementUnit::Celsius};
+        kmeter_iso::MeasurementUnit measurement_unit{kmeter_iso::MeasurementUnit::Celsius};
     };
 
     explicit UnitKmeterISO(const uint8_t addr = DEFAULT_ADDRESS)
-        : Component(addr), _data{new m5::container::CircularBuffer<kmeterISO::Data>(1)}
+        : Component(addr), _data{new m5::container::CircularBuffer<kmeter_iso::Data>(1)}
     {
         auto ccfg  = component_config();
         ccfg.clock = 100 * 1000U;
@@ -97,12 +98,12 @@ public:
     ///@name Properties
     ///@{
     /*! Gets the measurement unit on periodic measurement */
-    kmeterISO::MeasurementUnit measurementUnit() const
+    kmeter_iso::MeasurementUnit measurementUnit() const
     {
         return _munit;
     }
     /*! Set the measurement unit on periodic measurement */
-    void setMeasurementUnit(const kmeterISO::MeasurementUnit munit)
+    void setMeasurementUnit(const kmeter_iso::MeasurementUnit munit)
     {
         _munit = munit;
     }
@@ -125,7 +126,7 @@ public:
     */
     inline bool startPeriodicMeasurement()
     {
-        return PeriodicMeasurementAdapter<UnitKmeterISO, kmeterISO::Data>::startPeriodicMeasurement();
+        return PeriodicMeasurementAdapter<UnitKmeterISO, kmeter_iso::Data>::startPeriodicMeasurement();
     }
     /*!
       @brief Start periodic measurement
@@ -134,9 +135,9 @@ public:
       @return True if successful
     */
     inline bool startPeriodicMeasurement(const uint32_t interval,
-                                         const kmeterISO::MeasurementUnit munit = kmeterISO::Celsius)
+                                         const kmeter_iso::MeasurementUnit munit = kmeter_iso::MeasurementUnit::Celsius)
     {
-        return PeriodicMeasurementAdapter<UnitKmeterISO, kmeterISO::Data>::startPeriodicMeasurement(interval, munit);
+        return PeriodicMeasurementAdapter<UnitKmeterISO, kmeter_iso::Data>::startPeriodicMeasurement(interval, munit);
     }
     /*!
       @brief Stop periodic measurement
@@ -144,7 +145,7 @@ public:
     */
     inline bool stopPeriodicMeasurement()
     {
-        return PeriodicMeasurementAdapter<UnitKmeterISO, kmeterISO::Data>::stopPeriodicMeasurement();
+        return PeriodicMeasurementAdapter<UnitKmeterISO, kmeter_iso::Data>::stopPeriodicMeasurement();
     }
     ///@}
 
@@ -154,15 +155,6 @@ public:
       @return True if successful
     */
     bool readStatus(uint8_t& status);
-    /*!
-      @brief Ready to read data?
-      @return True if ready to read data
-    */
-    bool isReady()
-    {
-        uint8_t s{};
-        return readStatus(s) && (s == 0U);
-    }
 
     /*!
       @brief Read firmware version
@@ -179,19 +171,22 @@ public:
       @param munit  measurement unit
       @param timeoutMs Measurement timeout time(ms)
       @return True if successful
+      @warning During periodic detection runs, an error is returned
      */
-    bool measureSingleshot(kmeterISO::Data& d, kmeterISO::MeasurementUnit munit = kmeterISO::MeasurementUnit::Celsius,
-                           const uint32_t timeoutMs = 0);
+    bool measureSingleshot(kmeter_iso::Data& d,
+                           const kmeter_iso::MeasurementUnit munit = kmeter_iso::MeasurementUnit::Celsius,
+                           const uint32_t timeoutMs                = 100);
     /*!
       @brief Measure internal temperature single shot
       @param[out] data Measuerd data
       @param munit  measurement unit
       @param timeoutMs Measurement timeout time(ms)
       @return True if successful
+      @warning During periodic detection runs, an error is returned
      */
-    bool measureInternalSingleshot(kmeterISO::Data& d,
-                                   kmeterISO::MeasurementUnit munit = kmeterISO::MeasurementUnit::Celsius,
-                                   const uint32_t timeoutMs         = 0);
+    bool measureInternalSingleshot(kmeter_iso::Data& d,
+                                   const kmeter_iso::MeasurementUnit munit = kmeter_iso::MeasurementUnit::Celsius,
+                                   const uint32_t timeoutMs                = 100);
     ///@}
 
     ///@warning Handling warning
@@ -201,7 +196,7 @@ public:
       @brief Change device I2C address
       @param i2c_address I2C address
       @return True if successful
-
+      @warning During periodic detection runs, an error is returned
     */
     bool changeI2CAddress(const uint8_t i2c_address);
     /*!
@@ -214,39 +209,43 @@ public:
 
 protected:
     bool start_periodic_measurement();
-    bool start_periodic_measurement(const uint32_t interval,
-                                    const kmeterISO::MeasurementUnit munit = kmeterISO::Celsius);
+    bool start_periodic_measurement(const uint32_t interval, const kmeter_iso::MeasurementUnit munit);
     bool stop_periodic_measurement();
 
-    bool read_measurement(kmeterISO::Data& d, const kmeterISO::MeasurementUnit munit);
-    bool read_internal_measurement(kmeterISO::Data& d, const kmeterISO::MeasurementUnit munit);
+    bool read_measurement(kmeter_iso::Data& d, const kmeter_iso::MeasurementUnit munit);
+    bool read_internal_measurement(kmeter_iso::Data& d, const kmeter_iso::MeasurementUnit munit);
 
-    M5_UNIT_COMPONENT_PERIODIC_MEASUREMENT_ADAPTER_HPP_BUILDER(UnitKmeterISO, kmeterISO::Data);
+    bool is_data_ready()
+    {
+        uint8_t s{};
+        return readStatus(s) && (s == 0U);
+    }
+    M5_UNIT_COMPONENT_PERIODIC_MEASUREMENT_ADAPTER_HPP_BUILDER(UnitKmeterISO, kmeter_iso::Data);
 
 protected:
-    std::unique_ptr<m5::container::CircularBuffer<kmeterISO::Data>> _data{};
-    kmeterISO::MeasurementUnit _munit{kmeterISO::MeasurementUnit::Celsius};
+    std::unique_ptr<m5::container::CircularBuffer<kmeter_iso::Data>> _data{};
+    kmeter_iso::MeasurementUnit _munit{kmeter_iso::MeasurementUnit::Celsius};
     config_t _cfg{};
 };
 
-namespace kmeterISO {
+namespace kmeter_iso {
 namespace command {
 ///@cond
 // See also https://github.com/m5stack/M5Unit-KMeterISO/blob/main/docs/Unit_KmeterISO_I2C_Protocol.pdf
-constexpr uint8_t TEMPERATURE_CELSIUS_VAL_REG{0X00};
-constexpr uint8_t TEMPERATURE_FAHRENHEIT_VAL_REG{0X04};
-constexpr uint8_t INTERNAL_TEMPERATURE_CELSIUS_VAL_REG{0X10};
-constexpr uint8_t INTERNAL_TEMPERATURE_FAHRENHEIT_VAL_REG{0X14};
-constexpr uint8_t ERROR_STATUS_REG{0x20};
+constexpr uint8_t TEMPERATURE_CELSIUS_REG{0X00};
+constexpr uint8_t TEMPERATURE_FAHRENHEIT_REG{0X04};
+constexpr uint8_t INTERNAL_TEMPERATURE_CELSIUS_REG{0X10};
+constexpr uint8_t INTERNAL_TEMPERATURE_FAHRENHEIT_REG{0X14};
+constexpr uint8_t STATUS_REG{0x20};
 constexpr uint8_t TEMPERATURE_CELSIUS_STRING_REG{0x30};
-constexpr uint8_t TEMPERATURE__FAHRENHEIT_STRING_REG{0x40};
+constexpr uint8_t TEMPERATURE_FAHRENHEIT_STRING_REG{0x40};
 constexpr uint8_t INTERNAL_TEMPERATURE_CELSIUS_STRING_REG{0x50};
 constexpr uint8_t INTERNAL_TEMPERATURE_FAHRENHEIT_STRING_REG{0x60};
 constexpr uint8_t FIRMWARE_VERSION_REG{0xFE};
 constexpr uint8_t I2C_ADDRESS_REG{0xFF};
 ///@endcond
 }  // namespace command
-}  // namespace kmeterISO
+}  // namespace kmeter_iso
 
 }  // namespace unit
 }  // namespace m5

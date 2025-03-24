@@ -53,6 +53,11 @@ void Plotter::push_back(const int32_t val)
     }
 }
 
+void Plotter::clear()
+{
+    _data.clear();
+}
+
 void Plotter::push(LovyanGFX* dst, const int32_t x, const int32_t y)
 {
     dst->setClipRect(x, y, width(), height());
