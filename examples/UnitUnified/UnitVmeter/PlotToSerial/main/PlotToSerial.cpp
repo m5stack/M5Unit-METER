@@ -83,15 +83,17 @@ void setup()
 void loop()
 {
     M5.update();
+    auto touch = M5.Touch.getDetail();
+
     Units.update();
     if (unit.updated()) {
         while (unit.available()) {
-            M5_LOGI("\n>Voltage:%f", unit.voltage());
+            M5.Log.printf(">Voltage:%f\n", unit.voltage());
             unit.discard();
         }
     }
 
-    if (M5.BtnA.wasClicked()) {
+    if (M5.BtnA.wasClicked() || touch.wasClicked()) {
         rate = static_cast<Sampling>((m5::stl::to_underlying(rate) + 1) & 0x07);
         if (!unit.writeSamplingRate(rate)) {
             M5_LOGE("Failed to writeSamplingRate");
