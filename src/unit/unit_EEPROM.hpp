@@ -24,7 +24,7 @@ namespace unit {
 namespace meter {
 
 /*!
-  @class UnitEEPROM
+  @class m5::unit::meter::UnitEEPROM
   @brief Accessor unit to EEPROM that holds calibration data
   @note Ameter/Vmeter has the EEPROM for holding calibration data
  */

@@ -10,13 +10,13 @@
 #ifndef M5_UNIT_METER_UNIT_AMETER_HPP
 #define M5_UNIT_METER_UNIT_AMETER_HPP
 
-#include "unit_ADS1115.hpp"
+#include "unit_av_base.hpp"
 #include <limits>  // NaN
 
 namespace m5 {
 namespace unit {
 /*!
-  @class UnitAmeter
+  @class m5::unit::UnitAmeter
   @brief Ameter Unit is a current meter that can monitor the current in real time
 */
 class UnitAmeter : public UnitAVmeterBase {

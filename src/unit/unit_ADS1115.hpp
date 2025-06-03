@@ -11,12 +11,11 @@
 #define M5_UNIT_METER_UNIT_ADS1115_HPP
 
 #include "unit_ADS111x.hpp"
-#include "unit_EEPROM.hpp"
 
 namespace m5 {
 namespace unit {
 /*!
-  @class  UnitADS1115
+  @class m5::unit::UnitADS1115
   @brief ADS1115 unit
  */
 class UnitADS1115 : public UnitADS111x {
@@ -67,44 +66,6 @@ public:
 protected:
     virtual bool start_periodic_measurement(const ads111x::Sampling rate, const ads111x::Mux mux,
                                             const ads111x::Gain gain, const ads111x::ComparatorQueue comp_que) override;
-};
-
-/*!
-  @class UnitAVmeterBase
-  @brief ADS1115 with EEPROM
- */
-class UnitAVmeterBase : public UnitADS1115 {
-    M5_UNIT_COMPONENT_HPP_BUILDER(UnitAVmeterBase, 0x00);
-
-public:
-    explicit UnitAVmeterBase(const uint8_t addr = DEFAULT_ADDRESS, const uint8_t eepromAddr = 0x00);
-    virtual ~UnitAVmeterBase()
-    {
-    }
-
-    virtual bool begin() override;
-
-    inline float calibrationFactor() const
-    {
-        return _calibrationFactor;
-    }
-
-    virtual bool writeGain(const ads111x::Gain gain) override;
-
-protected:
-    virtual Adapter* duplicate_adapter(const uint8_t ch) override;
-    void apply_calibration(const ads111x::Gain gain);
-    bool validChild() const
-    {
-        return _valid;
-    }
-
-protected:
-    m5::unit::meter::UnitEEPROM _eeprom{};
-
-private:
-    float _calibrationFactor{1.0f};
-    bool _valid{};  // Did the constructor correctly add the child unit?
 };
 
 }  // namespace unit

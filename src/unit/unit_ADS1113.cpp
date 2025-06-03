@@ -20,7 +20,7 @@ namespace unit {
 // class UnitADS1113
 const char UnitADS1113::name[] = "UnitADS1113";
 const types::uid_t UnitADS1113::uid{"UnitADS1113"_mmh3};
-const types::uid_t UnitADS1113::attr{0};
+const types::attr_t UnitADS1113::attr{attribute::AccessI2C};
 
 bool UnitADS1113::start_periodic_measurement(const ads111x::Sampling rate, const ads111x::Mux, const ads111x::Gain,
                                              const ads111x::ComparatorQueue)
