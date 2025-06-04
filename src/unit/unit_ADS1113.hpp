@@ -15,7 +15,7 @@
 namespace m5 {
 namespace unit {
 /*!
-  @class  UnitADS1113
+  @class  m5::unit::UnitADS1113
   @brief ADS1113 unit
  */
 class UnitADS1113 : public UnitADS111x {

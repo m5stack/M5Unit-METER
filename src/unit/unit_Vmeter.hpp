@@ -10,13 +10,13 @@
 #ifndef M5_UNIT_METER_UNIT_VMETER_HPP
 #define M5_UNIT_METER_UNIT_VMETER_HPP
 
-#include "unit_ADS1115.hpp"
+#include "unit_av_base.hpp"
 #include <limits>  // NaN
 
 namespace m5 {
 namespace unit {
 /*!
-  @class UnitVmeter
+  @class m5::unit::UnitVmeter
   @brief Voltmeter Unit is a voltage meter that can monitor the voltage in real time
  */
 class UnitVmeter : public UnitAVmeterBase {

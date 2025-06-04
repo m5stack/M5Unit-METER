@@ -36,7 +36,7 @@ namespace unit {
 // class UnitDualKmeter
 const char UnitDualKmeter::name[] = "UnitDualKmeter";
 const types::uid_t UnitDualKmeter::uid{"UnitDualKmeter"_mmh3};
-const types::uid_t UnitDualKmeter::attr{0};
+const types::attr_t UnitDualKmeter::attr{attribute::AccessI2C};
 
 bool UnitDualKmeter::begin()
 {

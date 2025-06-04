@@ -35,7 +35,7 @@ namespace unit {
 // class UnitKmeterISO
 const char UnitKmeterISO::name[] = "UnitKmeterISO";
 const types::uid_t UnitKmeterISO::uid{"UnitKmeterISO"_mmh3};
-const types::uid_t UnitKmeterISO::attr{0};
+const types::attr_t UnitKmeterISO::attr{attribute::AccessI2C};
 
 bool UnitKmeterISO::begin()
 {

@@ -82,80 +82,44 @@ enum class ComparatorQueue : uint8_t {
               //!< default
 };
 
-/*!
-  @struct Config
-  @brief Accessor for configration
- */
+///@cond
 struct Config {
-    ///@name Getter
-    ///@{
-    /*! @brief Operational status */
     inline bool os() const
     {
         return value & (1U << 15);
     }
-    /*!
-      @brief Input multiplexer
-      @warning This feature serve nofunction on the ADS1113 and ADS1114
-    */
     inline Mux mux() const
     {
         return static_cast<Mux>((value >> 12) & 0x07);
     }
-    /*!
-      @brief Programmable gain amplifier
-      @warning This feature serve nofunction on the ADS1113
-    */
     inline Gain pga() const
     {
         return static_cast<Gain>((value >> 9) & 0x07);
     }
-    //! @brief Device operating mode
     inline bool mode() const
     {
         return value & (1U << 8);
     }
-    //! @brief Sampling rate
     inline Sampling dr() const
     {
         return static_cast<Sampling>((value >> 5) & 0x07);
     }
-    /*!
-      @brief Comparator mode
-      @warning This feature serve nofunction on the ADS1113
-    */
     inline bool comp_mode() const
     {
         return value & (1U << 4);
     }
-    /*!
-      @brief Comparator polarity
-      @warning This feature serve nofunction on the ADS1113
-    */
     inline bool comp_pol() const
     {
         return value & (1U << 3);
     }
-    /*!
-      @brief Latching comparator
-      @warning This feature serve nofunction on the ADS1113
-    */
     inline bool comp_lat() const
     {
         return value & (1U << 2);
     }
-    /*!
-      @brief Comparator queue
-      @warning This feature serve nofunction on the ADS1113
-    */
     inline ComparatorQueue comp_que() const
     {
         return static_cast<ComparatorQueue>(value & 0x03);
     }
-    ///@}
-
-    ///@name Setter
-    ///@{
     inline void os(const bool b)
     {
         value = (value & ~(1U << 15)) | ((b ? 1U : 0) << 15);
@@ -192,10 +156,9 @@ struct Config {
     {
         value = (value & ~0x03U) | (m5::stl::to_underlying(c) & 0x03);
     }
-    ///@}
-
     uint16_t value{};
 };
+///@endcond
 
 /*!
   @struct Data
@@ -213,7 +176,7 @@ struct Data {
 }  // namespace ads111x
 
 /*!
-  @class UnitADS111x
+  @class m5::unit::UnitADS111x
   @brief Base class for ADS111x series
  */
 class UnitADS111x : public Component, public PeriodicMeasurementAdapter<UnitADS111x, ads111x::Data> {
@@ -457,7 +420,6 @@ protected:
     std::unique_ptr<m5::container::CircularBuffer<ads111x::Data>> _data{};
     float _coefficient{};
     ads111x::Config _ads_cfg{};
-
     config_t _cfg{};
 };
 
