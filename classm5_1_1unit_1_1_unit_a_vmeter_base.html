@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">M5Unit-METER<span id="projectnumber">&#160;0.1.0 git rev:2ae611f</span>
+   <div id="projectname">M5Unit-METER<span id="projectnumber">&#160;0.2.0 git rev:3a4ce01</span>
    </div>
   </td>
  </tr>
@@ -105,10 +105,10 @@ $(function(){initNavTree('classm5_1_1unit_1_1_unit_a_vmeter_base.html',''); init
 </div><!--header-->
 <div class="contents">
 
-<p>ADS1115 with EEPROM.  
+<p>Base class for A/VMeter.  
  <a href="#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="unit___a_d_s1115_8hpp_source.html">unit_ADS1115.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="unit__av__base_8hpp_source.html">unit_av_base.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for m5::unit::UnitAVmeterBase:</div>
 <div class="dyncontent">
@@ -230,9 +230,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>writeSamplingRate</b>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a09c6fbe8ba5b1be2de668dee98f30ff2" id="r_a09c6fbe8ba5b1be2de668dee98f30ff2"><td class="memItemLeft" align="right" valign="top"><a id="a09c6fbe8ba5b1be2de668dee98f30ff2" name="a09c6fbe8ba5b1be2de668dee98f30ff2"></a>
-virtual Adapter *&#160;</td><td class="memItemRight" valign="bottom"><b>duplicate_adapter</b> (const uint8_t ch) override</td></tr>
-<tr class="separator:a09c6fbe8ba5b1be2de668dee98f30ff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e3eee070b47cd16504a20ef94edc5cf" id="r_a0e3eee070b47cd16504a20ef94edc5cf"><td class="memItemLeft" align="right" valign="top"><a id="a0e3eee070b47cd16504a20ef94edc5cf" name="a0e3eee070b47cd16504a20ef94edc5cf"></a>
+std::shared_ptr&lt; Adapter &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ensure_adapter</b> (const uint8_t ch)</td></tr>
+<tr class="separator:a0e3eee070b47cd16504a20ef94edc5cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbfb66e02573970326e27a10bc2807d4" id="r_afbfb66e02573970326e27a10bc2807d4"><td class="memItemLeft" align="right" valign="top"><a id="afbfb66e02573970326e27a10bc2807d4" name="afbfb66e02573970326e27a10bc2807d4"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>apply_calibration</b> (const <a class="el" href="unit___a_d_s111x_8hpp.html#ac482a60d7c757148d4a5016b4024f5e0">ads111x::Gain</a> <a class="el" href="classm5_1_1unit_1_1_unit_a_d_s111x.html#ae517d65928a97ad204e96d0c79c04b4e">gain</a>)</td></tr>
 <tr class="separator:afbfb66e02573970326e27a10bc2807d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -259,10 +259,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>start_single_measurem
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>in_conversion</b> ()</td></tr>
 <tr class="separator:ad65c98cae4dfdb7bc6b719726f8ff500 inherit pro_methods_classm5_1_1unit_1_1_unit_a_d_s111x"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2fea731c347c37519b976a5560fe6be4 inherit pro_methods_classm5_1_1unit_1_1_unit_a_d_s111x" id="r_a2fea731c347c37519b976a5560fe6be4"><td class="memItemLeft" align="right" valign="top">
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>read_config</b> (<a class="el" href="structm5_1_1unit_1_1ads111x_1_1_config.html">ads111x::Config</a> &amp;c)</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>read_config</b> (ads111x::Config &amp;c)</td></tr>
 <tr class="separator:a2fea731c347c37519b976a5560fe6be4 inherit pro_methods_classm5_1_1unit_1_1_unit_a_d_s111x"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2eda0b54105f62b6b900e5466b64664 inherit pro_methods_classm5_1_1unit_1_1_unit_a_d_s111x" id="r_ab2eda0b54105f62b6b900e5466b64664"><td class="memItemLeft" align="right" valign="top">
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>write_config</b> (const <a class="el" href="structm5_1_1unit_1_1ads111x_1_1_config.html">ads111x::Config</a> &amp;c)</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>write_config</b> (const ads111x::Config &amp;c)</td></tr>
 <tr class="separator:ab2eda0b54105f62b6b900e5466b64664 inherit pro_methods_classm5_1_1unit_1_1_unit_a_d_s111x"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb69d2e674345bf65419f6e6ca11ecce inherit pro_methods_classm5_1_1unit_1_1_unit_a_d_s111x" id="r_abb69d2e674345bf65419f6e6ca11ecce"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>apply_interval</b> (const <a class="el" href="unit___a_d_s111x_8hpp.html#a80091ab36ea2000ca4e9e0f9ef335bec">ads111x::Sampling</a> rate)</td></tr>
@@ -305,14 +305,14 @@ std::unique_ptr&lt; m5::container::CircularBuffer&lt; <a class="el" href="struct
 float&#160;</td><td class="memItemRight" valign="bottom"><b>_coefficient</b> {}</td></tr>
 <tr class="separator:a6991a3432fbab6dda7bc10038223cfb2 inherit pro_attribs_classm5_1_1unit_1_1_unit_a_d_s111x"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a702e0c9daf492328143b9da89466137b inherit pro_attribs_classm5_1_1unit_1_1_unit_a_d_s111x" id="r_a702e0c9daf492328143b9da89466137b"><td class="memItemLeft" align="right" valign="top">
-<a class="el" href="structm5_1_1unit_1_1ads111x_1_1_config.html">ads111x::Config</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_ads_cfg</b> {}</td></tr>
+ads111x::Config&#160;</td><td class="memItemRight" valign="bottom"><b>_ads_cfg</b> {}</td></tr>
 <tr class="separator:a702e0c9daf492328143b9da89466137b inherit pro_attribs_classm5_1_1unit_1_1_unit_a_d_s111x"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73a2e62e86d7d6fbce3d7e96ef9b028d inherit pro_attribs_classm5_1_1unit_1_1_unit_a_d_s111x" id="r_a73a2e62e86d7d6fbce3d7e96ef9b028d"><td class="memItemLeft" align="right" valign="top">
 <a class="el" href="structm5_1_1unit_1_1_unit_a_d_s111x_1_1config__t.html">config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_cfg</b> {}</td></tr>
 <tr class="separator:a73a2e62e86d7d6fbce3d7e96ef9b028d inherit pro_attribs_classm5_1_1unit_1_1_unit_a_d_s111x"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ADS1115 with EEPROM. </p>
+<div class="textblock"><p>Base class for A/VMeter. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a23234b62c1aa9840c24272d2824bee45" name="a23234b62c1aa9840c24272d2824bee45"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a23234b62c1aa9840c24272d2824bee45">&#9670;&#160;</a></span>begin()</h2>

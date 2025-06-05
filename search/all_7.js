@@ -11,8 +11,7 @@ var searchData=
   ['measurementunit_8',['measurementUnit',['../classm5_1_1unit_1_1_unit_dual_kmeter.html#a87ff0de53c8a1744af9286a2cc0787f6',1,'m5::unit::UnitDualKmeter::measurementUnit()'],['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html#a77e7e44ce02878770dc6ebaa4f89464c',1,'m5::unit::UnitKmeterISO::measurementUnit()']]],
   ['measuresingleshot_9',['measureSingleshot',['../classm5_1_1unit_1_1_unit_a_d_s111x.html#a44a1efc61b35279f4971dda91af2d190',1,'m5::unit::UnitADS111x::measureSingleshot()'],['../classm5_1_1unit_1_1_unit_dual_kmeter.html#a14d686fe04a785e0d743655394c591cf',1,'m5::unit::UnitDualKmeter::measureSingleshot()'],['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html#a2632abd72ef84f88ba2c39efdd19eb24',1,'m5::unit::UnitKmeterISO::measureSingleshot()']]],
   ['meter_10',['meter',['../namespacemeter.html',1,'']]],
-  ['mode_11',['mode',['../structm5_1_1unit_1_1ads111x_1_1_config.html#a7eaa48d4129a7768820c11f496a19c4d',1,'m5::unit::ads111x::Config']]],
-  ['multiplexer_12',['multiplexer',['../classm5_1_1unit_1_1_unit_a_d_s111x.html#ab3fe6f1a7fbc2558b33e81dccdc0d11d',1,'m5::unit::UnitADS111x']]],
-  ['mux_13',['Mux',['../unit___a_d_s111x_8hpp.html#a9376bdb1e48395373ab8292cd63a35c4',1,'m5::unit::ads111x']]],
-  ['mux_14',['mux',['../structm5_1_1unit_1_1_unit_a_d_s111x_1_1config__t.html#ae4af407a5e003a8449772b1d29f9c5b0',1,'m5::unit::UnitADS111x::config_t::mux'],['../structm5_1_1unit_1_1ads111x_1_1_config.html#a305ddc3883815230624f5d1e6e77bd56',1,'m5::unit::ads111x::Config::mux()']]]
+  ['multiplexer_11',['multiplexer',['../classm5_1_1unit_1_1_unit_a_d_s111x.html#ab3fe6f1a7fbc2558b33e81dccdc0d11d',1,'m5::unit::UnitADS111x']]],
+  ['mux_12',['Mux',['../unit___a_d_s111x_8hpp.html#a9376bdb1e48395373ab8292cd63a35c4',1,'m5::unit::ads111x']]],
+  ['mux_13',['mux',['../structm5_1_1unit_1_1_unit_a_d_s111x_1_1config__t.html#ae4af407a5e003a8449772b1d29f9c5b0',1,'m5::unit::UnitADS111x::config_t']]]
 ];

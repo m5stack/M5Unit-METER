@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pga_0',['pga',['../structm5_1_1unit_1_1ads111x_1_1_config.html#a2919071443a42ef2769d288ee7915217',1,'m5::unit::ads111x::Config']]]
+  ['temperature_0',['temperature',['../classm5_1_1unit_1_1_unit_dual_kmeter.html#a8dc6e2a3fa1f20264cee7be3016af67c',1,'m5::unit::UnitDualKmeter::temperature()'],['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html#af500c97292227c5c9de4c455237f6d04',1,'m5::unit::UnitKmeterISO::temperature()']]]
 ];

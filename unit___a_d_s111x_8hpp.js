@@ -1,6 +1,5 @@
 var unit___a_d_s111x_8hpp =
 [
-    [ "m5::unit::ads111x::Config", "structm5_1_1unit_1_1ads111x_1_1_config.html", "structm5_1_1unit_1_1ads111x_1_1_config" ],
     [ "m5::unit::ads111x::Data", "structm5_1_1unit_1_1ads111x_1_1_data.html", "structm5_1_1unit_1_1ads111x_1_1_data" ],
     [ "m5::unit::UnitADS111x", "classm5_1_1unit_1_1_unit_a_d_s111x.html", "classm5_1_1unit_1_1_unit_a_d_s111x" ],
     [ "m5::unit::UnitADS111x::config_t", "structm5_1_1unit_1_1_unit_a_d_s111x_1_1config__t.html", "structm5_1_1unit_1_1_unit_a_d_s111x_1_1config__t" ],

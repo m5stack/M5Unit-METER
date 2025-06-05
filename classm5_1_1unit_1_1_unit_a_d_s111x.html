@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">M5Unit-METER<span id="projectnumber">&#160;0.1.0 git rev:2ae611f</span>
+   <div id="projectname">M5Unit-METER<span id="projectnumber">&#160;0.2.0 git rev:3a4ce01</span>
    </div>
   </td>
  </tr>
@@ -119,7 +119,7 @@ Inheritance diagram for m5::unit::UnitADS111x:</div>
 <area href="classm5_1_1unit_1_1_unit_a_d_s1113.html" title="ADS1113 unit." alt="m5::unit::UnitADS1113" shape="rect" coords="0,112,366,136"/>
 <area href="classm5_1_1unit_1_1_unit_a_d_s1114.html" title="ADS1114 unit." alt="m5::unit::UnitADS1114" shape="rect" coords="376,112,742,136"/>
 <area href="classm5_1_1unit_1_1_unit_a_d_s1115.html" title="ADS1115 unit." alt="m5::unit::UnitADS1115" shape="rect" coords="752,112,1118,136"/>
-<area href="classm5_1_1unit_1_1_unit_a_vmeter_base.html" title="ADS1115 with EEPROM." alt="m5::unit::UnitAVmeterBase" shape="rect" coords="752,168,1118,192"/>
+<area href="classm5_1_1unit_1_1_unit_a_vmeter_base.html" title="Base class for A/VMeter." alt="m5::unit::UnitAVmeterBase" shape="rect" coords="752,168,1118,192"/>
 <area href="classm5_1_1unit_1_1_unit_ameter.html" title="Ameter Unit is a current meter that can monitor the current in real time." alt="m5::unit::UnitAmeter" shape="rect" coords="564,224,930,248"/>
 <area href="classm5_1_1unit_1_1_unit_vmeter.html" title="Voltmeter Unit is a voltage meter that can monitor the voltage in real time." alt="m5::unit::UnitVmeter" shape="rect" coords="940,224,1306,248"/>
   </map>
@@ -257,10 +257,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>start_single_measurem
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>in_conversion</b> ()</td></tr>
 <tr class="separator:ad65c98cae4dfdb7bc6b719726f8ff500"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2fea731c347c37519b976a5560fe6be4" id="r_a2fea731c347c37519b976a5560fe6be4"><td class="memItemLeft" align="right" valign="top"><a id="a2fea731c347c37519b976a5560fe6be4" name="a2fea731c347c37519b976a5560fe6be4"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>read_config</b> (<a class="el" href="structm5_1_1unit_1_1ads111x_1_1_config.html">ads111x::Config</a> &amp;c)</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>read_config</b> (ads111x::Config &amp;c)</td></tr>
 <tr class="separator:a2fea731c347c37519b976a5560fe6be4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2eda0b54105f62b6b900e5466b64664" id="r_ab2eda0b54105f62b6b900e5466b64664"><td class="memItemLeft" align="right" valign="top"><a id="ab2eda0b54105f62b6b900e5466b64664" name="ab2eda0b54105f62b6b900e5466b64664"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>write_config</b> (const <a class="el" href="structm5_1_1unit_1_1ads111x_1_1_config.html">ads111x::Config</a> &amp;c)</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>write_config</b> (const ads111x::Config &amp;c)</td></tr>
 <tr class="separator:ab2eda0b54105f62b6b900e5466b64664"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb69d2e674345bf65419f6e6ca11ecce" id="r_abb69d2e674345bf65419f6e6ca11ecce"><td class="memItemLeft" align="right" valign="top"><a id="abb69d2e674345bf65419f6e6ca11ecce" name="abb69d2e674345bf65419f6e6ca11ecce"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>apply_interval</b> (const <a class="el" href="unit___a_d_s111x_8hpp.html#a80091ab36ea2000ca4e9e0f9ef335bec">ads111x::Sampling</a> rate)</td></tr>
@@ -299,7 +299,7 @@ std::unique_ptr&lt; m5::container::CircularBuffer&lt; <a class="el" href="struct
 float&#160;</td><td class="memItemRight" valign="bottom"><b>_coefficient</b> {}</td></tr>
 <tr class="separator:a6991a3432fbab6dda7bc10038223cfb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a702e0c9daf492328143b9da89466137b" id="r_a702e0c9daf492328143b9da89466137b"><td class="memItemLeft" align="right" valign="top"><a id="a702e0c9daf492328143b9da89466137b" name="a702e0c9daf492328143b9da89466137b"></a>
-<a class="el" href="structm5_1_1unit_1_1ads111x_1_1_config.html">ads111x::Config</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_ads_cfg</b> {}</td></tr>
+ads111x::Config&#160;</td><td class="memItemRight" valign="bottom"><b>_ads_cfg</b> {}</td></tr>
 <tr class="separator:a702e0c9daf492328143b9da89466137b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73a2e62e86d7d6fbce3d7e96ef9b028d" id="r_a73a2e62e86d7d6fbce3d7e96ef9b028d"><td class="memItemLeft" align="right" valign="top"><a id="a73a2e62e86d7d6fbce3d7e96ef9b028d" name="a73a2e62e86d7d6fbce3d7e96ef9b028d"></a>
 <a class="el" href="structm5_1_1unit_1_1_unit_a_d_s111x_1_1config__t.html">config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_cfg</b> {}</td></tr>
