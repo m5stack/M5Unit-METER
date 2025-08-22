@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['disable_0',['Disable',['../unit___a_d_s111x_8hpp.html#aa7b7de5d60e1a10ad0763e15a2e27986abcfaccebf745acfd5e75351095a5394a',1,'m5::unit::ads111x']]]
+  ['celsius_0',['Celsius',['../unit___dual_kmeter_8hpp.html#a6ea66954d2412c5bda2e29d45cc49585a1ef292971cad34ecb884283503bf86c1',1,'Celsiusm5::unit::dual_kmeter'],['../unit___kmeter_i_s_o_8hpp.html#a4b5dbab8637c36236213c7ec8136fe2aa1ef292971cad34ecb884283503bf86c1',1,'Celsiusm5::unit::kmeter_iso']]],
+  ['conversionready_1',['ConversionReady',['../unit___i_n_a226_8hpp.html#ab56c7faf3c608093b140fc584da54c60ab7b930e1aa4787421b2f7b49afa581fa',1,'m5::unit::ina226']]]
 ];

@@ -16,8 +16,10 @@ var searchData=
   ['unit_5fdualkmeter_2ehpp_13',['unit_DualKmeter.hpp',['../unit___dual_kmeter_8hpp.html',1,'']]],
   ['unit_5feeprom_2ecpp_14',['unit_EEPROM.cpp',['../unit___e_e_p_r_o_m_8cpp.html',1,'']]],
   ['unit_5feeprom_2ehpp_15',['unit_EEPROM.hpp',['../unit___e_e_p_r_o_m_8hpp.html',1,'']]],
-  ['unit_5fkmeteriso_2ecpp_16',['unit_KmeterISO.cpp',['../unit___kmeter_i_s_o_8cpp.html',1,'']]],
-  ['unit_5fkmeteriso_2ehpp_17',['unit_KmeterISO.hpp',['../unit___kmeter_i_s_o_8hpp.html',1,'']]],
-  ['unit_5fvmeter_2ecpp_18',['unit_Vmeter.cpp',['../unit___vmeter_8cpp.html',1,'']]],
-  ['unit_5fvmeter_2ehpp_19',['unit_Vmeter.hpp',['../unit___vmeter_8hpp.html',1,'']]]
+  ['unit_5fina226_2ecpp_16',['unit_INA226.cpp',['../unit___i_n_a226_8cpp.html',1,'']]],
+  ['unit_5fina226_2ehpp_17',['unit_INA226.hpp',['../unit___i_n_a226_8hpp.html',1,'']]],
+  ['unit_5fkmeteriso_2ecpp_18',['unit_KmeterISO.cpp',['../unit___kmeter_i_s_o_8cpp.html',1,'']]],
+  ['unit_5fkmeteriso_2ehpp_19',['unit_KmeterISO.hpp',['../unit___kmeter_i_s_o_8hpp.html',1,'']]],
+  ['unit_5fvmeter_2ecpp_20',['unit_Vmeter.cpp',['../unit___vmeter_8cpp.html',1,'']]],
+  ['unit_5fvmeter_2ehpp_21',['unit_Vmeter.hpp',['../unit___vmeter_8hpp.html',1,'']]]
 ];
