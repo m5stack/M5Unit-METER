@@ -43,6 +43,13 @@ At the same time, the module also has built-in voltage and signal isolation chip
 
 In addition, the module has a built-in dial code on off, which can easily switch different I2C addresses to meet the different application needs of users. It can be applied to multiple scenarios such as industrial automation and instrument detection.
 
+### SKU:U200
+
+Unit INA226-10A is a fully isolated high-precision current and voltage measurement unit, suitable for scenarios measuring DC 0 ~ 30V voltage and up to 10A current, supporting simultaneous voltage and current measurements.
+
+### SKU:U200-1A
+
+Unit INA226-1A is a fully isolated high-precision current, voltage, and power measurement unit, suitable for scenarios measuring DC 0 ~ 30V voltage and up to 1A current, supporting simultaneous voltage and current measurements.
 
 ## Related Link
 See also examples using conventional methods here.
@@ -51,6 +58,8 @@ See also examples using conventional methods here.
 - [Unit Vmeter & Datasheet](https://docs.m5stack.com/en/unit/vmeter)
 - [Unit KMeterISO & Datasheet](https://docs.m5stack.com/en/unit/KMeterISO%20Unit)
 - [Unit DualKmeter & Datasheet](https://docs.m5stack.switch-science.com/en/module/DualKmeter%20Module13.2)
+- [Unit INA226-10A & Datasheet](https://docs.m5stack.com/en/unit/Unit_INA226-10A)
+- [Unit INA226-1A & Datasheet](https://docs.m5stack.com/en/unit/Unit_INA226-1A)
 
 
 ## Required Libraries:

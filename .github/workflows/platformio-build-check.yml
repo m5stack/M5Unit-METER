@@ -21,8 +21,8 @@ on:
       - 'examples/UnitUnified/**.hpp'
       - 'examples/UnitUnified/**.h'
       - 'examples/UnitUnified/**.c'
-      - '/platformio-build-check.yml'
-      - '**platformio.ini'
+      - '**/platformio-build-check.yml'
+      - '**/platformio.ini'
   pull_request:
     paths:
       - 'src/unit/**.cpp'
@@ -39,7 +39,7 @@ on:
       - 'examples/UnitUnified/**.h'
       - 'examples/UnitUnified/**.c'
       - '**/platformio-build-check.yml'
-      - '**platformio.ini'
+      - '**/platformio.ini'
   workflow_dispatch:
 
 defaults:
@@ -69,6 +69,7 @@ jobs:
           - UnitVmeter
           - UnitKmeterISO
           - UnitDualKmeter
+          - UnitINA226_10A
 
         board:
           - Core
@@ -146,6 +147,11 @@ jobs:
             framework: Arduino
             espressif32: latest
             unit: UnitDualKmeter
+          - example: PlotToSerial
+            board: Core
+            framework: Arduino
+            espressif32: latest
+            unit: UnitINA226_1A
 
         exclude:
           - unit: UnitDualKmeter

@@ -20,7 +20,7 @@ on:
       - 'examples/UnitUnified/**.hpp'
       - 'examples/UnitUnified/**.h'
       - 'examples/UnitUnified/**.c'
-      - '**arduino-esp-v3-build-check.yml'
+      - '**/arduino-esp-v3-build-check.yml'
   pull_request:
     paths:
       - 'src/unit/**.cpp'
@@ -32,7 +32,7 @@ on:
       - 'examples/UnitUnified/**.hpp'
       - 'examples/UnitUnified/**.h'
       - 'examples/UnitUnified/**.c'
-      - '**arduino-esp-v3-build-check.yml'
+      - '**/arduino-esp-v3-build-check.yml'
   workflow_dispatch:
 
 defaults:
@@ -64,6 +64,7 @@ jobs:
           - UnitVmeter
           - UnitKmeterISO
           - UnitDualKmeter
+          - UnitINA226
 
         board:
           - m5stack_atom
@@ -99,6 +100,9 @@ jobs:
 
         archi:
           - esp32
+
+        build-properties:
+          - "-DUSING_UNIT_INA226_10A"
 
         include:
           # Specific sketches

@@ -25,7 +25,7 @@ on:
       - 'examples/UnitUnified/**.hpp'
       - 'examples/UnitUnified/**.h'
       - 'examples/UnitUnified/**.c'
-      - '**arduino-m5-build-check.yml'
+      - '**/arduino-m5-build-check.yml'
   pull_request:
     paths:
       - 'src/unit/**.cpp'
@@ -41,7 +41,7 @@ on:
       - 'examples/UnitUnified/**.hpp'
       - 'examples/UnitUnified/**.h'
       - 'examples/UnitUnified/**.c'
-      - '**arduino-m5-build-check.yml'
+      - '**/arduino-m5-build-check.yml'
   workflow_dispatch:
 
 defaults:
@@ -73,6 +73,7 @@ jobs:
           - UnitVmeter
           - UnitKmeterISO
           - UnitDualKmeter
+          - UnitINA226
 
         board:
           - m5stack_atom
@@ -102,7 +103,7 @@ jobs:
 #          - m5stack_unit_cams3
 
         platform-version:
-          - 2.1.2
+          - 3.2.1
 
         platform:
           - m5stack
@@ -110,32 +111,35 @@ jobs:
         archi:
           - esp32
 
+        build-properties:
+          - "-DUSING_UNIT_INA226_10A"
+
         include:
           # Specific sketches
           - sketch: GraphicalMeter
             platform-url: https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json
-            platform-version: 2.1.2
+            platform-version: 3.2.1
             platform: m5stack
             archi: esp32
             board: m5stack_core
             build-properties: "-DUSING_UNIT_VMETER"
           - sketch: GraphicalMeter
             platform-url: https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json
-            platform-version: 2.1.2
+            platform-version: 3.2.1
             platform: m5stack
             archi: esp32
             board: m5stack_core
             build-properties: "-DUSING_UNIT_AMETER"
           - sketch: GraphicalMeter
             platform-url: https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json
-            platform-version: 2.1.2
+            platform-version: 3.2.1
             platform: m5stack
             archi: esp32
             board: m5stack_core
             build-properties: "-DUSING_UNIT_KMETER_ISO"
           - sketch: GraphicalMeter
             platform-url: https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json
-            platform-version: 2.1.2
+            platform-version: 3.2.1
             platform: m5stack
             archi: esp32
             board: m5stack_core

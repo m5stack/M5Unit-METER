@@ -20,6 +20,7 @@
 #include "unit/unit_Vmeter.hpp"
 #include "unit/unit_KmeterISO.hpp"
 #include "unit/unit_DualKmeter.hpp"
+#include "unit/unit_INA226.hpp"
 
 /*!
   @namespace m5
