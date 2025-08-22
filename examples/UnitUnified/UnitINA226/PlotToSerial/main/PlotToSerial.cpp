@@ -14,20 +14,33 @@
 // *************************************************************
 // Choose one define symbol to match the unit you are using
 // *************************************************************
-#if !defined(USING_UNIT_INA226_1A) && !defined(USING_UNIT_INA226_10A)
+#if !defined(USING_UNIT_INA226_1A) && !defined(USING_UNIT_INA226_10A) && !defined(USING_UNIT_INA226_10A_IN_TAB5)
 // #define USING_UNIT_INA226_1A
 // #define USING_UNIT_INA226_10A
+// #define USING_UNIT_INA226_10A_IN_TAB5
 #endif
 
 namespace {
 auto& lcd = M5.Display;
 m5::unit::UnitUnified Units;
 #if defined(USING_UNIT_INA226_1A)
+
 #pragma message "Using 1A"
 m5::unit::UnitINA226_1A unit;
+
 #elif defined(USING_UNIT_INA226_10A)
+
 #pragma message "Using 10A"
 m5::unit::UnitINA226_10A unit;
+
+#elif defined(USING_UNIT_INA226_10A_IN_TAB5)
+
+#pragma message "Using 10A (Tab5)"
+m5::unit::UnitINA226_10A unit;
+#if !defined(CONFIG_IDF_TARGET_ESP32P4)
+#error "Compile not for Tab5"
+#endif
+
 #else
 #error "Choose unit"
 #endif
@@ -42,6 +55,29 @@ void setup()
         lcd.setRotation(1);
     }
 
+#if defined(USING_UNIT_INA226_10A_IN_TAB5)
+    auto board = M5.getBoard();
+    if (board != m5::board_t::board_M5Tab5) {
+        M5_LOGE("Core is NOT Tab5");
+        while (true) {
+            m5::utility::delay(10000);
+        }
+    }
+    auto pin_num_sda = 31;
+    auto pin_num_scl = 32;
+    M5_LOGI("Pin: SDA:%u SCL:%u", pin_num_sda, pin_num_scl);
+    Wire1.end();
+    Wire1.begin(pin_num_sda, pin_num_scl, 400000U);
+
+    if (!Units.add(unit, Wire1) || !Units.begin()) {
+        M5_LOGE("Failed to begin");
+        lcd.clear(TFT_RED);
+        while (true) {
+            m5::utility::delay(10000);
+        }
+    }
+
+#else
     auto pin_num_sda = M5.getPin(m5::pin_name_t::port_a_sda);
     auto pin_num_scl = M5.getPin(m5::pin_name_t::port_a_scl);
     M5_LOGI("getPin: SDA:%u SCL:%u", pin_num_sda, pin_num_scl);
@@ -55,6 +91,8 @@ void setup()
             m5::utility::delay(10000);
         }
     }
+#endif
+
     lcd.setFont(&fonts::AsciiFont8x16);
 
     M5_LOGI("M5UnitUnified has been begun");
