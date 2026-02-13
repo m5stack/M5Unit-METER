@@ -208,7 +208,6 @@ bool UnitADS111x::generalReset()
 
     auto timeout_at = m5::utility::millis() + 10;
     bool done{};
-    Config c{};
     do {
         // power-down mode?
         if (read_config(_ads_cfg) && _ads_cfg.mode()) {
