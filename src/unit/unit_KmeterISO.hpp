@@ -94,7 +94,7 @@ public:
         _cfg = cfg;
     }
     ///@}
-c
+
     ///@name Properties
     ///@{
     /*! Gets the measurement unit on periodic measurement */
