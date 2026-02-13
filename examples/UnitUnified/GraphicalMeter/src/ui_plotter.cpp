@@ -99,7 +99,7 @@ void Plotter::push(LovyanGFX* dst, const int32_t x, const int32_t y)
     auto pf  = dst->getFont();
     auto ptd = dst->getTextDatum();
     dst->setFont(&fonts::Font2);
-    dst->setTextColor(TFT_WHITE);
+    dst->setTextColor(static_cast<uint32_t>(textColor()));
 
     int32_t tx{x};
     switch (_tdatum & 0x03) {

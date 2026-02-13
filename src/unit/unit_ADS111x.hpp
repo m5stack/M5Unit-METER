@@ -71,7 +71,7 @@ enum class Sampling : uint8_t {
 
 /*!
   @enum ComparatorQueue
-  @brief the value determines the number of successive conversions exceeding the upper orlower threshold required
+  @brief the value determines the number of successive conversions exceeding the upper or lower threshold required
   @warning This feature serve nofunction on the ADS1113
 */
 enum class ComparatorQueue : uint8_t {
@@ -216,12 +216,12 @@ public:
 
     ///@name Settings for begin
     ///@{
-    /*! @brief Gets the configration */
+    /*! @brief Gets the configuration */
     inline config_t config()
     {
         return _cfg;
     }
-    //! @brief Set the configration
+    //! @brief Set the configuration
     inline void config(const config_t& cfg)
     {
         _cfg = cfg;
@@ -284,7 +284,7 @@ public:
     ///@}
 
     ///@warning ADS1113, ADS1114 and ADS1115 differ in the items that can be set
-    ///@name Configration
+    ///@name Configuration
     ///@{
     /*! @brief Gets the input multiplexer */
     inline ads111x::Mux multiplexer() const
@@ -356,7 +356,7 @@ public:
     /*!
       @brief Measurement single shot
       @details Measuring in the current settings
-      @param[out] data Measuerd data
+      @param[out] data Measured data
       @param timeoutMillis Timeout for measure
       @return True if successful
       @warning During periodic detection runs, an error is returned

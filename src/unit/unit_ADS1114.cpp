@@ -26,7 +26,7 @@ bool UnitADS1114::start_periodic_measurement(const ads111x::Sampling rate, const
                                              const ads111x::ComparatorQueue comp_que)
 {
     M5_LIB_LOGW("mux is not support");
-    return writeSamplingRate(_cfg.rate) && writeGain(_cfg.gain) && writeComparatorQueue(_cfg.comp_que) &&
+    return writeSamplingRate(rate) && writeGain(gain) && writeComparatorQueue(comp_que) &&
            UnitADS111x::start_periodic_measurement();
 }
 

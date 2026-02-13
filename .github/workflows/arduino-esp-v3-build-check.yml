@@ -47,11 +47,11 @@ jobs:
   build:
     name: ${{ matrix.unit }}:${{ matrix.sketch }}:${{matrix.board}}@${{matrix.platform-version}}
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 12
 
     strategy:
       fail-fast: false
-      #max-parallel: 1
+      max-parallel: 20
       matrix:
         platform-url:
           - https://espressif.github.io/arduino-esp32/package_esp32_index.json
@@ -67,15 +67,17 @@ jobs:
           - UnitINA226
 
         board:
+          - arduino_nesso_n1
           - m5stack_atom
           - m5stack_atoms3
           - m5stack_capsule
-#          - m5stack_cardputer
+          - m5stack_cardputer
           - m5stack_core
           - m5stack_core2
           - m5stack_coreink
           - m5stack_cores3
           - m5stack_dial
+          - m5stack_dinmeter
           - m5stack_fire
           - m5stack_nanoc6
           - m5stack_paper
@@ -87,13 +89,14 @@ jobs:
 #          - m5stack_stickc
           - m5stack_stickc_plus
           - m5stack_stickc_plus2
+          - m5stack_tab5
 #          - m5stack_timer_cam
 #          - m5stack_tough
 #          - m5stack_unit_cam
 #          - m5stack_unit_cams3
 
         platform-version:
-          - 3.1.3
+          - 3.3.6
 
         platform:
           - esp32
@@ -108,58 +111,56 @@ jobs:
           # Specific sketches
           - sketch: GraphicalMeter
             platform-url: https://espressif.github.io/arduino-esp32/package_esp32_index.json
-            platform-version: 3.1.3
+            platform-version: 3.3.6
             platform: esp32
             archi: esp32
             board: m5stack_core
             build-properties: "-DUSING_UNIT_VMETER"
           - sketch: GraphicalMeter
             platform-url: https://espressif.github.io/arduino-esp32/package_esp32_index.json
-            platform-version: 3.1.3
+            platform-version: 3.3.6
             platform: esp32
             archi: esp32
             board: m5stack_core
             build-properties: "-DUSING_UNIT_AMETER"
           - sketch: GraphicalMeter
             platform-url: https://espressif.github.io/arduino-esp32/package_esp32_index.json
-            platform-version: 3.1.3
+            platform-version: 3.3.6
             platform: esp32
             archi: esp32
             board: m5stack_core
             build-properties: "-DUSING_UNIT_KMETER_ISO"
           - sketch: GraphicalMeter
             platform-url: https://espressif.github.io/arduino-esp32/package_esp32_index.json
-            platform-version: 3.1.3
+            platform-version: 3.3.6
             platform: esp32
             archi: esp32
             board: m5stack_core
             build-properties: "-DUSING_UNIT_DUAL_KMETER"
 
         exclude:
-          - unit: UnitDualMeter
+          - unit: UnitDualKmeter
             board: m5stack_atom
-          - unit: UnitDualMeter
+          - unit: UnitDualKmeter
             board: m5stack_atoms3
-          - unit: UnitDualMeter
+          - unit: UnitDualKmeter
             board: m5stack_coreink
-          - unit: UnitDualMeter
+          - unit: UnitDualKmeter
             board: m5stack_dial
-          - unit: UnitDualMeter
+          - unit: UnitDualKmeter
             board: m5stack_nanoc6
-          - unit: UnitDualMeter
+          - unit: UnitDualKmeter
             board: m5stack_paper
-          - unit: UnitDualMeter
+          - unit: UnitDualKmeter
             board: m5stack_stamp_s3
-          - unit: UnitDualMeter
+          - unit: UnitDualKmeter
             board: m5stack_stickc_plus
-          - unit: UnitDualMeter
+          - unit: UnitDualKmeter
             board: m5stack_stickc_plus2
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
 
       # Build 
       - name: Compile examples

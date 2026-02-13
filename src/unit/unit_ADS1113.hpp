@@ -29,7 +29,7 @@ public:
     {
     }
 
-    ///@name Configration
+    ///@name Configuration
     ///@{
     /*! @brief Not support @warning Not support */
     virtual bool writeMultiplexer(const ads111x::Mux) override

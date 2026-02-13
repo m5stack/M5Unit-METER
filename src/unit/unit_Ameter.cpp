@@ -24,7 +24,7 @@ const types::attr_t UnitAmeter::attr{attribute::AccessI2C};
 void UnitAmeter::apply_coefficient(const ads111x::Gain gain)
 {
     UnitADS111x::apply_coefficient(gain);
-    _correction = resolution() * calibrationFactor();
+    _correction = resolution() * _eeprom.calibrationFactor(gain);
 }
 
 }  // namespace unit

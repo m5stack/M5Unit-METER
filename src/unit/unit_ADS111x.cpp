@@ -112,7 +112,7 @@ bool UnitADS111x::writeSamplingRate(ads111x::Sampling rate)
     if (read_config(c)) {
         c.dr(rate);
         if (write_config(c)) {
-            apply_interval(_ads_cfg.dr());
+            apply_interval(rate);
             return true;
         }
     }

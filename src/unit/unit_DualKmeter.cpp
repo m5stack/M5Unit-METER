@@ -51,7 +51,7 @@ bool UnitDualKmeter::begin()
     }
 
     uint8_t ver{};
-    if (!readFirmwareVersion(ver) && (ver == 0x00)) {
+    if (!readFirmwareVersion(ver) || (ver == 0x00)) {
         M5_LIB_LOGE("Failed to read version %02X", ver);
         return false;
     }

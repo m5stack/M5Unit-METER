@@ -86,22 +86,22 @@ struct Data {
     std::array<uint16_t, 4> raw{};  //!< Raw data 0:Shunt 1:Bus 2:Power 3:Current
     float currentLSB{};             //!< currentLSB
 
-    //@brirf Sunt voltage (mV)
+    //! @brief Shunt voltage (mV)
     inline float shuntVoltage() const
     {
         return raw[0] * 0.0025f;
     }
-    // @brief Bus voltage (mV)
+    //! @brief Bus voltage (mV)
     inline float voltage() const
     {
         return raw[1] * 1.25f;
     }
-    // @brief Power (mW)
+    //! @brief Power (mW)
     inline float power() const
     {
         return raw[2] * currentLSB * 25.f * 1000.f;
     }
-    // @brief Current (mA)
+    //! @brief Current (mA)
     inline float current() const
     {
         return (int16_t)raw[3] * currentLSB * 1000.f;
@@ -144,7 +144,7 @@ protected:
       @brief Constructor
       @param shuntRes Shunt resistor (O)
       @param maxCurA Maximum measure current (A)
-      @paream curLSB currentLSB
+      @param curLSB currentLSB
      */
     UnitINA226(const float shuntRes, const float maxCurA, const float curLSB, const uint8_t addr = DEFAULT_ADDRESS);
 
@@ -158,12 +158,12 @@ public:
 
     ///@name Settings for begin
     ///@{
-    /*! @brief Gets the configration */
+    /*! @brief Gets the configuration */
     inline config_t config()
     {
         return _cfg;
     }
-    //! @brief Set the configration
+    //! @brief Set the configuration
     inline void config(const config_t& cfg)
     {
         _cfg = cfg;
@@ -229,8 +229,8 @@ public:
     /*!
       @brief Start periodic measurement
       @param rate Sampling Sampling rate
-      @paran sct Shunt conversion time
-      @paran bct Bus conversion time
+      @param sct Shunt conversion time
+      @param bct Bus conversion time
       @param current Measure current if true
       @param voltage Measure bus voltage if true
       @param power Measure power if true
@@ -258,7 +258,7 @@ public:
     /*!
       @brief Measurement single shot
       @details Measuring in the current settings
-      @param[out] data Measuerd data
+      @param[out] data Measured data
       @param current Measure current if true
       @param voltage Measure bus voltage if true
       @param power Measure power if true
@@ -271,10 +271,10 @@ public:
     /*!
       @brief Measurement single shot
       @details Measuring in the current settings
-      @param[out] data Measuerd data
+      @param[out] data Measured data
       @param rate Sampling Sampling rate
-      @paran sct Shunt conversion time
-      @paran bct Bus conversion time
+      @param sct Shunt conversion time
+      @param bct Bus conversion time
       @param current Measure current if true
       @param voltage Measure bus voltage if true
       @param power Measure power if true
@@ -317,7 +317,7 @@ public:
     bool readBusVoltageConversionTime(ina226::ConversionTime& ct);
     /*!
       @brief Write the convsrsion time of Bus voltage
-      @paramct Conversion time
+      @param ct Conversion time
       @return True if successful
       @warning During periodic detection runs, an error is returned
      */
@@ -330,7 +330,7 @@ public:
     bool readShuntVoltageConversionTime(ina226::ConversionTime& ct);
     /*!
       @brief Write the convsrsion time of Shunt voltage
-      @paramct Conversion time
+      @param ct Conversion time
       @return True if successful
       @warning During periodic detection runs, an error is returned
      */
@@ -370,14 +370,14 @@ public:
      */
     bool writeAlert(const ina226::Alert type, const uint16_t limit, const bool latch = true);
     /*!
-      @brief Read the alerm limit value
+      @brief Read the alert limit value
       @param[out] limit Limit value
       @return True if successful
       @note The unit of value depends on the type of Alert (See also datasheet)
      */
     bool readAlertLimit(uint16_t& limit);
     /*!
-      @brief Write the alerm limit value
+      @brief Write the alert limit value
       @param limit Limit value
       @return True if successful
       @note The unit of value depends on the type of Alert (See also datasheet)

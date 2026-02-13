@@ -29,7 +29,7 @@ public:
     {
     }
 
-    ///@name Configration
+    ///@name Configuration
     ///@{
     /*! @brief Write the input multiplexer */
     virtual bool writeMultiplexer(const ads111x::Mux mux) override

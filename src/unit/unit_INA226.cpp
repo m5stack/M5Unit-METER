@@ -402,7 +402,7 @@ bool UnitINA226::stop_periodic_measurement()
     if (inPeriodic()) {
         return powerDown();
     }
-    return false;
+    return true;
 }
 
 bool UnitINA226::measureSingleshot(ina226::Data& data, const bool current, const bool voltage, const bool power)
@@ -601,7 +601,8 @@ bool UnitINA226::softReset(const bool all)
         if (write_configuration(mc.v)) {
             m5::utility::delay(2);
             if (read_configuration(mc.v) && mc.v == DEFAULT_CONFIG_VALUE && readCalibration(cal) && cal == 0) {
-                _periodic = true;  // Default config register value is 0x4127 (measn Mode ShuntAndBus)
+                // Default config 0x4127 is ShuntAndBus continuous mode,
+                // but leave _periodic false; caller manages it via powerDown/startPeriodicMeasurement
                 return true;
             }
         }

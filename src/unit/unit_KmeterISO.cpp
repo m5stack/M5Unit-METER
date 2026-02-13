@@ -50,10 +50,11 @@ bool UnitKmeterISO::begin()
     }
 
     uint8_t ver{};
-    if (!readFirmwareVersion(ver) && (ver == 0x00)) {
+    if (!readFirmwareVersion(ver) || !ver) {
         M5_LIB_LOGE("Failed to read version %02X", ver);
         return false;
     }
+
     return _cfg.start_periodic ? startPeriodicMeasurement(_cfg.interval, _cfg.measurement_unit) : true;
 }
 
