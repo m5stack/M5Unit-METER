@@ -25,8 +25,8 @@ const types::attr_t UnitADS1115::attr{attribute::AccessI2C};
 bool UnitADS1115::start_periodic_measurement(const ads111x::Sampling rate, const ads111x::Mux mux,
                                              const ads111x::Gain gain, const ads111x::ComparatorQueue comp_que)
 {
-    return writeSamplingRate(rate) && writeMultiplexer(mux) && writeGain(gain) &&
-           writeComparatorQueue(comp_que) && UnitADS111x::start_periodic_measurement();
+    return writeSamplingRate(rate) && writeMultiplexer(mux) && writeGain(gain) && writeComparatorQueue(comp_que) &&
+           UnitADS111x::start_periodic_measurement();
 }
 
 }  // namespace unit
