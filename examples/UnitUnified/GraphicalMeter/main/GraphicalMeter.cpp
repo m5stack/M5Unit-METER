@@ -451,9 +451,10 @@ void setup()
     auto pin_num_sda = M5.getPin(m5::pin_name_t::in_i2c_sda);
     auto pin_num_scl = M5.getPin(m5::pin_name_t::in_i2c_scl);
 #else
-    auto pin_num_sda = M5.getPin(m5::pin_name_t::port_a_sda);
-    auto pin_num_scl = M5.getPin(m5::pin_name_t::port_a_scl);
+    auto pin_num_sda               = M5.getPin(m5::pin_name_t::port_a_sda);
+    auto pin_num_scl               = M5.getPin(m5::pin_name_t::port_a_scl);
 #endif
+
     M5_LOGI("getPin: SDA:%u SCL:%u", pin_num_sda, pin_num_scl);
 
     auto cfg = unit.config();
