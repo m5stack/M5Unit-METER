@@ -6,25 +6,15 @@
 /*
   UnitTest for UnitVmeter
 */
-#include "../avmeter_template.hpp"
+#include "../avmeter_base.hpp"
 #include <unit/unit_Vmeter.hpp>
 
-const ::testing::Environment* global_fixture = ::testing::AddGlobalTestEnvironment(new GlobalFixture<400000U>());
+using TestADS1115 = TestAVmeterBase<UnitVmeter>;
 
-#if 0
-INSTANTIATE_TEST_SUITE_P(
-    ParamValues, TestADS1115,
-    ::testing::Values(TestParams{false, +UnitVmeter::DEFAULT_ADDRESS,
-                                 +UnitVmeter::DEFAULT_EEPROM_ADDRESS},
-                      TestParams{true, +UnitVmeter::DEFAULT_ADDRESS,
-                                 +UnitVmeter::DEFAULT_EEPROM_ADDRESS}));
-#endif
-INSTANTIATE_TEST_SUITE_P(ParamValues, TestADS1115,
-                         ::testing::Values(TestParams{false, +UnitVmeter::DEFAULT_ADDRESS,
-                                                      +UnitVmeter::DEFAULT_EEPROM_ADDRESS}));
+#include "../avmeter_template.hpp"
 
 // For UnitVmeter-specific testing
-class TestVmeter : public ComponentTestBase<UnitVmeter, bool> {
+class TestVmeter : public I2CComponentTestBase<UnitVmeter> {
 protected:
     virtual UnitVmeter* get_instance() override
     {
@@ -35,18 +25,9 @@ protected:
         }
         return ptr;
     }
-    virtual bool is_using_hal() const override
-    {
-        return GetParam();
-    };
 };
 
-// INSTANTIATE_TEST_SUITE_P(ParamValues, TestVmeter,
-//                          ::testing::Values(false, true));
-//  INSTANTIATE_TEST_SUITE_P(ParamValues, TestVmeter, ::testing::Values(true));
-INSTANTIATE_TEST_SUITE_P(ParamValues, TestVmeter, ::testing::Values(false));
-
-TEST_P(TestVmeter, Correction)
+TEST_F(TestVmeter, Correction)
 {
     SCOPED_TRACE(ustr);
 

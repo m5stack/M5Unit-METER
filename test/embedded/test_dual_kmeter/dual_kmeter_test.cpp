@@ -5,6 +5,8 @@
  */
 /*
   UnitTest for DualKmeter
+  NOTE: A thermocouple must be connected to the unit for tests to pass.
+        Without it, the STM32 never reports data-ready and all measurements time out.
 */
 #include <gtest/gtest.h>
 #include <Wire.h>
@@ -14,7 +16,6 @@
 #include <googletest/test_helper.hpp>
 #include <unit/unit_DualKmeter.hpp>
 #include <chrono>
-#include <thread>
 #include <iostream>
 
 using namespace m5::unit::googletest;
@@ -23,32 +24,9 @@ using namespace m5::unit::dual_kmeter;
 using namespace m5::unit::dual_kmeter::command;
 using m5::unit::types::elapsed_time_t;
 
-namespace in_wire {
-template <uint32_t FREQ, uint32_t WNUM = 0>
-class GlobalFixture : public ::testing::Environment {
-    static_assert(WNUM < 2, "Wire number must be lesser than 2");
-
-public:
-    void SetUp() override
-    {
-        auto pin_num_sda = M5.getPin(m5::pin_name_t::in_i2c_sda);
-        auto pin_num_scl = M5.getPin(m5::pin_name_t::in_i2c_scl);
-        TwoWire* w[2]    = {&Wire, &Wire1};
-        if (WNUM < m5::stl::size(w) && i2cIsInit(WNUM)) {
-            M5_LOGW("Already inititlized Wire %d. Terminate and restart FREQ %u", WNUM, FREQ);
-            w[WNUM]->end();
-        }
-        w[WNUM]->begin(pin_num_sda, pin_num_scl, FREQ);
-    }
-};
-}  // namespace in_wire
-
-const ::testing::Environment* global_fixture =
-    ::testing::AddGlobalTestEnvironment(new in_wire::GlobalFixture<100000U>());
-
 constexpr uint32_t STORED_SIZE{6};
 
-class TestDualKmeter : public ComponentTestBase<UnitDualKmeter, bool> {
+class TestDualKmeter : public I2CComponentTestBase<UnitDualKmeter> {
 protected:
     virtual UnitDualKmeter* get_instance() override
     {
@@ -58,60 +36,21 @@ protected:
         ptr->component_config(ccfg);
         return ptr;
     }
-    virtual bool is_using_hal() const override
+    // DualKmeter uses M5-Bus internal I2C
+    virtual bool begin() override
     {
-        return GetParam();
-    };
+        M5_LOGI("Using M5.In_I2C");
+        return Units.add(*unit, M5.In_I2C) && Units.begin();
+    }
 };
-
-// INSTANTIATE_TEST_SUITE_P(ParamValues, TestDualKmeter, ::testing::Values(false, true));
-// INSTANTIATE_TEST_SUITE_P(ParamValues, TestDualKmeter, ::testing::Values(true));
-INSTANTIATE_TEST_SUITE_P(ParamValues, TestDualKmeter, ::testing::Values(false));
 
 namespace {
 constexpr MeasurementUnit mu_table[] = {MeasurementUnit::Celsius, MeasurementUnit::Fahrenheit};
 constexpr Channel ch_table[]         = {Channel::One, Channel::Two};
 constexpr uint32_t interval_table[]  = {10, 100, 500};
-
-template <class U>
-elapsed_time_t test_periodic(U* unit, const uint32_t times, const uint32_t measure_duration = 0)
-{
-    auto tm         = unit->interval();
-    auto timeout_at = m5::utility::millis() + 10 * 1000;
-
-    do {
-        unit->update();
-        if (unit->updated()) {
-            break;
-        }
-        std::this_thread::yield();
-    } while (!unit->updated() && m5::utility::millis() <= timeout_at);
-    // timeout
-    if (!unit->updated()) {
-        return 0;
-    }
-
-    //
-    uint32_t measured{};
-    auto start_at = m5::utility::millis();
-    timeout_at    = start_at + (times * (tm + measure_duration) * 2);
-
-    do {
-        unit->update();
-        measured += unit->updated() ? 1 : 0;
-        if (measured >= times) {
-            break;
-        }
-        // std::this_thread::yield();
-        m5::utility::delay(1);
-
-    } while (measured < times && m5::utility::millis() <= timeout_at);
-    return (measured == times) ? m5::utility::millis() - start_at : 0;
-    // return (measured == times) ? unit->updatedMillis() - start_at : 0;
-}
 }  // namespace
 
-TEST_P(TestDualKmeter, Basic)
+TEST_F(TestDualKmeter, Basic)
 {
     SCOPED_TRACE(ustr);
 
@@ -140,7 +79,7 @@ TEST_P(TestDualKmeter, Basic)
     }
 }
 
-TEST_P(TestDualKmeter, Singleshot)
+TEST_F(TestDualKmeter, Singleshot)
 {
     SCOPED_TRACE(ustr);
 
@@ -187,7 +126,7 @@ TEST_P(TestDualKmeter, Singleshot)
     }
 }
 
-TEST_P(TestDualKmeter, Periodic)
+TEST_F(TestDualKmeter, Periodic)
 {
     SCOPED_TRACE(ustr);
 
@@ -202,11 +141,13 @@ TEST_P(TestDualKmeter, Periodic)
                 EXPECT_TRUE(unit->startPeriodicMeasurement(it, c, mu));
                 EXPECT_TRUE(unit->inPeriodic());
 
-                auto elapsed = test_periodic(unit.get(), STORED_SIZE);
+                auto r = collect_periodic_measurements(unit.get(), STORED_SIZE);
+                EXPECT_FALSE(r.timed_out);
+                EXPECT_EQ(r.update_count, STORED_SIZE);
+                EXPECT_LE(r.median(), r.expected_interval + 1);
+
                 EXPECT_TRUE(unit->stopPeriodicMeasurement());
                 EXPECT_FALSE(unit->inPeriodic());
-
-                EXPECT_GE(elapsed, it * STORED_SIZE);
 
                 EXPECT_EQ(unit->available(), STORED_SIZE);
                 EXPECT_FALSE(unit->empty());

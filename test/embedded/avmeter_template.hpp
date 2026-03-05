@@ -4,47 +4,12 @@
  * SPDX-License-Identifier: MIT
  */
 /*
-  UnitTest for UnitADS111x
+  Shared test definitions for UnitADS111x (AMeter/VMeter)
+  Include AFTER defining: using TestADS1115 = TestAVmeterBase<UnitXxx>;
 */
-#include <gtest/gtest.h>
-#include <Wire.h>
-#include <M5Unified.h>
-#include <M5UnitUnified.hpp>
-#include <googletest/test_template.hpp>
-#include <googletest/test_helper.hpp>
-#include <unit/unit_ADS1115.hpp>
-#include <unit/unit_Vmeter.hpp>
+#include <m5_unit_component/adapter_i2c.hpp>
 #include <limits>
 #include <utility>
-
-struct TestParams {
-    const bool hal;            // bool true: Using bus false: using wire
-    const uint8_t reg;         // unit address
-    const uint8_t reg_eeprom;  // eeprom address
-};
-
-using namespace m5::unit::googletest;
-using namespace m5::unit;
-using namespace m5::unit::ads111x;
-
-class TestADS1115 : public ComponentTestBase<UnitAVmeterBase, TestParams> {
-protected:
-    virtual UnitAVmeterBase* get_instance() override
-    {
-        TestParams tp = GetParam();
-        auto ptr      = new m5::unit::UnitAVmeterBase(tp.reg, tp.reg_eeprom);
-        if (ptr) {
-            auto ccfg        = ptr->component_config();
-            ccfg.stored_size = 4;
-            ptr->component_config(ccfg);
-        }
-        return ptr;
-    }
-    virtual bool is_using_hal() const override
-    {
-        return GetParam().hal;
-    };
-};
 
 namespace {
 inline void check_measurement_values(m5::unit::UnitAVmeterBase* u)
@@ -53,16 +18,24 @@ inline void check_measurement_values(m5::unit::UnitAVmeterBase* u)
 }
 }  // namespace
 
-TEST_P(TestADS1115, Address)
+TEST_F(TestADS1115, Address)
 {
     SCOPED_TRACE(ustr);
     m5::unit::UnitAVmeterBase tmp(0x00, 0x00);
     EXPECT_FALSE(tmp.begin());
 }
 
-TEST_P(TestADS1115, GeneralReset)
+TEST_F(TestADS1115, GeneralReset)
 {
     SCOPED_TRACE(ustr);
+
+    // I2C_Class hangs on generalReset (bus stuck after general call reset)
+    auto ad          = unit->asAdapter<m5::unit::AdapterI2C>(m5::unit::Adapter::Type::I2C);
+    bool is_i2cclass = ad && ad->implType() == m5::unit::AdapterI2C::ImplType::I2CClass;
+    if (is_i2cclass) {
+        M5_LOGW("Skip GeneralReset: I2C_Class does not recover from general call reset");
+        GTEST_SKIP();
+    }
 
     EXPECT_TRUE(unit->stopPeriodicMeasurement());
     EXPECT_FALSE(unit->inPeriodic());
@@ -97,7 +70,7 @@ TEST_P(TestADS1115, GeneralReset)
     EXPECT_EQ(low, default_low);
 }
 
-TEST_P(TestADS1115, Configration)
+TEST_F(TestADS1115, Configuration)
 {
     SCOPED_TRACE(ustr);
 
@@ -267,7 +240,7 @@ TEST_P(TestADS1115, Configration)
     }
 }
 
-TEST_P(TestADS1115, Periodic)
+TEST_F(TestADS1115, Periodic)
 {
     SCOPED_TRACE(ustr);
 
@@ -293,7 +266,10 @@ TEST_P(TestADS1115, Periodic)
             EXPECT_TRUE(unit->startPeriodicMeasurement());
             EXPECT_TRUE(unit->inPeriodic());
 
-            test_periodic_measurement(unit.get(), 4, check_measurement_values);
+            auto r = collect_periodic_measurements(unit.get(), 4, 0, check_measurement_values);
+            EXPECT_FALSE(r.timed_out);
+            EXPECT_EQ(r.update_count, 4U);
+            EXPECT_LE(r.median(), r.expected_interval + 1);
 
             EXPECT_TRUE(unit->stopPeriodicMeasurement());
             EXPECT_FALSE(unit->inPeriodic());
@@ -305,7 +281,7 @@ TEST_P(TestADS1115, Periodic)
     }
 }
 
-TEST_P(TestADS1115, SingleShot)
+TEST_F(TestADS1115, SingleShot)
 {
     SCOPED_TRACE(ustr);
 
