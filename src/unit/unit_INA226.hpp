@@ -85,26 +85,29 @@ enum class Alert : int8_t {
 struct Data {
     std::array<uint16_t, 4> raw{};  //!< Raw data 0:Shunt 1:Bus 2:Power 3:Current
     float currentLSB{};             //!< currentLSB
+    uint8_t measureBits{};          //!< Measured channels bitmask (0:Shunt 1:Bus 2:Power 3:Current)
 
-    //! @brief Shunt voltage (mV)
+    //! @brief Shunt voltage (mV) Returns NaN if not measured
     inline float shuntVoltage() const
     {
-        return raw[0] * 0.0025f;
+        return (measureBits & 0x01) ? (int16_t)raw[0] * 0.0025f : std::numeric_limits<float>::quiet_NaN();
     }
-    //! @brief Bus voltage (mV)
+    //! @brief Bus voltage (mV) Returns NaN if not measured
     inline float voltage() const
     {
-        return raw[1] * 1.25f;
+        return (measureBits & 0x02) ? raw[1] * 1.25f : std::numeric_limits<float>::quiet_NaN();
     }
-    //! @brief Power (mW)
+    //! @brief Power (mW) Returns NaN if not measured
     inline float power() const
     {
-        return raw[2] * currentLSB * 25.f * 1000.f;
+        return (measureBits & 0x04) ? raw[2] * currentLSB * 25.f * 1000.f
+                                    : std::numeric_limits<float>::quiet_NaN();
     }
-    //! @brief Current (mA)
+    //! @brief Current (mA) Returns NaN if not measured
     inline float current() const
     {
-        return (int16_t)raw[3] * currentLSB * 1000.f;
+        return (measureBits & 0x08) ? (int16_t)raw[3] * currentLSB * 1000.f
+                                    : std::numeric_limits<float>::quiet_NaN();
     }
 };
 
@@ -385,6 +388,38 @@ public:
     */
     bool writeAlertLimit(const uint16_t limit);
     ///@}
+
+    // ============================================================
+    // M5Unified M5.Power.Ina226 compatible API
+#if defined(__M5UNIFIED_HPP__)
+
+    ///@name M5Unified Power.Ina226 compatible API
+    ///@note Values are in V/A/W (not mV/mA/mW)
+    ///@{
+
+    //! @brief Bus voltage (V) compatible with INA226_Class::getBusVoltage()
+    inline float getBusVoltage()
+    {
+        return voltage() / 1000.0f;
+    }
+    //! @brief Shunt voltage (V) compatible with INA226_Class::getShuntVoltage()
+    inline float getShuntVoltage()
+    {
+        return shuntVoltage() / 1000.0f;
+    }
+    //! @brief Current (A) compatible with INA226_Class::getShuntCurrent()
+    inline float getShuntCurrent()
+    {
+        return current() / 1000.0f;
+    }
+    //! @brief Power (W) compatible with INA226_Class::getPower()
+    inline float getPower()
+    {
+        return power() / 1000.0f;
+    }
+
+    ///@}
+#endif
 
     /*!
       @brief Read the alert occurred?
