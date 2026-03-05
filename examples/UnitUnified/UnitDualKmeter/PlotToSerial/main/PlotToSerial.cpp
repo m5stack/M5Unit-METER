@@ -9,8 +9,6 @@
 #include <M5Unified.h>
 #include <M5UnitUnified.h>
 #include <M5UnitUnifiedMETER.h>
-#include <Wire.h>
-
 namespace {
 m5::unit::UnitUnified Units;
 m5::unit::UnitDualKmeter unit{0x11};  // Configured address
@@ -28,23 +26,10 @@ void setup()
         lcd.setRotation(1);
     }
 
-    auto board       = M5.getBoard();
-    auto pin_num_sda = M5.getPin(m5::pin_name_t::in_i2c_sda);
-    auto pin_num_scl = M5.getPin(m5::pin_name_t::in_i2c_scl);
-    M5_LOGI("getPin: SDA:%u SCL:%u", pin_num_sda, pin_num_scl);
-
-    bool began{};
-    if (board == m5::board_t::board_M5Tab5) {
-        // Tab5: internal I2C already initialized by M5Unified on Wire1
-        began = Units.add(unit, Wire1) && Units.begin();
-    } else {
-        Wire.end();
-        Wire.begin(pin_num_sda, pin_num_scl, unit.component_config().clock);
-        began = Units.add(unit, Wire) && Units.begin();
-    }
-    if (!began) {
+    // DualKmeter uses M5-Bus internal I2C
+    if (!Units.add(unit, M5.In_I2C) || !Units.begin()) {
         M5_LOGE("Failed to begin");
-        lcd.clear(TFT_RED);
+        lcd.fillScreen(TFT_RED);
         while (true) {
             m5::utility::delay(10000);
         }
@@ -65,7 +50,7 @@ void loop()
         M5.Log.printf(">Temperature%d:%.2f\n", (int)d.channel + 1, d.temperature());
     }
 
-    // Togle single <-> periodic
+    // Toggle single <-> periodic
     if (M5.BtnA.wasClicked()) {
         static bool single{};
         single = !single;
@@ -80,7 +65,7 @@ void loop()
             if (unit.measureInternalSingleshot(d, unit.measurementChannel())) {
                 M5.Log.printf("Single:internal temperature %.2f\n", d.temperature());
             }
-            lcd.clear(TFT_BLUE);
+            lcd.fillScreen(TFT_BLUE);
         } else {
             M5.Speaker.tone(3000, 40);
             unit.startPeriodicMeasurement();
@@ -88,7 +73,7 @@ void loop()
         }
     }
 
-    // Togle channel 1 <-> 2
+    // Toggle channel 1 <-> 2
     if (M5.BtnA.wasHold()) {
         static Channel ch{};
         ch = (ch == Channel::One) ? Channel::Two : Channel::One;
