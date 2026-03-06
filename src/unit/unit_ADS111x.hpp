@@ -26,7 +26,7 @@ namespace ads111x {
 /*!
   @enum Mux
   @brief Input multiplexer
-  @warning This feature serve nofunction on the ADS1113 and ADS1114
+  @warning This feature serves no function on the ADS1113 and ADS1114
 */
 enum class Mux : uint8_t {
     AIN_01,  //!< Positive:AIN0 Negative:AIN1 as default
@@ -42,7 +42,7 @@ enum class Mux : uint8_t {
 /*!
   @enum Gain
   @brief Programmable gain amplifier
-  @warning This feature serve nofunction on the ADS1113
+  @warning This feature serves no function on the ADS1113
  */
 enum class Gain : uint8_t {
     PGA_6144,  //!< +/- 6.144 V
@@ -72,7 +72,7 @@ enum class Sampling : uint8_t {
 /*!
   @enum ComparatorQueue
   @brief the value determines the number of successive conversions exceeding the upper or lower threshold required
-  @warning This feature serve nofunction on the ADS1113
+  @warning This feature serves no function on the ADS1113
 */
 enum class ComparatorQueue : uint8_t {
     One,      //!< Assert after one conversion
@@ -335,7 +335,7 @@ public:
     virtual bool writeMultiplexer(const ads111x::Mux mux) = 0;
     /*!
       @brief Write the programmable gain amplifier
-      @warning the threshould values  must be updated whenever the PGA settings are changed
+      @warning the threshold values must be updated whenever the PGA settings are changed
       @sa writeThreshold
      */
     virtual bool writeGain(const ads111x::Gain gain) = 0;

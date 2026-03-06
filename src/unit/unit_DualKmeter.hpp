@@ -213,7 +213,7 @@ public:
     ///@{
     /*!
       @brief Measure temperature single shot
-      @param[out] data Measuerd data
+      @param[out] data Measured data
       @param channel Channel to be measured
       @param munit  measurement unit
       @param timeoutMs Measurement timeout time(ms)
@@ -225,7 +225,7 @@ public:
                            const uint32_t timeoutMs           = 100);
     /*!
       @brief Measure internal temperature single shot
-      @param[out] data Measuerd data
+      @param[out] data Measured data
       @param munit  measurement unit
       @param timeoutMs Measurement timeout time(ms)
       @return True if successful
@@ -287,17 +287,17 @@ protected:
 namespace dual_kmeter {
 ///@cond
 namespace command {
-constexpr uint8_t TEMPERATURE_CELSIUS_REG{0x00};                    // R
-constexpr uint8_t TEMPERATURE_FAHRENHEIT_REG{0x04};                 // R
-constexpr uint8_t INTERNAL_TEMPERATURE_CELSIUS_REG{0x10};           // R
-constexpr uint8_t INTERNAL_TEMPERATURE_FAHRENHEIT_REG{0x14};        // R
-constexpr uint8_t CHANNEL_REG{0x20};                                // R/W
-constexpr uint8_t STATUS_REG{0x30};                                 // R
-constexpr uint8_t TEMPERATURE_CELSIUS_STRING_REG{0x40};             // R
-constexpr uint8_t TEMPERATURE_FAHRENHEITSTRING_REG{0x50};           // R
-constexpr uint8_t INTERNAL_TEMPERATURE_CELSIUS_STRING_REG{0x60};    // R
-constexpr uint8_t INTERNAL_TEMPERATURE_FAHRENHEITSTRING_REG{0x70};  // R
-constexpr uint8_t FIRMWARE_VERSION_REG{0xFE};                       // R
+constexpr uint8_t TEMPERATURE_CELSIUS_REG{0x00};                     // R
+constexpr uint8_t TEMPERATURE_FAHRENHEIT_REG{0x04};                  // R
+constexpr uint8_t INTERNAL_TEMPERATURE_CELSIUS_REG{0x10};            // R
+constexpr uint8_t INTERNAL_TEMPERATURE_FAHRENHEIT_REG{0x14};         // R
+constexpr uint8_t CHANNEL_REG{0x20};                                 // R/W
+constexpr uint8_t STATUS_REG{0x30};                                  // R
+constexpr uint8_t TEMPERATURE_CELSIUS_STRING_REG{0x40};              // R
+constexpr uint8_t TEMPERATURE_FAHRENHEIT_STRING_REG{0x50};           // R
+constexpr uint8_t INTERNAL_TEMPERATURE_CELSIUS_STRING_REG{0x60};     // R
+constexpr uint8_t INTERNAL_TEMPERATURE_FAHRENHEIT_STRING_REG{0x70};  // R
+constexpr uint8_t FIRMWARE_VERSION_REG{0xFE};                        // R
 }  // namespace command
 ///@endcond
 }  // namespace dual_kmeter

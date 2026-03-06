@@ -167,7 +167,7 @@ public:
     ///@{
     /*!
       @brief Measure temperature single shot
-      @param[out] data Measuerd data
+      @param[out] data Measured data
       @param munit  measurement unit
       @param timeoutMs Measurement timeout time(ms)
       @return True if successful
@@ -178,7 +178,7 @@ public:
                            const uint32_t timeoutMs                = 100);
     /*!
       @brief Measure internal temperature single shot
-      @param[out] data Measuerd data
+      @param[out] data Measured data
       @param munit  measurement unit
       @param timeoutMs Measurement timeout time(ms)
       @return True if successful

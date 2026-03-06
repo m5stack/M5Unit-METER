@@ -726,7 +726,7 @@ bool UnitINA226::read_measurement(ina226::Data& d)
             ret &= readRegister16BE((uint8_t)(reg + i), d.raw[i], 0);  // reg 0x01 - 0x04
         }
     }
-    d.currentLSB    = _currentLSB;
+    d.currentLSB  = _currentLSB;
     d.measureBits = _measureBits;
     return _measureBits && ret;
 }

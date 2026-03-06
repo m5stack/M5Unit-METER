@@ -100,14 +100,12 @@ struct Data {
     //! @brief Power (mW) Returns NaN if not measured
     inline float power() const
     {
-        return (measureBits & 0x04) ? raw[2] * currentLSB * 25.f * 1000.f
-                                    : std::numeric_limits<float>::quiet_NaN();
+        return (measureBits & 0x04) ? raw[2] * currentLSB * 25.f * 1000.f : std::numeric_limits<float>::quiet_NaN();
     }
     //! @brief Current (mA) Returns NaN if not measured
     inline float current() const
     {
-        return (measureBits & 0x08) ? (int16_t)raw[3] * currentLSB * 1000.f
-                                    : std::numeric_limits<float>::quiet_NaN();
+        return (measureBits & 0x08) ? (int16_t)raw[3] * currentLSB * 1000.f : std::numeric_limits<float>::quiet_NaN();
     }
 };
 
@@ -175,7 +173,7 @@ public:
 
     ///@name Properties
     ///@{
-    //@brief Gets the shunt Resistor (O)
+    //! @brief Gets the shunt Resistor (O)
     inline float shuntResistor() const
     {
         return _shuntRes;
@@ -313,26 +311,26 @@ public:
      */
     bool writeSamplingRate(const ina226::Sampling rate);
     /*!
-      @brief Read the convsrsion time of Bus voltage
+      @brief Read the conversion time of Bus voltage
       @param[out] ct Conversion time
       @return True if successful
      */
     bool readBusVoltageConversionTime(ina226::ConversionTime& ct);
     /*!
-      @brief Write the convsrsion time of Bus voltage
+      @brief Write the conversion time of Bus voltage
       @param ct Conversion time
       @return True if successful
       @warning During periodic detection runs, an error is returned
      */
     bool writeBusVoltageConversionTime(const ina226::ConversionTime ct);
     /*!
-      @brief Read the convsrsion time of Shunt voltage
+      @brief Read the conversion time of Shunt voltage
       @param[out] ct Conversion time
       @return True if successful
      */
     bool readShuntVoltageConversionTime(ina226::ConversionTime& ct);
     /*!
-      @brief Write the convsrsion time of Shunt voltage
+      @brief Write the conversion time of Shunt voltage
       @param ct Conversion time
       @return True if successful
       @warning During periodic detection runs, an error is returned
@@ -366,7 +364,7 @@ public:
       |Type|Alert|Description|Unit|Value|
       |---|---|---|---|---|
       |Type::ShuntOver Type::ShuntUnder| SOL/SUL|Shunt over/under limit|V| V / 0.00125 |
-      |Type::BusOver Type::BusUnder | BOL/BUL|Bus over/under limit|V| V / 0..00125 |
+      |Type::BusOver Type::BusUnder | BOL/BUL|Bus over/under limit|V| V / 0.00125 |
       |Type::PowerOver | POL|Power over limit|W| W / (25 ×  currentLSB) |
       |Type::ConversionReady | CNVR | Conversion ready| - | - |
       @warning During periodic detection runs, an error is returned
