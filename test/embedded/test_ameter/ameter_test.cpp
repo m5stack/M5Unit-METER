@@ -29,6 +29,8 @@ protected:
 
 TEST_F(TestAmeter, Correction)
 {
+    SCOPED_TRACE(ustr);
+
     constexpr Gain gain_table[] = {
         Gain::PGA_6144, Gain::PGA_4096, Gain::PGA_2048, Gain::PGA_1024, Gain::PGA_512, Gain::PGA_256,
     };

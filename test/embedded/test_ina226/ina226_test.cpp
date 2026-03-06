@@ -195,10 +195,10 @@ TEST_F(TestINA226, M5UnifiedCompat)
     EXPECT_FALSE(unit->empty());
 
     // M5Unified compat API returns V/A/W (not mV/mA/mW)
-    float busV    = unit->getBusVoltage();
-    float shuntV  = unit->getShuntVoltage();
+    float busV     = unit->getBusVoltage();
+    float shuntV   = unit->getShuntVoltage();
     float currentA = unit->getShuntCurrent();
-    float powerW  = unit->getPower();
+    float powerW   = unit->getPower();
 
     // Should be finite (periodic is running with all channels)
     EXPECT_TRUE(std::isfinite(busV));
@@ -350,9 +350,9 @@ TEST_F(TestINA226, Periodic)
     EXPECT_FALSE(unit->inPeriodic());
 
     // SoftwareI2C adds ~2-3ms overhead per transaction
-    auto ad          = unit->asAdapter<m5::unit::AdapterI2C>(m5::unit::Adapter::Type::I2C);
-    bool is_bus      = ad && ad->implType() == m5::unit::AdapterI2C::ImplType::Bus;
-    uint32_t tol     = is_bus ? 5 : 1;
+    auto ad      = unit->asAdapter<m5::unit::AdapterI2C>(m5::unit::Adapter::Type::I2C);
+    bool is_bus  = ad && ad->implType() == m5::unit::AdapterI2C::ImplType::Bus;
+    uint32_t tol = is_bus ? 5 : 1;
 
     // Rate coverage with all channels (timing verification)
     for (auto&& p : periodic_param_table) {
