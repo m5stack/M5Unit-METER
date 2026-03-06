@@ -137,6 +137,14 @@ jobs:
             archi: esp32
             board: m5stack_core
             build-properties: "-DUSING_UNIT_DUAL_KMETER"
+          - sketch: PlotToSerial
+            unit: UnitINA226
+            platform-url: https://espressif.github.io/arduino-esp32/package_esp32_index.json
+            platform-version: 3.3.6
+            platform: esp32
+            archi: esp32
+            board: m5stack_tab5
+            build-properties: "-DBUILTIN_UNIT_INA226_10A"
 
         exclude:
           - unit: UnitDualKmeter

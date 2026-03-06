@@ -156,6 +156,11 @@ jobs:
             framework: Arduino
             espressif32: latest
             unit: UnitINA226_1A
+          - example: PlotToSerial
+            board: Tab5
+            framework: Arduino
+            espressif32: latest
+            unit: BUILTIN_UNIT_INA226_10A
 
         exclude:
           - unit: UnitDualKmeter
