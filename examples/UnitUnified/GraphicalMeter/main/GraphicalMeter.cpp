@@ -226,7 +226,6 @@ void draw_gauge_column(const int32_t gx)
     }
 }
 
-
 int16_t to_plot_y(const float value)
 {
     const float minv            = static_cast<float>(active_scale_min);
@@ -235,7 +234,7 @@ int16_t to_plot_y(const float value)
     const int32_t top_plot_y    = graph_top + 1;
     const int32_t bottom_plot_y = graph_top + graph_height - 1;
     const int32_t plot_span     = std::max<int32_t>(1, bottom_plot_y - top_plot_y);
-    const float clamped = m5::stl::clamp(value, minv, maxv);
+    const float clamped         = m5::stl::clamp(value, minv, maxv);
     return static_cast<int16_t>(bottom_plot_y - ((clamped - minv) * plot_span / range));
 }
 
@@ -658,8 +657,8 @@ void loop()
 
     auto now = m5::utility::millis();
     if (now >= start_at + 1000) {
-        ups       = upsCnt;
-        sps       = sampleCnt;
+        ups = upsCnt;
+        sps = sampleCnt;
 #if defined(OUTPUT_DEBUG)
         M5_LOGI("UPS:%u SPS:%u", ups, sps);
 #endif
