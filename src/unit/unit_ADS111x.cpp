@@ -27,7 +27,7 @@ constexpr float coefficient_table[] = {
     1024.f / 32767,
     512.f / 32767,
     256.f / 32767,
-    // dupicated[6,7]
+    // duplicated[6,7]
     256.f / 32767,
     256.f / 32767,
 };
@@ -241,7 +241,8 @@ bool UnitADS111x::writeThreshold(const int16_t high, const int16_t low)
         M5_LIB_LOGW("high must be greater than low");
         return false;
     }
-    return writeRegister16BE(HIGH_THRESHOLD_REG, (uint16_t)high) && writeRegister16BE(LOW_THRESHOLD_REG, (uint16_t)low);
+    return writeRegister16BE(HIGH_THRESHOLD_REG, static_cast<uint16_t>(high)) &&
+           writeRegister16BE(LOW_THRESHOLD_REG, static_cast<uint16_t>(low));
 }
 
 //

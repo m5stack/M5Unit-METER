@@ -50,11 +50,11 @@ struct Data {
     std::array<uint8_t, 4> raw{};  //!< Raw data
     Channel channel{};             //!< Which channel?
 
-    //@note Unit depends on setting
+    //! @note Unit depends on setting
     inline float temperature() const
     {
-        return static_cast<int32_t>(((uint32_t)raw[3] << 24) | ((uint32_t)raw[2] << 16) | ((uint32_t)raw[1] << 8) |
-                                    ((uint32_t)raw[0] << 0)) *
+        return static_cast<int32_t>((static_cast<uint32_t>(raw[3]) << 24) | (static_cast<uint32_t>(raw[2]) << 16) |
+                                    (static_cast<uint32_t>(raw[1]) << 8) | static_cast<uint32_t>(raw[0])) *
                0.01f;
     }
 };
@@ -99,9 +99,9 @@ public:
         bool start_periodic{true};
         //! periodic interval(ms) if start on begin
         uint32_t interval{100};
-        //! //!< measurement channel if start on begin
+        //!< measurement channel if start on begin
         dual_kmeter::Channel measurement_channel{dual_kmeter::Channel::One};
-        //! //!< measurement unit if start on begin
+        //!< measurement unit if start on begin
         dual_kmeter::MeasurementUnit measurement_unit{dual_kmeter::MeasurementUnit::Celsius};
     };
 
@@ -135,17 +135,20 @@ public:
 
     ///@name Properties
     ///@{
-    /*! Gets the measurement unit on periodic measurement */
+    //! @brief Gets the measurement unit on periodic measurement
+    //! @return Current measurement unit
     dual_kmeter::MeasurementUnit measurementUnit() const
     {
         return _munit;
     }
-    /*! Gets the measurement channel on periodic measurement */
+    //! @brief Gets the measurement channel on periodic measurement
+    //! @return Current measurement channel
     dual_kmeter::Channel measurementChannel() const
     {
         return _channel;
     }
-    /*! Set the measurement unit on periodic measurement */
+    //! @brief Set the measurement unit on periodic measurement
+    //! @param munit Measurement unit to set
     void setMeasurementUnit(const dual_kmeter::MeasurementUnit munit)
     {
         _munit = munit;
@@ -220,18 +223,19 @@ public:
       @return True if successful
       @warning During periodic detection runs, an error is returned
     */
-    bool measureSingleshot(dual_kmeter::Data& d, const dual_kmeter::Channel channel,
+    bool measureSingleshot(dual_kmeter::Data& data, const dual_kmeter::Channel channel,
                            dual_kmeter::MeasurementUnit munit = dual_kmeter::MeasurementUnit::Celsius,
                            const uint32_t timeoutMs           = 100);
     /*!
       @brief Measure internal temperature single shot
       @param[out] data Measured data
+      @param channel Channel to be measured
       @param munit  measurement unit
       @param timeoutMs Measurement timeout time(ms)
       @return True if successful
       @warning During periodic detection runs, an error is returned
      */
-    bool measureInternalSingleshot(dual_kmeter::Data& d, const dual_kmeter::Channel channel,
+    bool measureInternalSingleshot(dual_kmeter::Data& data, const dual_kmeter::Channel channel,
                                    const dual_kmeter::MeasurementUnit munit = dual_kmeter::MeasurementUnit::Celsius,
                                    const uint32_t timeoutMs                 = 100);
     ///@}

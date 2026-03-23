@@ -36,11 +36,11 @@ enum class MeasurementUnit : uint8_t {
 struct Data {
     std::array<uint8_t, 4> raw{};  //!< Raw data
 
-    //@note Unit depends on setting
+    //! @note Unit depends on setting
     inline float temperature() const
     {
-        return static_cast<int32_t>(((uint32_t)raw[3] << 24) | ((uint32_t)raw[2] << 16) | ((uint32_t)raw[1] << 8) |
-                                    ((uint32_t)raw[0] << 0)) *
+        return static_cast<int32_t>((static_cast<uint32_t>(raw[3]) << 24) | (static_cast<uint32_t>(raw[2]) << 16) |
+                                    (static_cast<uint32_t>(raw[1]) << 8) | static_cast<uint32_t>(raw[0])) *
                0.01f;
     }
 };
@@ -63,7 +63,7 @@ public:
         bool start_periodic{true};
         //! periodic interval(ms) if start on begin
         uint32_t interval{100};
-        //! //!< measurement unit if start on begin
+        //!< measurement unit if start on begin
         kmeter_iso::MeasurementUnit measurement_unit{kmeter_iso::MeasurementUnit::Celsius};
     };
 
@@ -97,12 +97,14 @@ public:
 
     ///@name Properties
     ///@{
-    /*! Gets the measurement unit on periodic measurement */
+    //! @brief Gets the measurement unit on periodic measurement
+    //! @return Current measurement unit
     kmeter_iso::MeasurementUnit measurementUnit() const
     {
         return _munit;
     }
-    /*! Set the measurement unit on periodic measurement */
+    //! @brief Set the measurement unit on periodic measurement
+    //! @param munit Measurement unit to set
     void setMeasurementUnit(const kmeter_iso::MeasurementUnit munit)
     {
         _munit = munit;
@@ -173,7 +175,7 @@ public:
       @return True if successful
       @warning During periodic detection runs, an error is returned
      */
-    bool measureSingleshot(kmeter_iso::Data& d,
+    bool measureSingleshot(kmeter_iso::Data& data,
                            const kmeter_iso::MeasurementUnit munit = kmeter_iso::MeasurementUnit::Celsius,
                            const uint32_t timeoutMs                = 100);
     /*!
@@ -184,7 +186,7 @@ public:
       @return True if successful
       @warning During periodic detection runs, an error is returned
      */
-    bool measureInternalSingleshot(kmeter_iso::Data& d,
+    bool measureInternalSingleshot(kmeter_iso::Data& data,
                                    const kmeter_iso::MeasurementUnit munit = kmeter_iso::MeasurementUnit::Celsius,
                                    const uint32_t timeoutMs                = 100);
     ///@}

@@ -39,19 +39,30 @@ public:
     {
     }
 
+    //! @brief Gets the expected (hope) ADC value for the given gain
+    //! @param gain Gain setting
+    //! @return Expected ADC value
     inline int16_t hope(m5::unit::ads111x::Gain gain) const
     {
         return _calibration[m5::stl::to_underlying(gain)].hope;
     }
+    //! @brief Gets the actual ADC value for the given gain
+    //! @param gain Gain setting
+    //! @return Actual ADC value
     inline int16_t actual(m5::unit::ads111x::Gain gain) const
     {
         return _calibration[m5::stl::to_underlying(gain)].actual;
     }
+    //! @brief Gets the calibration factor for the given gain
+    //! @param gain Gain setting
+    //! @return Calibration factor (hope / actual)
     inline float calibrationFactor(m5::unit::ads111x::Gain gain) const
     {
         return actual(gain) ? (float)hope(gain) / actual(gain) : 1.0f;
     }
 
+    //! @brief Read calibration data from EEPROM
+    //! @return True if successful
     bool readCalibration();
 
 protected:

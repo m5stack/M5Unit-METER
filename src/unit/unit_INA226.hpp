@@ -143,7 +143,7 @@ public:
 protected:
     /*!
       @brief Constructor
-      @param shuntRes Shunt resistor (O)
+      @param shuntRes Shunt resistor (Ohm)
       @param maxCurA Maximum measure current (A)
       @param curLSB currentLSB
      */
@@ -173,7 +173,7 @@ public:
 
     ///@name Properties
     ///@{
-    //! @brief Gets the shunt Resistor (O)
+    //! @brief Gets the shunt Resistor (Ohm)
     inline float shuntResistor() const
     {
         return _shuntRes;
@@ -229,7 +229,7 @@ public:
     }
     /*!
       @brief Start periodic measurement
-      @param rate Sampling Sampling rate
+      @param rate Sampling rate
       @param sct Shunt conversion time
       @param bct Bus conversion time
       @param current Measure current if true
@@ -273,7 +273,7 @@ public:
       @brief Measurement single shot
       @details Measuring in the current settings
       @param[out] data Measured data
-      @param rate Sampling Sampling rate
+      @param rate Sampling rate
       @param sct Shunt conversion time
       @param bct Bus conversion time
       @param current Measure current if true
@@ -299,13 +299,13 @@ public:
     bool readMode(ina226::Mode& mode);
     /*!
       @brief Read the sampling rate
-      @param[out] rate Samling rate
+      @param[out] rate Sampling rate
       @return True if successful
      */
     bool readSamplingRate(ina226::Sampling& rate);
     /*!
       @brief Write the sampling rate
-      @param rate Samling rate
+      @param rate Sampling rate
       @return True if successful
       @warning During periodic detection runs, an error is returned
      */
