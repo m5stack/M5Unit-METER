@@ -84,7 +84,7 @@ void setup()
     M5_LOGI("M5UnitUnified has been begun");
     M5_LOGI("%s", Units.debugInfo().c_str());
 
-    M5_LOGI(">RES:%f COEE:%f CF:%f CORR:%f periodic :%d", unit.resolution(), unit.coefficient(),
+    M5_LOGI(">RES:%f COEF:%f CF:%f CORR:%f periodic:%d", unit.resolution(), unit.coefficient(),
             unit.calibrationFactor(), unit.correction(), unit.inPeriodic());
 
     lcd.fillScreen(TFT_DARKGREEN);
