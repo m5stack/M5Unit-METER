@@ -194,6 +194,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install intelhex
+        run: pip install intelhex
+
       - name: Build examples
         uses: karniv00l/platformio-run-action@v1
         with:
