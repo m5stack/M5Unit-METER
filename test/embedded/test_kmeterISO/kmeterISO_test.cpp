@@ -54,6 +54,10 @@ TEST_F(TestKmeterISO, Basic)
     EXPECT_TRUE(unit->readFirmwareVersion(ver));
     EXPECT_NE(ver, 0x00);
 
+    // Status
+    uint8_t status{};
+    EXPECT_TRUE(unit->readStatus(status));
+
     // Properties
     EXPECT_EQ(unit->measurementUnit(), MeasurementUnit::Celsius);
 

@@ -168,6 +168,15 @@ TEST_F(TestINA226, Basic)
     EXPECT_TRUE(unit->readCalibration(cal));
     EXPECT_NE(cal, 0U);
 
+    // writeCalibration round-trip
+    {
+        uint16_t orig = cal;
+        EXPECT_TRUE(unit->writeCalibration(0x1234));
+        EXPECT_TRUE(unit->readCalibration(cal));
+        EXPECT_EQ(cal, 0x1234);
+        EXPECT_TRUE(unit->writeCalibration(orig));  // restore
+    }
+
     Alert alert{};
     EXPECT_TRUE(unit->readAlert(alert));
     EXPECT_EQ(alert, Alert::None);
@@ -282,6 +291,12 @@ TEST_F(TestINA226, Settings)
         EXPECT_EQ(a2, a);
         EXPECT_TRUE(unit->readAlertLimit(lim));
         EXPECT_EQ(lim, v);
+    }
+
+    // AlertOccurred
+    {
+        bool occurred{};
+        EXPECT_TRUE(unit->readAlertOccurred(occurred));
     }
 
     // Reset

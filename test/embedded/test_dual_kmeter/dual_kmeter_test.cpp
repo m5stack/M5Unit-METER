@@ -59,6 +59,10 @@ TEST_F(TestDualKmeter, Basic)
     EXPECT_TRUE(unit->readFirmwareVersion(ver));
     EXPECT_NE(ver, 0x00);
 
+    // Status
+    uint8_t status{};
+    EXPECT_TRUE(unit->readStatus(status));
+
     // Measure unit
     EXPECT_EQ(unit->measurementUnit(), MeasurementUnit::Celsius);
 
