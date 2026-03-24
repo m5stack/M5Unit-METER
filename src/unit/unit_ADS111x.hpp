@@ -94,7 +94,8 @@ struct Config {
     }
     inline Gain pga() const
     {
-        return static_cast<Gain>((value >> 9) & 0x07);
+        uint8_t v = (value >> 9) & 0x07;
+        return static_cast<Gain>(v > 5 ? 5 : v);  // 6,7 are duplicates of PGA_256
     }
     inline bool mode() const
     {
