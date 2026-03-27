@@ -77,6 +77,9 @@ TEST_F(TestKmeterISO, Singleshot)
     for (auto&& mu : mu_table) {
         EXPECT_FALSE(unit->measureSingleshot(d, mu));
     }
+    for (auto&& mu : mu_table) {
+        EXPECT_FALSE(unit->measureInternalSingleshot(d, mu));
+    }
 
     //
     EXPECT_TRUE(unit->stopPeriodicMeasurement());
@@ -88,6 +91,15 @@ TEST_F(TestKmeterISO, Singleshot)
             EXPECT_TRUE(unit->measureSingleshot(d, mu, 1000));
             EXPECT_TRUE(std::isfinite(d.temperature()));
             // M5_LOGI("T:%f", d.temperature());
+            m5::utility::delay(100);
+        }
+    }
+
+    for (auto&& mu : mu_table) {
+        uint32_t cnt{8};
+        while (cnt--) {
+            EXPECT_TRUE(unit->measureInternalSingleshot(d, mu, 1000));
+            EXPECT_TRUE(std::isfinite(d.temperature()));
             m5::utility::delay(100);
         }
     }

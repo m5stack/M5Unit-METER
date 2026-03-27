@@ -36,6 +36,7 @@ enum class MeasurementUnit : uint8_t {
 struct Data {
     std::array<uint8_t, 4> raw{};  //!< Raw data
 
+    //! @brief Temperature value
     //! @note Unit depends on setting
     inline float temperature() const
     {
