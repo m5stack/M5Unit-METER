@@ -88,7 +88,7 @@ void UnitADS111x::update(const bool force)
     if (inPeriodic()) {
         elapsed_time_t at{m5::utility::millis()};
         if (force || !_latest || at >= _latest + _interval) {
-            // The rate of continuous conversion is equal to the programmeddata
+            // The rate of continuous conversion is equal to the programmed data
             // rate. Data can be read at any time and always reflect the most
             // recent completed conversion.
             ads111x::Data d{};
