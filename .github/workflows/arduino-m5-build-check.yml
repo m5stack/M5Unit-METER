@@ -12,10 +12,10 @@ on:
     branches:
       - '*'
     paths:
-      - 'src/unit/**.cpp'
-      - 'src/unit/**.hpp'
-      - 'src/unit/**.h'
-      - 'src/unit/**.c'
+      - 'src/**.cpp'
+      - 'src/**.hpp'
+      - 'src/**.h'
+      - 'src/**.c'
       - 'test/**.cpp'
       - 'test/**.hpp'
       - 'test/**.h'
@@ -28,10 +28,10 @@ on:
       - '.github/workflows/arduino-m5-build-check.yml'
   pull_request:
     paths:
-      - 'src/unit/**.cpp'
-      - 'src/unit/**.hpp'
-      - 'src/unit/**.h'
-      - 'src/unit/**.c'
+      - 'src/**.cpp'
+      - 'src/**.hpp'
+      - 'src/**.h'
+      - 'src/**.c'
       - 'test/**.cpp'
       - 'test/**.hpp'
       - 'test/**.h'
