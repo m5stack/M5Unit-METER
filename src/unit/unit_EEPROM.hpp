@@ -58,7 +58,7 @@ public:
     //! @return Calibration factor (hope / actual)
     inline float calibrationFactor(m5::unit::ads111x::Gain gain) const
     {
-        return actual(gain) ? (float)hope(gain) / actual(gain) : 1.0f;
+        return actual(gain) ? static_cast<float>(hope(gain)) / actual(gain) : 1.0f;
     }
 
     //! @brief Read calibration data from EEPROM

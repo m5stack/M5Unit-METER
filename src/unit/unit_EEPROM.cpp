@@ -19,7 +19,7 @@ constexpr uint8_t DATA_ADDRESS{0xD0};
 constexpr Gain gain_table[] = {
     Gain::PGA_6144, Gain::PGA_4096, Gain::PGA_2048, Gain::PGA_1024, Gain::PGA_512, Gain::PGA_256,
 };
-};  // namespace
+}  // namespace
 
 namespace m5 {
 namespace unit {
@@ -71,8 +71,8 @@ bool UnitEEPROM::read_calibration(const Gain gain, int16_t& hope, int16_t& actua
 
     m5::types::big_uint16_t hh(buf[1], buf[2]);
     m5::types::big_uint16_t aa(buf[3], buf[4]);
-    hope   = (int16_t)hh.get();
-    actual = (int16_t)aa.get();
+    hope   = static_cast<int16_t>(hh.get());
+    actual = static_cast<int16_t>(aa.get());
 
     return true;
 }
