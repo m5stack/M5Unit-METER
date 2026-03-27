@@ -90,7 +90,7 @@ struct Data {
     //! @brief Shunt voltage (mV) Returns NaN if not measured
     inline float shuntVoltage() const
     {
-        return (measureBits & 0x01) ? (int16_t)raw[0] * 0.0025f : std::numeric_limits<float>::quiet_NaN();
+        return (measureBits & 0x01) ? static_cast<int16_t>(raw[0]) * 0.0025f : std::numeric_limits<float>::quiet_NaN();
     }
     //! @brief Bus voltage (mV) Returns NaN if not measured
     inline float voltage() const
@@ -105,7 +105,8 @@ struct Data {
     //! @brief Current (mA) Returns NaN if not measured
     inline float current() const
     {
-        return (measureBits & 0x08) ? (int16_t)raw[3] * currentLSB * 1000.f : std::numeric_limits<float>::quiet_NaN();
+        return (measureBits & 0x08) ? static_cast<int16_t>(raw[3]) * currentLSB * 1000.f
+                                    : std::numeric_limits<float>::quiet_NaN();
     }
 };
 
@@ -472,6 +473,7 @@ class UnitINA226_10A : public UnitINA226 {
 
 public:
     /*!
+      @brief Constructor for UnitINA226_10A
       @param curLSB currentLSB (calculated and set internally if zero)
      */
     explicit UnitINA226_10A(const float curLSB = 0.0f)
@@ -492,6 +494,7 @@ class UnitINA226_1A : public UnitINA226 {
 
 public:
     /*!
+      @brief Constructor for UnitINA226_1A
       @param curLSB currentLSB (calculated and set internally if zero)
      */
     explicit UnitINA226_1A(const float curLSB = 0.0f)
@@ -513,12 +516,12 @@ constexpr uint8_t BUS_VOLTAGE_REG{0x02};
 constexpr uint8_t POWER_REG{0x03};
 constexpr uint8_t CURRENT_REG{0x04};
 
-constexpr uint8_t CALIBRATION_REG{0X05};
+constexpr uint8_t CALIBRATION_REG{0x05};
 constexpr uint8_t MASK_REG{0x06};
 constexpr uint8_t ALERT_LIMIT_REG{0x07};
 
 constexpr uint8_t MANUFACTURER_ID_REG{0xFE};
-constexpr uint8_t DIE_ID_REG{0XFF};
+constexpr uint8_t DIE_ID_REG{0xff};
 }  // namespace command
 ///@endcond
 }  // namespace ina226

@@ -153,11 +153,11 @@ TEST_F(TestINA226, Basic)
 #if defined(USING_UNIT_INA226_1A)
     constexpr float res{0.080f};
     constexpr float maxCur{1.0f};
-    constexpr float cur{0.00030518509f};
+    constexpr float cur{1.0f / 32768.f};  // 2^15 per datasheet
 #elif defined(USING_UNIT_INA226_10A)
     constexpr float res{0.005f};
     constexpr float maxCur{10.0f};
-    constexpr float cur{0.00030518509f};
+    constexpr float cur{10.0f / 32768.f};  // 2^15 per datasheet
 #endif
 
     EXPECT_FLOAT_EQ(unit->shuntResistor(), res);

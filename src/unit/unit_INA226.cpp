@@ -10,7 +10,6 @@
 #include "unit_INA226.hpp"
 #include <M5Utility.hpp>
 #include <array>
-#include <thread>
 
 using namespace m5::utility::mmh3;
 using namespace m5::unit::types;
@@ -19,7 +18,7 @@ using namespace m5::unit::ina226::command;
 using m5::unit::types::elapsed_time_t;
 
 namespace {
-constexpr uint16_t MANUFACTURER_ID{0X5449};
+constexpr uint16_t MANUFACTURER_ID{0x5449};
 constexpr uint16_t DIE_ID{0x2260};
 constexpr uint16_t DEFAULT_CONFIG_VALUE{0x4127};
 
@@ -223,12 +222,12 @@ struct Mask {
 
 float calculate_currentLSB(const float maxCur)
 {
-    return maxCur / 32767.f;
+    return maxCur / 32768.f;
 }
 
 uint16_t calculate_calibration(const float shuntRes, const float maxCur, const float curLSB)
 {
-    return (0.00512f / (curLSB * shuntRes));
+    return static_cast<uint16_t>(0.00512f / (curLSB * shuntRes));
 }
 
 uint32_t calculate_interval(const uint16_t v /* config bits*/)
