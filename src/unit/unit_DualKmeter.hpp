@@ -50,6 +50,7 @@ struct Data {
     std::array<uint8_t, 4> raw{};  //!< Raw data
     Channel channel{};             //!< Which channel?
 
+    //! @brief Temperature value
     //! @note Unit depends on setting
     inline float temperature() const
     {
@@ -83,7 +84,7 @@ struct Data {
   |0x1E|ON|OFF|ON|ON||
   |0x1F|OFF|ON|ON|ON||
   |0x20|ON|ON|ON|ON||
-  @code m5::unit::DualKmeter unit{0x1A}; // Configured address
+  @code m5::unit::UnitDualKmeter unit{0x1A}; // Configured address
   @endcode
 */
 class UnitDualKmeter : public Component, public PeriodicMeasurementAdapter<UnitDualKmeter, dual_kmeter::Data> {
@@ -176,8 +177,8 @@ public:
     }
     /*!
       @brief Start periodic measurement
-      @param channel Channel to be measured
       @param interval Periodic interval(ms)
+      @param channel Channel to be measured
       @param munit Measurement unit
       @return True if successful
     */

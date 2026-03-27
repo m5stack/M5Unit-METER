@@ -10,7 +10,6 @@
 #include "unit_DualKmeter.hpp"
 #include <M5Utility.hpp>
 #include <array>
-#include <thread>
 
 using namespace m5::utility::mmh3;
 using namespace m5::unit::types;
