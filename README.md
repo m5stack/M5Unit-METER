@@ -69,6 +69,40 @@ See also examples using conventional methods here.
 ## Examples
 See also [examples/UnitUnified](examples/UnitUnified)
 
+### For ArduinoIDE settings
+You must choose a define symbol for the unit you will use.
+(Rewrite source or specify with compile options)
+
+- GraphicalMeter
+```cpp
+// *************************************************************
+// Choose one define symbol to match the unit you are using
+// *************************************************************
+#if !defined(USING_UNIT_VMETER) && !defined(USING_UNIT_AMETER) && !defined(USING_UNIT_KMETER_ISO) && \
+    !defined(USING_UNIT_DUAL_KMETER)
+// For Vmeter
+// #define USING_UNIT_VMETER
+// For Ameter
+// #define USING_UNIT_AMETER
+// For KmeterISO
+// #define USING_UNIT_KMETER_ISO
+// For DualKmeter
+// #define USING_UNIT_DUAL_KMETER
+#endif
+```
+
+- UnitINA226/PlotToSerial
+```cpp
+// *************************************************************
+// Choose one define symbol to match the unit you are using
+// *************************************************************
+#if !defined(USING_UNIT_INA226_1A) && !defined(USING_UNIT_INA226_10A) && !defined(BUILTIN_UNIT_INA226_10A)
+// #define USING_UNIT_INA226_1A
+// #define USING_UNIT_INA226_10A
+// #define BUILTIN_UNIT_INA226_10A
+#endif
+```
+
 ## Doxygen document
 [GitHub Pages](https://m5stack.github.io/M5Unit-METER/)
 
@@ -85,4 +119,3 @@ If you want to output Git commit hashes to html, do it for the git cloned folder
 - [Doxygen](https://www.doxygen.nl/)
 - [pcregrep](https://formulae.brew.sh/formula/pcre2)
 - [Git](https://git-scm.com/) (Output commit hash to html)
-
