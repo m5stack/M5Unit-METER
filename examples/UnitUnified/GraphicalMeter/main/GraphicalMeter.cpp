@@ -33,7 +33,7 @@
 #include <freertos/queue.h>
 #include <vector>
 
-#define OUTPUT_DEBUG
+//#define OUTPUT_DEBUG
 
 // *************************************************************
 // Choose one define symbol to match the unit you are using
@@ -109,7 +109,7 @@ bool has_active_scale{};
 
 #if defined(USING_UNIT_VMETER)
 // Voltage (mV): ±20 ~ ±130000
-constexpr int32_t fixed_ranges[][2] = {{-20, 20}, {-200, 200}, {-2000, 2000}, {-20000, 20000}, {-130000, 130000}};
+constexpr int32_t fixed_ranges[][2] = {{0, 100}, {0, 500}, {0, 1000}, {0, 5000}, {0, 10000}, {0, 130000}};
 constexpr const char* range_unit    = "mV";
 #elif defined(USING_UNIT_AMETER)
 // Current (mA): ±25 ~ ±500
@@ -153,15 +153,6 @@ inline bool pop_sample(float& v)
 inline float plot_at(size_t screen_col)
 {
     return plot_values[(plot_head + screen_col) % plot_values.size()];
-}
-
-inline const char* current_tag()
-{
-#if defined(USING_UNIT_DUAL_KMETER)
-    return tag;
-#else
-    return tag;
-#endif
 }
 
 // Compute the vertical pixel range at column sc for a polyline using exact Bresenham split.
@@ -303,7 +294,7 @@ void draw_footer()
         lcd.setFont(meter_width >= 240 ? &fonts::FreeSansBold12pt7b : &fonts::FreeSansBold9pt7b);
         lcd.setTextDatum(textdatum_t::middle_left);
         lcd.setTextColor(TFT_WHITE, TFT_BLACK);
-        lcd.drawString(current_tag(), meter_offset_x, plot_height + footer_height / 2);
+        lcd.drawString(tag, meter_offset_x, plot_height + footer_height / 2);
         footer_static_drawn = true;
     }
 
