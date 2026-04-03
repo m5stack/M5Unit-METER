@@ -5,6 +5,8 @@
  */
 /*
   UnitTest for KMeterISO
+  NOTE: A thermocouple must be connected to the unit for tests to pass.
+        Without it, the STM32 never reports data-ready and all measurements time out.
 */
 #include <gtest/gtest.h>
 #include <Wire.h>
@@ -14,7 +16,6 @@
 #include <googletest/test_helper.hpp>
 #include <unit/unit_KmeterISO.hpp>
 #include <chrono>
-#include <thread>
 #include <iostream>
 
 using namespace m5::unit::googletest;
@@ -23,11 +24,9 @@ using namespace m5::unit::kmeter_iso;
 using namespace m5::unit::kmeter_iso::command;
 using m5::unit::types::elapsed_time_t;
 
-const ::testing::Environment* global_fixture = ::testing::AddGlobalTestEnvironment(new GlobalFixture<100000U>());
-
 constexpr uint32_t STORED_SIZE{6};
 
-class TestKmeterISO : public ComponentTestBase<UnitKmeterISO, bool> {
+class TestKmeterISO : public I2CComponentTestBase<UnitKmeterISO> {
 protected:
     virtual UnitKmeterISO* get_instance() override
     {
@@ -37,61 +36,16 @@ protected:
         ptr->component_config(ccfg);
         return ptr;
     }
-    virtual bool is_using_hal() const override
-    {
-        return GetParam();
-    };
 };
-
-// INSTANTIATE_TEST_SUITE_P(ParamValues, TestKmeterISO, ::testing::Values(false, true));
-// INSTANTIATE_TEST_SUITE_P(ParamValues, TestKmeterISO, ::testing::Values(true));
-INSTANTIATE_TEST_SUITE_P(ParamValues, TestKmeterISO, ::testing::Values(false));
 
 namespace {
 
 constexpr MeasurementUnit mu_table[] = {MeasurementUnit::Celsius, MeasurementUnit::Fahrenheit};
 constexpr uint32_t interval_table[]  = {20, 100, 500};
 
-template <class U>
-elapsed_time_t test_periodic(U* unit, const uint32_t times, const uint32_t measure_duration = 0)
-{
-    auto tm         = unit->interval();
-    auto timeout_at = m5::utility::millis() + 10 * 1000;
-
-    do {
-        unit->update();
-        if (unit->updated()) {
-            break;
-        }
-        std::this_thread::yield();
-    } while (!unit->updated() && m5::utility::millis() <= timeout_at);
-    // timeout
-    if (!unit->updated()) {
-        return 0;
-    }
-
-    //
-    uint32_t measured{};
-    auto start_at = m5::utility::millis();
-    timeout_at    = start_at + (times * (tm + measure_duration) * 2);
-
-    do {
-        unit->update();
-        measured += unit->updated() ? 1 : 0;
-        if (measured >= times) {
-            break;
-        }
-        // std::this_thread::yield();
-        m5::utility::delay(1);
-
-    } while (measured < times && m5::utility::millis() <= timeout_at);
-    return (measured == times) ? m5::utility::millis() - start_at : 0;
-    // return (measured == times) ? unit->updatedMillis() - start_at : 0;
-}
-
 }  // namespace
 
-TEST_P(TestKmeterISO, Basic)
+TEST_F(TestKmeterISO, Basic)
 {
     SCOPED_TRACE(ustr);
 
@@ -99,6 +53,10 @@ TEST_P(TestKmeterISO, Basic)
     uint8_t ver{0x00};
     EXPECT_TRUE(unit->readFirmwareVersion(ver));
     EXPECT_NE(ver, 0x00);
+
+    // Status
+    uint8_t status{};
+    EXPECT_TRUE(unit->readStatus(status));
 
     // Properties
     EXPECT_EQ(unit->measurementUnit(), MeasurementUnit::Celsius);
@@ -109,15 +67,18 @@ TEST_P(TestKmeterISO, Basic)
     EXPECT_EQ(unit->measurementUnit(), MeasurementUnit::Celsius);
 }
 
-TEST_P(TestKmeterISO, Singleshot)
+TEST_F(TestKmeterISO, Singleshot)
 {
     SCOPED_TRACE(ustr);
     Data d{};
 
-    // Failed in peiordic
+    // Failed in periodic
     EXPECT_TRUE(unit->inPeriodic());
     for (auto&& mu : mu_table) {
         EXPECT_FALSE(unit->measureSingleshot(d, mu));
+    }
+    for (auto&& mu : mu_table) {
+        EXPECT_FALSE(unit->measureInternalSingleshot(d, mu));
     }
 
     //
@@ -133,9 +94,18 @@ TEST_P(TestKmeterISO, Singleshot)
             m5::utility::delay(100);
         }
     }
+
+    for (auto&& mu : mu_table) {
+        uint32_t cnt{8};
+        while (cnt--) {
+            EXPECT_TRUE(unit->measureInternalSingleshot(d, mu, 1000));
+            EXPECT_TRUE(std::isfinite(d.temperature()));
+            m5::utility::delay(100);
+        }
+    }
 }
 
-TEST_P(TestKmeterISO, Periodic)
+TEST_F(TestKmeterISO, Periodic)
 {
     SCOPED_TRACE(ustr);
 
@@ -153,11 +123,13 @@ TEST_P(TestKmeterISO, Periodic)
             EXPECT_TRUE(unit->startPeriodicMeasurement(it, mu));
             EXPECT_TRUE(unit->inPeriodic());
 
-            auto elapsed = test_periodic(unit.get(), STORED_SIZE);
+            auto r = collect_periodic_measurements(unit.get(), STORED_SIZE);
+            EXPECT_FALSE(r.timed_out);
+            EXPECT_EQ(r.update_count, STORED_SIZE);
+            EXPECT_LE(r.median(), r.expected_interval + 1);
+
             EXPECT_TRUE(unit->stopPeriodicMeasurement());
             EXPECT_FALSE(unit->inPeriodic());
-
-            EXPECT_GE(elapsed, it * STORED_SIZE);
 
             EXPECT_EQ(unit->available(), STORED_SIZE);
             EXPECT_FALSE(unit->empty());
@@ -189,7 +161,7 @@ TEST_P(TestKmeterISO, Periodic)
   WARNING!!
   Failure of this test will result in an unexpected I2C address being set!
 */
-TEST_P(TestKmeterISO, I2CAddress)
+TEST_F(TestKmeterISO, I2CAddress)
 {
     SCOPED_TRACE(ustr);
 

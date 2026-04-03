@@ -10,7 +10,6 @@
 #include "unit_KmeterISO.hpp"
 #include <M5Utility.hpp>
 #include <array>
-#include <thread>
 
 using namespace m5::utility::mmh3;
 using namespace m5::unit::types;
@@ -50,10 +49,19 @@ bool UnitKmeterISO::begin()
     }
 
     uint8_t ver{};
-    if (!readFirmwareVersion(ver) && (ver == 0x00)) {
+    for (uint8_t retry = 0; retry < 3; ++retry) {
+        if (readFirmwareVersion(ver) && ver != 0) {
+            break;
+        }
+        M5_LIB_LOGW("Failed to read version, retry %u", retry);
+        ver = 0;
+        m5::utility::delay(100);
+    }
+    if (!ver) {
         M5_LIB_LOGE("Failed to read version %02X", ver);
         return false;
     }
+
     return _cfg.start_periodic ? startPeriodicMeasurement(_cfg.interval, _cfg.measurement_unit) : true;
 }
 

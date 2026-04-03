@@ -8,10 +8,10 @@ on:
     branches:
       - '*'
     paths:
-      - 'src/unit/**.cpp'
-      - 'src/unit/**.hpp'
-      - 'src/unit/**.h'
-      - 'src/unit/**.c'
+      - 'src/**.cpp'
+      - 'src/**.hpp'
+      - 'src/**.h'
+      - 'src/**.c'
       - 'test/**.cpp'
       - 'test/**.hpp'
       - 'test/**.h'
@@ -21,14 +21,15 @@ on:
       - 'examples/UnitUnified/**.hpp'
       - 'examples/UnitUnified/**.h'
       - 'examples/UnitUnified/**.c'
-      - '**/platformio-build-check.yml'
-      - '**/platformio.ini'
+      - '.github/workflows/platformio-build-check.yml'
+      - 'platformio.ini'
+      - 'unit_*_env.ini'
   pull_request:
     paths:
-      - 'src/unit/**.cpp'
-      - 'src/unit/**.hpp'
-      - 'src/unit/**.h'
-      - 'src/unit/**.c'
+      - 'src/**.cpp'
+      - 'src/**.hpp'
+      - 'src/**.h'
+      - 'src/**.c'
       - 'test/**.cpp'
       - 'test/**.hpp'
       - 'test/**.h'
@@ -38,8 +39,9 @@ on:
       - 'examples/UnitUnified/**.hpp'
       - 'examples/UnitUnified/**.h'
       - 'examples/UnitUnified/**.c'
-      - '**/platformio-build-check.yml'
-      - '**/platformio.ini'
+      - '.github/workflows/platformio-build-check.yml'
+      - 'platformio.ini'
+      - 'unit_*_env.ini'
   workflow_dispatch:
 
 defaults:
@@ -54,11 +56,11 @@ jobs:
   build:
     name: ${{ matrix.unit }}:${{ matrix.example }}@${{ matrix.board }}:${{ matrix.framework }}:${{ matrix.espressif32 }}
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 12
 
     strategy:
       fail-fast: false
-      #max-parallel: 1
+      max-parallel: 20
       
       matrix:
         example:
@@ -78,14 +80,18 @@ jobs:
           - Fire
           - StampS3
           - Dial
-          - AtomMatrix
+          - Atom
           - AtomS3
           - AtomS3R
           - NanoC6
           - StickCPlus
           - StickCPlus2
+          - StickS3
           - Paper
           - CoreInk
+          - Cardputer
+          - Tab5
+          - NessoN1
 
         framework:
           - Arduino
@@ -152,6 +158,11 @@ jobs:
             framework: Arduino
             espressif32: latest
             unit: UnitINA226_1A
+          - example: PlotToSerial
+            board: Tab5
+            framework: Arduino
+            espressif32: latest
+            unit: BUILTIN_UNIT_INA226_10A
 
         exclude:
           - unit: UnitDualKmeter
@@ -159,7 +170,7 @@ jobs:
           - unit: UnitDualKmeter
             board: Dial
           - unit: UnitDualKmeter
-            board: AtomMatrix
+            board: Atom
           - unit: UnitDualKmeter
             board: AtomS3
           - unit: UnitDualKmeter
@@ -174,12 +185,24 @@ jobs:
             board: Paper
           - unit: UnitDualKmeter
             board: CoreInk
+          - unit: UnitDualKmeter
+            board: StickS3
+          - unit: UnitDualKmeter
+            board: Cardputer
+          - unit: UnitDualKmeter
+            board: NessoN1
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          python-version: '3.10'
+
+      - name: Install intelhex
+        run: pip install intelhex
 
       - name: Build examples
         uses: karniv00l/platformio-run-action@v1

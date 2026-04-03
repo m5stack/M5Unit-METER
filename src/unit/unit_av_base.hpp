@@ -24,6 +24,9 @@ class UnitAVmeterBase : public UnitADS1115 {
     M5_UNIT_COMPONENT_HPP_BUILDER(UnitAVmeterBase, 0x00);
 
 public:
+    //! @brief Constructor
+    //! @param addr I2C address of the ADC
+    //! @param eepromAddr I2C address of the calibration EEPROM
     explicit UnitAVmeterBase(const uint8_t addr = DEFAULT_ADDRESS, const uint8_t eepromAddr = 0x00);
     virtual ~UnitAVmeterBase()
     {
@@ -31,11 +34,16 @@ public:
 
     virtual bool begin() override;
 
+    //! @brief Gets the calibration factor for the current gain setting
+    //! @return Calibration factor
     inline float calibrationFactor() const
     {
         return _calibrationFactor;
     }
 
+    //! @brief Write the gain and update calibration factor
+    //! @param gain Gain setting
+    //! @return True if successful
     virtual bool writeGain(const ads111x::Gain gain) override;
 
 protected:

@@ -85,26 +85,28 @@ enum class Alert : int8_t {
 struct Data {
     std::array<uint16_t, 4> raw{};  //!< Raw data 0:Shunt 1:Bus 2:Power 3:Current
     float currentLSB{};             //!< currentLSB
+    uint8_t measureBits{};          //!< Measured channels bitmask (0:Shunt 1:Bus 2:Power 3:Current)
 
-    //@brirf Sunt voltage (mV)
+    //! @brief Shunt voltage (mV) Returns NaN if not measured
     inline float shuntVoltage() const
     {
-        return raw[0] * 0.0025f;
+        return (measureBits & 0x01) ? static_cast<int16_t>(raw[0]) * 0.0025f : std::numeric_limits<float>::quiet_NaN();
     }
-    // @brief Bus voltage (mV)
+    //! @brief Bus voltage (mV) Returns NaN if not measured
     inline float voltage() const
     {
-        return raw[1] * 1.25f;
+        return (measureBits & 0x02) ? raw[1] * 1.25f : std::numeric_limits<float>::quiet_NaN();
     }
-    // @brief Power (mW)
+    //! @brief Power (mW) Returns NaN if not measured
     inline float power() const
     {
-        return raw[2] * currentLSB * 25.f * 1000.f;
+        return (measureBits & 0x04) ? raw[2] * currentLSB * 25.f * 1000.f : std::numeric_limits<float>::quiet_NaN();
     }
-    // @brief Current (mA)
+    //! @brief Current (mA) Returns NaN if not measured
     inline float current() const
     {
-        return (int16_t)raw[3] * currentLSB * 1000.f;
+        return (measureBits & 0x08) ? static_cast<int16_t>(raw[3]) * currentLSB * 1000.f
+                                    : std::numeric_limits<float>::quiet_NaN();
     }
 };
 
@@ -142,9 +144,9 @@ public:
 protected:
     /*!
       @brief Constructor
-      @param shuntRes Shunt resistor (O)
+      @param shuntRes Shunt resistor (Ohm)
       @param maxCurA Maximum measure current (A)
-      @paream curLSB currentLSB
+      @param curLSB currentLSB
      */
     UnitINA226(const float shuntRes, const float maxCurA, const float curLSB, const uint8_t addr = DEFAULT_ADDRESS);
 
@@ -158,12 +160,12 @@ public:
 
     ///@name Settings for begin
     ///@{
-    /*! @brief Gets the configration */
+    /*! @brief Gets the configuration */
     inline config_t config()
     {
         return _cfg;
     }
-    //! @brief Set the configration
+    //! @brief Set the configuration
     inline void config(const config_t& cfg)
     {
         _cfg = cfg;
@@ -172,7 +174,7 @@ public:
 
     ///@name Properties
     ///@{
-    //@brief Gets the shunt Resistor (O)
+    //! @brief Gets the shunt Resistor (Ohm)
     inline float shuntResistor() const
     {
         return _shuntRes;
@@ -228,9 +230,9 @@ public:
     }
     /*!
       @brief Start periodic measurement
-      @param rate Sampling Sampling rate
-      @paran sct Shunt conversion time
-      @paran bct Bus conversion time
+      @param rate Sampling rate
+      @param sct Shunt conversion time
+      @param bct Bus conversion time
       @param current Measure current if true
       @param voltage Measure bus voltage if true
       @param power Measure power if true
@@ -258,7 +260,7 @@ public:
     /*!
       @brief Measurement single shot
       @details Measuring in the current settings
-      @param[out] data Measuerd data
+      @param[out] data Measured data
       @param current Measure current if true
       @param voltage Measure bus voltage if true
       @param power Measure power if true
@@ -271,10 +273,10 @@ public:
     /*!
       @brief Measurement single shot
       @details Measuring in the current settings
-      @param[out] data Measuerd data
-      @param rate Sampling Sampling rate
-      @paran sct Shunt conversion time
-      @paran bct Bus conversion time
+      @param[out] data Measured data
+      @param rate Sampling rate
+      @param sct Shunt conversion time
+      @param bct Bus conversion time
       @param current Measure current if true
       @param voltage Measure bus voltage if true
       @param power Measure power if true
@@ -298,39 +300,39 @@ public:
     bool readMode(ina226::Mode& mode);
     /*!
       @brief Read the sampling rate
-      @param[out] rate Samling rate
+      @param[out] rate Sampling rate
       @return True if successful
      */
     bool readSamplingRate(ina226::Sampling& rate);
     /*!
       @brief Write the sampling rate
-      @param rate Samling rate
+      @param rate Sampling rate
       @return True if successful
       @warning During periodic detection runs, an error is returned
      */
     bool writeSamplingRate(const ina226::Sampling rate);
     /*!
-      @brief Read the convsrsion time of Bus voltage
+      @brief Read the conversion time of Bus voltage
       @param[out] ct Conversion time
       @return True if successful
      */
     bool readBusVoltageConversionTime(ina226::ConversionTime& ct);
     /*!
-      @brief Write the convsrsion time of Bus voltage
-      @paramct Conversion time
+      @brief Write the conversion time of Bus voltage
+      @param ct Conversion time
       @return True if successful
       @warning During periodic detection runs, an error is returned
      */
     bool writeBusVoltageConversionTime(const ina226::ConversionTime ct);
     /*!
-      @brief Read the convsrsion time of Shunt voltage
+      @brief Read the conversion time of Shunt voltage
       @param[out] ct Conversion time
       @return True if successful
      */
     bool readShuntVoltageConversionTime(ina226::ConversionTime& ct);
     /*!
-      @brief Write the convsrsion time of Shunt voltage
-      @paramct Conversion time
+      @brief Write the conversion time of Shunt voltage
+      @param ct Conversion time
       @return True if successful
       @warning During periodic detection runs, an error is returned
      */
@@ -363,21 +365,21 @@ public:
       |Type|Alert|Description|Unit|Value|
       |---|---|---|---|---|
       |Type::ShuntOver Type::ShuntUnder| SOL/SUL|Shunt over/under limit|V| V / 0.00125 |
-      |Type::BusOver Type::BusUnder | BOL/BUL|Bus over/under limit|V| V / 0..00125 |
+      |Type::BusOver Type::BusUnder | BOL/BUL|Bus over/under limit|V| V / 0.00125 |
       |Type::PowerOver | POL|Power over limit|W| W / (25 ×  currentLSB) |
       |Type::ConversionReady | CNVR | Conversion ready| - | - |
       @warning During periodic detection runs, an error is returned
      */
     bool writeAlert(const ina226::Alert type, const uint16_t limit, const bool latch = true);
     /*!
-      @brief Read the alerm limit value
+      @brief Read the alert limit value
       @param[out] limit Limit value
       @return True if successful
       @note The unit of value depends on the type of Alert (See also datasheet)
      */
     bool readAlertLimit(uint16_t& limit);
     /*!
-      @brief Write the alerm limit value
+      @brief Write the alert limit value
       @param limit Limit value
       @return True if successful
       @note The unit of value depends on the type of Alert (See also datasheet)
@@ -385,6 +387,38 @@ public:
     */
     bool writeAlertLimit(const uint16_t limit);
     ///@}
+
+    // ============================================================
+    // M5Unified M5.Power.Ina226 compatible API
+#if defined(__M5UNIFIED_HPP__)
+
+    ///@name M5Unified Power.Ina226 compatible API
+    ///@note Values are in V/A/W (not mV/mA/mW)
+    ///@{
+
+    //! @brief Bus voltage (V) compatible with INA226_Class::getBusVoltage()
+    inline float getBusVoltage()
+    {
+        return voltage() / 1000.0f;
+    }
+    //! @brief Shunt voltage (V) compatible with INA226_Class::getShuntVoltage()
+    inline float getShuntVoltage()
+    {
+        return shuntVoltage() / 1000.0f;
+    }
+    //! @brief Current (A) compatible with INA226_Class::getShuntCurrent()
+    inline float getShuntCurrent()
+    {
+        return current() / 1000.0f;
+    }
+    //! @brief Power (W) compatible with INA226_Class::getPower()
+    inline float getPower()
+    {
+        return power() / 1000.0f;
+    }
+
+    ///@}
+#endif
 
     /*!
       @brief Read the alert occurred?
@@ -439,6 +473,7 @@ class UnitINA226_10A : public UnitINA226 {
 
 public:
     /*!
+      @brief Constructor for UnitINA226_10A
       @param curLSB currentLSB (calculated and set internally if zero)
      */
     explicit UnitINA226_10A(const float curLSB = 0.0f)
@@ -459,6 +494,7 @@ class UnitINA226_1A : public UnitINA226 {
 
 public:
     /*!
+      @brief Constructor for UnitINA226_1A
       @param curLSB currentLSB (calculated and set internally if zero)
      */
     explicit UnitINA226_1A(const float curLSB = 0.0f)
@@ -480,12 +516,12 @@ constexpr uint8_t BUS_VOLTAGE_REG{0x02};
 constexpr uint8_t POWER_REG{0x03};
 constexpr uint8_t CURRENT_REG{0x04};
 
-constexpr uint8_t CALIBRATION_REG{0X05};
+constexpr uint8_t CALIBRATION_REG{0x05};
 constexpr uint8_t MASK_REG{0x06};
 constexpr uint8_t ALERT_LIMIT_REG{0x07};
 
 constexpr uint8_t MANUFACTURER_ID_REG{0xFE};
-constexpr uint8_t DIE_ID_REG{0XFF};
+constexpr uint8_t DIE_ID_REG{0xff};
 }  // namespace command
 ///@endcond
 }  // namespace ina226

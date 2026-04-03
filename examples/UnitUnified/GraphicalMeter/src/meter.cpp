@@ -36,20 +36,24 @@ private:
 namespace {
 m5::ui::Plotter* plotter{};
 EMA ema{};
-m5gfx::rgb565_t theme_color{};
+uint8_t theme_color_index{PaletteTheme};
 }  // namespace
 
 void initialize_meter(const uint32_t swid, const uint32_t shgt, const uint32_t elements,
                       const m5gfx::rgb565_t theme_clr)
 {
+    (void)theme_clr;
     delete plotter;
 
     auto hgt = shgt - 32;
     plotter  = new m5::ui::Plotter(nullptr, elements, swid, hgt, 100);
     plotter->setGaugeTextDatum(textdatum_t::top_right);
-    plotter->setLineColor(theme_clr);
+    plotter->setLineColor(PaletteTheme);
+    plotter->setGaugeColor(PaletteGauge);
+    plotter->setBackgroundColor(PaletteBackground);
+    plotter->setTextColor(PaletteText);
     ema.clear();
-    theme_color = theme_clr;
+    theme_color_index = PaletteTheme;
 }
 
 void store_value(const float val)
@@ -72,7 +76,7 @@ void draw_meter(LGFX_Sprite& spr, const int32_t offset, const char* tag, const c
     auto f  = spr.getFont();
     auto td = spr.getTextDatum();
 
-    spr.fillRect(x, y, wid, 4, theme_color);
+    spr.fillRect(x, y, wid, 4, theme_color_index);
 
     spr.setFont(wid >= 240 ? &fonts::FreeSansBold12pt7b : &fonts::FreeSansBold9pt7b);
 

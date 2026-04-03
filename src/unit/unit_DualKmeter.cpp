@@ -10,7 +10,6 @@
 #include "unit_DualKmeter.hpp"
 #include <M5Utility.hpp>
 #include <array>
-#include <thread>
 
 using namespace m5::utility::mmh3;
 using namespace m5::unit::types;
@@ -51,7 +50,7 @@ bool UnitDualKmeter::begin()
     }
 
     uint8_t ver{};
-    if (!readFirmwareVersion(ver) && (ver == 0x00)) {
+    if (!readFirmwareVersion(ver) || (ver == 0x00)) {
         M5_LIB_LOGE("Failed to read version %02X", ver);
         return false;
     }

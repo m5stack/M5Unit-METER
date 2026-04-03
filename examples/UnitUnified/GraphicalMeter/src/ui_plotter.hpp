@@ -61,6 +61,11 @@ public:
     {
         _bgClr = clr;
     }
+    template <typename T>
+    void setTextColor(const T& clr)
+    {
+        _textClr = clr;
+    }
 
     inline void setUnitString(const char* s)
     {
@@ -82,17 +87,21 @@ public:
     void push(LovyanGFX* dst, const int32_t x, const int32_t y);
 
 protected:
-    m5gfx::rgb565_t lineColor() const
+    uint32_t lineColor() const
     {
         return _lineClr;
     }
-    m5gfx::rgb565_t gaugeColor() const
+    uint32_t gaugeColor() const
     {
         return _gaugeClr;
     }
-    m5gfx::rgb565_t backgroundColor() const
+    uint32_t backgroundColor() const
     {
         return _bgClr;
+    }
+    uint32_t textColor() const
+    {
+        return _textClr;
     }
 
 protected:
@@ -101,7 +110,7 @@ private:
     int32_t _min{}, _max{}, _wid{}, _hgt{}, _coefficient{};
     m5::container::CircularBuffer<int32_t> _data;
 
-    m5gfx::rgb565_t _lineClr{TFT_WHITE}, _gaugeClr{TFT_DARKGRAY}, _bgClr{TFT_BLACK};
+    uint32_t _lineClr{TFT_WHITE}, _gaugeClr{TFT_DARKGRAY}, _bgClr{TFT_BLACK}, _textClr{TFT_WHITE};
     textdatum_t _tdatum{textdatum_t::top_left};
     const char* _ustr{};
     bool _autoScale{};

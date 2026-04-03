@@ -12,11 +12,11 @@
 #include <M5UnitUnified.hpp>
 #include <googletest/test_template.hpp>
 #include <googletest/test_helper.hpp>
+#include <m5_unit_component/adapter_i2c.hpp>
 #include <unit/unit_INA226.hpp>
 #include <chrono>
-#include <thread>
 #include <iostream>
-#include <random>
+#include <esp_random.h>
 
 #if !defined(USING_UNIT_INA226_1A) && !defined(USING_UNIT_INA226_10A)
 #define USING_UNIT_INA226_10A
@@ -28,12 +28,11 @@ using namespace m5::unit::ina226;
 using namespace m5::unit::ina226::command;
 using m5::unit::types::elapsed_time_t;
 
-const ::testing::Environment* global_fixture = ::testing::AddGlobalTestEnvironment(new GlobalFixture<400000U>());
-
 constexpr uint32_t STORED_SIZE{4};
 
 #if defined(USING_UNIT_INA226_10A)
-class TestINA226 : public ComponentTestBase<UnitINA226_10A, bool> {
+#pragma message "Using 10A"
+class TestINA226 : public I2CComponentTestBase<UnitINA226_10A> {
 protected:
     virtual UnitINA226_10A* get_instance() override
     {
@@ -43,14 +42,10 @@ protected:
         ptr->component_config(ccfg);
         return ptr;
     }
-
-    virtual bool is_using_hal() const override
-    {
-        return GetParam();
-    };
 };
 #elif defined(USING_UNIT_INA226_1A)
-class TestINA226 : public ComponentTestBase<UnitINA226_1A, bool> {
+#pragma message "Using 1A"
+class TestINA226 : public I2CComponentTestBase<UnitINA226_1A> {
 protected:
     virtual UnitINA226_1A* get_instance() override
     {
@@ -60,23 +55,12 @@ protected:
         ptr->component_config(ccfg);
         return ptr;
     }
-
-    virtual bool is_using_hal() const override
-    {
-        return GetParam();
-    };
 };
 #else
 #error "Choose unit"
 #endif
 
-// INSTANTIATE_TEST_SUITE_P(ParamValues, TestINA226, ::testing::Values(false, true));
-// INSTANTIATE_TEST_SUITE_P(ParamValues, TestINA226, ::testing::Values(true));
-INSTANTIATE_TEST_SUITE_P(ParamValues, TestINA226, ::testing::Values(false));
-
 namespace {
-
-auto rng = std::default_random_engine{};
 
 constexpr Sampling rate_table[] = {
     Sampling::Rate1,   Sampling::Rate4,   Sampling::Rate16,  Sampling::Rate64,
@@ -148,20 +132,32 @@ constexpr std::tuple<Sampling, ConversionTime, ConversionTime> param_table[] = {
 
 };
 
+// Periodic: one entry per Sampling rate, all channels only (timing verification)
+constexpr std::tuple<Sampling, ConversionTime, ConversionTime> periodic_param_table[] = {
+    {Sampling::Rate1, ConversionTime::US_140, ConversionTime::US_588},
+    {Sampling::Rate4, ConversionTime::US_204, ConversionTime::US_332},
+    {Sampling::Rate16, ConversionTime::US_332, ConversionTime::US_204},
+    {Sampling::Rate64, ConversionTime::US_588, ConversionTime::US_1100},
+    {Sampling::Rate128, ConversionTime::US_1100, ConversionTime::US_2116},
+    {Sampling::Rate256, ConversionTime::US_2116, ConversionTime::US_4156},
+    {Sampling::Rate512, ConversionTime::US_4156, ConversionTime::US_8244},
+    {Sampling::Rate1024, ConversionTime::US_8244, ConversionTime::US_140},
+};
+
 }  // namespace
 
-TEST_P(TestINA226, Basic)
+TEST_F(TestINA226, Basic)
 {
     SCOPED_TRACE(ustr);
 
 #if defined(USING_UNIT_INA226_1A)
     constexpr float res{0.080f};
     constexpr float maxCur{1.0f};
-    constexpr float cur{0.00030518509f};
+    constexpr float cur{1.0f / 32768.f};  // 2^15 per datasheet
 #elif defined(USING_UNIT_INA226_10A)
     constexpr float res{0.005f};
     constexpr float maxCur{10.0f};
-    constexpr float cur{0.00030518509f};
+    constexpr float cur{10.0f / 32768.f};  // 2^15 per datasheet
 #endif
 
     EXPECT_FLOAT_EQ(unit->shuntResistor(), res);
@@ -171,6 +167,15 @@ TEST_P(TestINA226, Basic)
     uint16_t cal{};
     EXPECT_TRUE(unit->readCalibration(cal));
     EXPECT_NE(cal, 0U);
+
+    // writeCalibration round-trip
+    {
+        uint16_t orig = cal;
+        EXPECT_TRUE(unit->writeCalibration(0x1234));
+        EXPECT_TRUE(unit->readCalibration(cal));
+        EXPECT_EQ(cal, 0x1234);
+        EXPECT_TRUE(unit->writeCalibration(orig));  // restore
+    }
 
     Alert alert{};
     EXPECT_TRUE(unit->readAlert(alert));
@@ -183,7 +188,48 @@ TEST_P(TestINA226, Basic)
     EXPECT_TRUE(unit->inPeriodic());
 }
 
-TEST_P(TestINA226, Settings)
+TEST_F(TestINA226, M5UnifiedCompat)
+{
+    SCOPED_TRACE(ustr);
+
+    // Periodic is running, buffer should fill
+    EXPECT_TRUE(unit->inPeriodic());
+
+    // Wait for at least one measurement
+    auto timeout_at = m5::utility::millis() + 2000;
+    while (!unit->updated() && m5::utility::millis() <= timeout_at) {
+        unit->update();
+        m5::utility::delay(1);
+    }
+    EXPECT_FALSE(unit->empty());
+
+    // M5Unified compat API returns V/A/W (not mV/mA/mW)
+    float busV     = unit->getBusVoltage();
+    float shuntV   = unit->getShuntVoltage();
+    float currentA = unit->getShuntCurrent();
+    float powerW   = unit->getPower();
+
+    // Should be finite (periodic is running with all channels)
+    EXPECT_TRUE(std::isfinite(busV));
+    EXPECT_TRUE(std::isfinite(shuntV));
+    EXPECT_TRUE(std::isfinite(currentA));
+    EXPECT_TRUE(std::isfinite(powerW));
+
+    // Verify unit conversion: compat (V/A/W) == native (mV/mA/mW) / 1000
+    EXPECT_FLOAT_EQ(busV, unit->voltage() / 1000.0f);
+    EXPECT_FLOAT_EQ(shuntV, unit->shuntVoltage() / 1000.0f);
+    EXPECT_FLOAT_EQ(currentA, unit->current() / 1000.0f);
+    EXPECT_FLOAT_EQ(powerW, unit->power() / 1000.0f);
+
+    // After flush, compat API should return NaN (same as native)
+    unit->flush();
+    EXPECT_FALSE(std::isfinite(unit->getBusVoltage()));
+    EXPECT_FALSE(std::isfinite(unit->getShuntCurrent()));
+    EXPECT_FALSE(std::isfinite(unit->getPower()));
+    EXPECT_FALSE(std::isfinite(unit->getShuntVoltage()));
+}
+
+TEST_F(TestINA226, Settings)
 {
     SCOPED_TRACE(ustr);
 
@@ -234,7 +280,10 @@ TEST_P(TestINA226, Settings)
     EXPECT_EQ(lim, 0x1234);
 
     for (auto&& a : alert_table) {
-        uint16_t v = rng() & 0xFFFF;
+        uint16_t v = esp_random() & 0xFFFF;
+        auto s     = m5::utility::formatString("Alert:%u Limit:0x%04X", m5::stl::to_underlying(a), v);
+        SCOPED_TRACE(s);
+
         EXPECT_TRUE(unit->writeAlert(a, v));
 
         Alert a2{};
@@ -242,6 +291,12 @@ TEST_P(TestINA226, Settings)
         EXPECT_EQ(a2, a);
         EXPECT_TRUE(unit->readAlertLimit(lim));
         EXPECT_EQ(lim, v);
+    }
+
+    // AlertOccurred
+    {
+        bool occurred{};
+        EXPECT_TRUE(unit->readAlertOccurred(occurred));
     }
 
     // Reset
@@ -269,112 +324,12 @@ TEST_P(TestINA226, Settings)
     }
 }
 
-#if 0
-TEST_P(TestINA226, Singleshot)
+TEST_F(TestINA226, Singleshot)
 {
     SCOPED_TRACE(ustr);
     Data d{};
 
-    // Failed in peiordic
-    EXPECT_TRUE(unit->inPeriodic());
-    for (auto&& mb : mb_table) {
-        EXPECT_FALSE(unit->measureSingleshot(d, mb & 1, mb & 2, mb & 4));
-    }
-
-    //
-    EXPECT_TRUE(unit->stopPeriodicMeasurement());
-    EXPECT_FALSE(unit->inPeriodic());
-
-    for (auto&& r : rate_table) {
-        for (auto&& ct : ct_table) {
-            for (auto&& mb : mb_table) {
-                auto s = m5::utility::formatString("R:%u CT:%u MB:%02X", r, ct, mb);
-                SCOPED_TRACE(s);
-                EXPECT_TRUE(unit->measureSingleshot(d, r, ct, ct, mb & 1, mb & 2, mb & 4));
-            }
-        }
-    }
-}
-
-TEST_P(TestINA226, Periodic)
-{
-    SCOPED_TRACE(ustr);
-
-    EXPECT_TRUE(unit->inPeriodic());
-    EXPECT_FALSE(unit->startPeriodicMeasurement());
-    EXPECT_TRUE(unit->stopPeriodicMeasurement());
-    EXPECT_FALSE(unit->inPeriodic());
-
-    for (auto&& r : rate_table) {
-        for (auto&& ct : ct_table) {
-            for (auto&& mb : mb_table) {
-                auto s = m5::utility::formatString("R:%u CT:%u MB:%02X", r, ct, mb);
-                SCOPED_TRACE(s);
-
-                EXPECT_TRUE(unit->startPeriodicMeasurement(r, ct, ct, mb & 1, mb & 2, mb & 4));
-                EXPECT_TRUE(unit->inPeriodic());
-
-                test_periodic_measurement(unit.get(), STORED_SIZE, 1);
-                EXPECT_TRUE(unit->stopPeriodicMeasurement());
-                EXPECT_FALSE(unit->inPeriodic());
-
-                EXPECT_EQ(unit->available(), STORED_SIZE);
-                EXPECT_FALSE(unit->empty());
-                EXPECT_TRUE(unit->full());
-
-                uint32_t cnt{STORED_SIZE / 2};
-                while (cnt-- && unit->available()) {
-                    switch (mb) {
-                        case 0x01:
-                            EXPECT_TRUE(std::isfinite(unit->shuntVoltage()));
-                            EXPECT_TRUE(std::isfinite(unit->voltage()));
-                            EXPECT_TRUE(std::isfinite(unit->power()));
-                            EXPECT_TRUE(std::isfinite(unit->current()));
-                            break;
-                        case 0x02:
-                            EXPECT_TRUE(std::isfinite(unit->shuntVoltage()));
-                            EXPECT_TRUE(std::isfinite(unit->voltage()));
-                            EXPECT_TRUE(std::isfinite(unit->power()));
-                            EXPECT_TRUE(std::isfinite(unit->current()));
-                            break;
-                        case 0x07:
-                            EXPECT_TRUE(std::isfinite(unit->shuntVoltage()));
-                            EXPECT_TRUE(std::isfinite(unit->voltage()));
-                            EXPECT_TRUE(std::isfinite(unit->power()));
-                            EXPECT_TRUE(std::isfinite(unit->current()));
-                            break;
-                    }
-
-                    EXPECT_FLOAT_EQ(unit->shuntVoltage(), unit->oldest().shuntVoltage());
-
-                    EXPECT_FALSE(unit->empty());
-                    unit->discard();
-                }
-                EXPECT_EQ(unit->available(), STORED_SIZE / 2);
-                EXPECT_FALSE(unit->empty());
-                EXPECT_FALSE(unit->full());
-
-                unit->flush();
-                EXPECT_EQ(unit->available(), 0);
-                EXPECT_TRUE(unit->empty());
-                EXPECT_FALSE(unit->full());
-
-                EXPECT_FALSE(std::isfinite(unit->shuntVoltage()));
-                EXPECT_FALSE(std::isfinite(unit->voltage()));
-                EXPECT_FALSE(std::isfinite(unit->power()));
-                EXPECT_FALSE(std::isfinite(unit->current()));
-            }
-        }
-    }
-}
-#else
-
-TEST_P(TestINA226, Singleshot)
-{
-    SCOPED_TRACE(ustr);
-    Data d{};
-
-    // Failed in peiordic
+    // Failed in periodic
     EXPECT_TRUE(unit->inPeriodic());
     for (auto&& mb : mb_table) {
         EXPECT_FALSE(unit->measureSingleshot(d, mb & 1, mb & 2, mb & 4));
@@ -400,7 +355,7 @@ TEST_P(TestINA226, Singleshot)
     }
 }
 
-TEST_P(TestINA226, Periodic)
+TEST_F(TestINA226, Periodic)
 {
     SCOPED_TRACE(ustr);
 
@@ -409,73 +364,64 @@ TEST_P(TestINA226, Periodic)
     EXPECT_TRUE(unit->stopPeriodicMeasurement());
     EXPECT_FALSE(unit->inPeriodic());
 
-    for (auto&& p : param_table) {
-        for (auto&& mb : mb_table) {
-            Sampling r{};
-            ConversionTime ct1{}, ct2{};
-            std::tie(r, ct1, ct2) = p;
+    // SoftwareI2C adds ~2-3ms overhead per transaction
+    auto ad      = unit->asAdapter<m5::unit::AdapterI2C>(m5::unit::Adapter::Type::I2C);
+    bool is_bus  = ad && ad->implType() == m5::unit::AdapterI2C::ImplType::Bus;
+    uint32_t tol = is_bus ? 5 : 1;
 
-            auto s = m5::utility::formatString("R:%u CT:%u/%u MB:%02X", r, ct1, ct2, mb);
-            SCOPED_TRACE(s);
-            M5_LOGI("MP:[%s]", s.c_str());
+    // Rate coverage with all channels (timing verification)
+    for (auto&& p : periodic_param_table) {
+        Sampling r{};
+        ConversionTime ct1{}, ct2{};
+        std::tie(r, ct1, ct2) = p;
 
-            EXPECT_TRUE(unit->startPeriodicMeasurement(r, ct1, ct2, mb & 1, mb & 2, mb & 4));
-            EXPECT_TRUE(unit->inPeriodic());
+        auto s = m5::utility::formatString("R:%u CT:%u/%u", r, ct1, ct2);
+        SCOPED_TRACE(s);
+        M5_LOGI("MP:[%s]", s.c_str());
 
-            test_periodic_measurement(unit.get(), STORED_SIZE, 1);
-            EXPECT_TRUE(unit->stopPeriodicMeasurement());
-            EXPECT_FALSE(unit->inPeriodic());
+        EXPECT_TRUE(unit->startPeriodicMeasurement(r, ct1, ct2));
+        EXPECT_TRUE(unit->inPeriodic());
 
-            EXPECT_EQ(unit->available(), STORED_SIZE);
+        uint32_t timeout = is_bus ? std::max<uint32_t>(unit->interval(), 500) * (STORED_SIZE + 1) * 4 : 0;
+        auto result      = collect_periodic_measurements(unit.get(), STORED_SIZE, timeout);
+        EXPECT_FALSE(result.timed_out);
+        EXPECT_EQ(result.update_count, STORED_SIZE);
+        EXPECT_LE(result.median(), result.expected_interval + tol);
+
+        EXPECT_TRUE(unit->stopPeriodicMeasurement());
+        EXPECT_FALSE(unit->inPeriodic());
+
+        EXPECT_EQ(unit->available(), STORED_SIZE);
+        EXPECT_FALSE(unit->empty());
+        EXPECT_TRUE(unit->full());
+
+        uint32_t cnt{STORED_SIZE / 2};
+        while (cnt-- && unit->available()) {
+            EXPECT_TRUE(std::isfinite(unit->shuntVoltage()));
+            EXPECT_TRUE(std::isfinite(unit->voltage()));
+            EXPECT_TRUE(std::isfinite(unit->power()));
+            EXPECT_TRUE(std::isfinite(unit->current()));
+
+            EXPECT_FLOAT_EQ(unit->shuntVoltage(), unit->oldest().shuntVoltage());
+            EXPECT_FLOAT_EQ(unit->voltage(), unit->oldest().voltage());
+            EXPECT_FLOAT_EQ(unit->power(), unit->oldest().power());
+            EXPECT_FLOAT_EQ(unit->current(), unit->oldest().current());
+
             EXPECT_FALSE(unit->empty());
-            EXPECT_TRUE(unit->full());
-
-            uint32_t cnt{STORED_SIZE / 2};
-            while (cnt-- && unit->available()) {
-                switch (mb) {
-                    case 0x01:
-                        EXPECT_TRUE(std::isfinite(unit->shuntVoltage()));
-                        EXPECT_TRUE(std::isfinite(unit->voltage()));
-                        EXPECT_TRUE(std::isfinite(unit->power()));
-                        EXPECT_TRUE(std::isfinite(unit->current()));
-                        break;
-                    case 0x02:
-                        EXPECT_TRUE(std::isfinite(unit->shuntVoltage()));
-                        EXPECT_TRUE(std::isfinite(unit->voltage()));
-                        EXPECT_TRUE(std::isfinite(unit->power()));
-                        EXPECT_TRUE(std::isfinite(unit->current()));
-                        break;
-                    default:
-                        EXPECT_TRUE(std::isfinite(unit->shuntVoltage()));
-                        EXPECT_TRUE(std::isfinite(unit->voltage()));
-                        EXPECT_TRUE(std::isfinite(unit->power()));
-                        EXPECT_TRUE(std::isfinite(unit->current()));
-                        break;
-                }
-
-                EXPECT_FLOAT_EQ(unit->shuntVoltage(), unit->oldest().shuntVoltage());
-                EXPECT_FLOAT_EQ(unit->voltage(), unit->oldest().voltage());
-                EXPECT_FLOAT_EQ(unit->power(), unit->oldest().power());
-                EXPECT_FLOAT_EQ(unit->current(), unit->oldest().current());
-
-                EXPECT_FALSE(unit->empty());
-                unit->discard();
-            }
-            EXPECT_EQ(unit->available(), STORED_SIZE / 2);
-            EXPECT_FALSE(unit->empty());
-            EXPECT_FALSE(unit->full());
-
-            unit->flush();
-            EXPECT_EQ(unit->available(), 0);
-            EXPECT_TRUE(unit->empty());
-            EXPECT_FALSE(unit->full());
-
-            EXPECT_FALSE(std::isfinite(unit->shuntVoltage()));
-            EXPECT_FALSE(std::isfinite(unit->voltage()));
-            EXPECT_FALSE(std::isfinite(unit->power()));
-            EXPECT_FALSE(std::isfinite(unit->current()));
+            unit->discard();
         }
+        EXPECT_EQ(unit->available(), STORED_SIZE / 2);
+        EXPECT_FALSE(unit->empty());
+        EXPECT_FALSE(unit->full());
+
+        unit->flush();
+        EXPECT_EQ(unit->available(), 0);
+        EXPECT_TRUE(unit->empty());
+        EXPECT_FALSE(unit->full());
+
+        EXPECT_FALSE(std::isfinite(unit->shuntVoltage()));
+        EXPECT_FALSE(std::isfinite(unit->voltage()));
+        EXPECT_FALSE(std::isfinite(unit->power()));
+        EXPECT_FALSE(std::isfinite(unit->current()));
     }
 }
-
-#endif

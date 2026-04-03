@@ -6,29 +6,15 @@
 /*
   UnitTest for UnitAmeter
 */
-#include "../avmeter_template.hpp"
+#include "../avmeter_base.hpp"
 #include <unit/unit_Ameter.hpp>
 
-using namespace m5::unit;
-using namespace m5::unit::googletest;
-using namespace m5::unit::ads111x;
+using TestADS1115 = TestAVmeterBase<UnitAmeter>;
 
-const ::testing::Environment* global_fixture = ::testing::AddGlobalTestEnvironment(new GlobalFixture<400000U>());
-
-#if 0
-INSTANTIATE_TEST_SUITE_P(
-    ParamValues, TestADS1115,
-    ::testing::Values(TestParams{false, +UnitAmeter::DEFAULT_ADDRESS,
-                                 +UnitAmeter::DEFAULT_EEPROM_ADDRESS},
-                      TestParams{true, +UnitAmeter::DEFAULT_ADDRESS,
-                                 +UnitAmeter::DEFAULT_EEPROM_ADDRESS}));
-#endif
-INSTANTIATE_TEST_SUITE_P(ParamValues, TestADS1115,
-                         ::testing::Values(TestParams{false, +UnitAmeter::DEFAULT_ADDRESS,
-                                                      +UnitAmeter::DEFAULT_EEPROM_ADDRESS}));
+#include "../avmeter_template.hpp"
 
 // For UnitAmeter-specific testing
-class TestAmeter : public ComponentTestBase<UnitAmeter, bool> {
+class TestAmeter : public I2CComponentTestBase<UnitAmeter> {
 protected:
     virtual UnitAmeter* get_instance() override
     {
@@ -39,19 +25,12 @@ protected:
         }
         return ptr;
     }
-    virtual bool is_using_hal() const override
-    {
-        return GetParam();
-    };
 };
 
-// INSTANTIATE_TEST_SUITE_P(ParamValues, TestAmeter,
-//                          ::testing::Values(false, true));
-//  INSTANTIATE_TEST_SUITE_P(ParamValues, TestAmeter, ::testing::Values(true));
-INSTANTIATE_TEST_SUITE_P(ParamValues, TestAmeter, ::testing::Values(false));
-
-TEST_P(TestAmeter, Correction)
+TEST_F(TestAmeter, Correction)
 {
+    SCOPED_TRACE(ustr);
+
     constexpr Gain gain_table[] = {
         Gain::PGA_6144, Gain::PGA_4096, Gain::PGA_2048, Gain::PGA_1024, Gain::PGA_512, Gain::PGA_256,
     };

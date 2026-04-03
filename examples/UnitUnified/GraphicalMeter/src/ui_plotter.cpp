@@ -99,7 +99,7 @@ void Plotter::push(LovyanGFX* dst, const int32_t x, const int32_t y)
     auto pf  = dst->getFont();
     auto ptd = dst->getTextDatum();
     dst->setFont(&fonts::Font2);
-    dst->setTextColor(TFT_WHITE);
+    dst->setTextColor(static_cast<uint32_t>(textColor()));
 
     int32_t tx{x};
     switch (_tdatum & 0x03) {
@@ -120,15 +120,15 @@ void Plotter::push(LovyanGFX* dst, const int32_t x, const int32_t y)
     dst->drawString(s.c_str(), tx, y + _hgt);
 
     if (_min != _max) {
-        auto s = m5::utility::formatString("%d%s", _max / _coefficient, _ustr ? _ustr : "");
-        td     = static_cast<textdatum_t>(m5::stl::to_underlying(_tdatum) | 0);  // top_xxx
+        auto s2 = m5::utility::formatString("%d%s", _max / _coefficient, _ustr ? _ustr : "");
+        td      = static_cast<textdatum_t>(m5::stl::to_underlying(_tdatum));  // top_xxx
         dst->setTextDatum(td);
-        dst->drawString(s.c_str(), tx, y);
+        dst->drawString(s2.c_str(), tx, y);
         if (_max - _min > 1) {
-            s  = m5::utility::formatString("%d%s", (_min + ((_max - _min) >> 1)) / _coefficient, _ustr ? _ustr : "");
+            s2 = m5::utility::formatString("%d%s", (_min + ((_max - _min) >> 1)) / _coefficient, _ustr ? _ustr : "");
             td = static_cast<textdatum_t>(m5::stl::to_underlying(_tdatum) | 4);  // middle_xxx
             dst->setTextDatum(td);
-            dst->drawString(s.c_str(), tx, y + (_hgt >> 1));
+            dst->drawString(s2.c_str(), tx, y + (_hgt >> 1));
         }
     }
 

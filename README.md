@@ -27,7 +27,7 @@ This prevents noise and surges on the data bus or other circuits from entering t
 
 ### SKU:U133-V11
 
-KMeterISO unitis an integrated K-type thermocouple sensor unit that integrates the functions of "acquisition + isolation + communication", using STM32F030+MAX31855KASA 14bit thermocouple digital conversion chip scheme to achieve high-precision temperature acquisition and conversion, MCU using STM32F030 to realize data acquisition and I2C communication interface, 
+KMeterISO unit is an integrated K-type thermocouple sensor unit that integrates the functions of "acquisition + isolation + communication", using STM32F030+MAX31855KASA 14bit thermocouple digital conversion chip scheme to achieve high-precision temperature acquisition and conversion, MCU using STM32F030 to realize data acquisition and I2C communication interface, 
 
 using CA-IS3641HW as a signal isolator. The unit supports access to thermocouple probes with a measurement range of -200°C to 1350°C, and adopts a universal standard K-type flat interface, which is convenient for subsequent replacement of different measuring probes to match different needs. 
 
@@ -35,13 +35,7 @@ This module is widely used in application scenarios such as temperature collecti
 
 ### SKU:M127
 
-The DualKmeter module13.2 is a dual-channel K-type temperature measurement module based on the MAX31855KASA+stm32f030f4p6+galvanic isolation. 
-
-The module has a built-in two-way K-type thermocouple sensor interface, which uses the signal relay to measure the temperature value of the two channels in turn, supporting a measurement range of -200°C to 1350°C, and a measurement accuracy of °C.
-
-At the same time, the module also has built-in voltage and signal isolation chips such as B0505LS-1WR2 and CA-IS3020S, ensuring the 'stability and safety' of the system. 
-
-In addition, the module has a built-in dial code on off, which can easily switch different I2C addresses to meet the different application needs of users. It can be applied to multiple scenarios such as industrial automation and instrument detection.
+Module13.2 Dual Kmeter is a dual-channel K-type temperature measurement module based on the "MAX31855KASA + stm32f030f4p6 + electrical isolation" solution. The module features two K-type thermocouple sensor interfaces, and uses a signal relay to alternately measure the temperature values of the two channels. It supports a measurement range of -200°C to 1350°C with an accuracy of ±2°C. Additionally, the module includes B0505LS-1WR2 and CA-IS3020S voltage and signal isolation chips, ensuring system stability and safety. The module also has a built-in DIP switch for easily switching different I2C addresses to meet various application needs. It can be used in industrial automation, instrument detection, and other scenarios.
 
 ### SKU:U200
 
@@ -54,10 +48,10 @@ Unit INA226-1A is a fully isolated high-precision current, voltage, and power me
 ## Related Link
 See also examples using conventional methods here.
 
-- [Unit Ameter & Datasheet](https://docs.m5stack.com/en/unit/ameter)
+- [Unit Ameter & Datasheet](https://docs.m5stack.com/en/unit/Ameter%20Unit)
 - [Unit Vmeter & Datasheet](https://docs.m5stack.com/en/unit/vmeter)
 - [Unit KMeterISO & Datasheet](https://docs.m5stack.com/en/unit/KMeterISO%20Unit)
-- [Unit DualKmeter & Datasheet](https://docs.m5stack.switch-science.com/en/module/DualKmeter%20Module13.2)
+- [Unit DualKmeter & Datasheet](https://docs.m5stack.com/en/module/DualKmeter%20Module13.2)
 - [Unit INA226-10A & Datasheet](https://docs.m5stack.com/en/unit/Unit_INA226-10A)
 - [Unit INA226-1A & Datasheet](https://docs.m5stack.com/en/unit/Unit_INA226-1A)
 
@@ -75,6 +69,40 @@ See also examples using conventional methods here.
 ## Examples
 See also [examples/UnitUnified](examples/UnitUnified)
 
+### For ArduinoIDE settings
+You must choose a define symbol for the unit you will use.
+(Rewrite source or specify with compile options)
+
+- GraphicalMeter
+```cpp
+// *************************************************************
+// Choose one define symbol to match the unit you are using
+// *************************************************************
+#if !defined(USING_UNIT_VMETER) && !defined(USING_UNIT_AMETER) && !defined(USING_UNIT_KMETER_ISO) && \
+    !defined(USING_UNIT_DUAL_KMETER)
+// For Vmeter
+// #define USING_UNIT_VMETER
+// For Ameter
+// #define USING_UNIT_AMETER
+// For KmeterISO
+// #define USING_UNIT_KMETER_ISO
+// For DualKmeter
+// #define USING_UNIT_DUAL_KMETER
+#endif
+```
+
+- UnitINA226/PlotToSerial
+```cpp
+// *************************************************************
+// Choose one define symbol to match the unit you are using
+// *************************************************************
+#if !defined(USING_UNIT_INA226_1A) && !defined(USING_UNIT_INA226_10A) && !defined(BUILTIN_UNIT_INA226_10A)
+// #define USING_UNIT_INA226_1A
+// #define USING_UNIT_INA226_10A
+// #define BUILTIN_UNIT_INA226_10A
+#endif
+```
+
 ## Doxygen document
 [GitHub Pages](https://m5stack.github.io/M5Unit-METER/)
 
@@ -91,4 +119,3 @@ If you want to output Git commit hashes to html, do it for the git cloned folder
 - [Doxygen](https://www.doxygen.nl/)
 - [pcregrep](https://formulae.brew.sh/formula/pcre2)
 - [Git](https://git-scm.com/) (Output commit hash to html)
-

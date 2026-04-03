@@ -27,7 +27,7 @@ constexpr float coefficient_table[] = {
     1024.f / 32767,
     512.f / 32767,
     256.f / 32767,
-    // dupicated[6,7]
+    // duplicated[6,7]
     256.f / 32767,
     256.f / 32767,
 };
@@ -88,7 +88,7 @@ void UnitADS111x::update(const bool force)
     if (inPeriodic()) {
         elapsed_time_t at{m5::utility::millis()};
         if (force || !_latest || at >= _latest + _interval) {
-            // The rate of continuous conversion is equal to the programmeddata
+            // The rate of continuous conversion is equal to the programmed data
             // rate. Data can be read at any time and always reflect the most
             // recent completed conversion.
             ads111x::Data d{};
@@ -112,7 +112,7 @@ bool UnitADS111x::writeSamplingRate(ads111x::Sampling rate)
     if (read_config(c)) {
         c.dr(rate);
         if (write_config(c)) {
-            apply_interval(_ads_cfg.dr());
+            apply_interval(rate);
             return true;
         }
     }
@@ -208,7 +208,6 @@ bool UnitADS111x::generalReset()
 
     auto timeout_at = m5::utility::millis() + 10;
     bool done{};
-    Config c{};
     do {
         // power-down mode?
         if (read_config(_ads_cfg) && _ads_cfg.mode()) {
@@ -242,7 +241,8 @@ bool UnitADS111x::writeThreshold(const int16_t high, const int16_t low)
         M5_LIB_LOGW("high must be greater than low");
         return false;
     }
-    return writeRegister16BE(HIGH_THRESHOLD_REG, (uint16_t)high) && writeRegister16BE(LOW_THRESHOLD_REG, (uint16_t)low);
+    return writeRegister16BE(HIGH_THRESHOLD_REG, static_cast<uint16_t>(high)) &&
+           writeRegister16BE(LOW_THRESHOLD_REG, static_cast<uint16_t>(low));
 }
 
 //

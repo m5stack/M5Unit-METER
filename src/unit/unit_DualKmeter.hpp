@@ -50,11 +50,12 @@ struct Data {
     std::array<uint8_t, 4> raw{};  //!< Raw data
     Channel channel{};             //!< Which channel?
 
-    //@note Unit depends on setting
+    //! @brief Temperature value
+    //! @note Unit depends on setting
     inline float temperature() const
     {
-        return static_cast<int32_t>(((uint32_t)raw[3] << 24) | ((uint32_t)raw[2] << 16) | ((uint32_t)raw[1] << 8) |
-                                    ((uint32_t)raw[0] << 0)) *
+        return static_cast<int32_t>((static_cast<uint32_t>(raw[3]) << 24) | (static_cast<uint32_t>(raw[2]) << 16) |
+                                    (static_cast<uint32_t>(raw[1]) << 8) | static_cast<uint32_t>(raw[0])) *
                0.01f;
     }
 };
@@ -83,7 +84,7 @@ struct Data {
   |0x1E|ON|OFF|ON|ON||
   |0x1F|OFF|ON|ON|ON||
   |0x20|ON|ON|ON|ON||
-  @code m5::unit::DualKmeter unit{0x1A}; // Configured address
+  @code m5::unit::UnitDualKmeter unit{0x1A}; // Configured address
   @endcode
 */
 class UnitDualKmeter : public Component, public PeriodicMeasurementAdapter<UnitDualKmeter, dual_kmeter::Data> {
@@ -99,9 +100,9 @@ public:
         bool start_periodic{true};
         //! periodic interval(ms) if start on begin
         uint32_t interval{100};
-        //! //!< measurement channel if start on begin
+        //!< measurement channel if start on begin
         dual_kmeter::Channel measurement_channel{dual_kmeter::Channel::One};
-        //! //!< measurement unit if start on begin
+        //!< measurement unit if start on begin
         dual_kmeter::MeasurementUnit measurement_unit{dual_kmeter::MeasurementUnit::Celsius};
     };
 
@@ -121,12 +122,12 @@ public:
 
     ///@name Settings for begin
     ///@{
-    /*! @brief Gets the configration */
+    /*! @brief Gets the configuration */
     inline config_t config()
     {
         return _cfg;
     }
-    //! @brief Set the configration
+    //! @brief Set the configuration
     inline void config(const config_t& cfg)
     {
         _cfg = cfg;
@@ -135,17 +136,20 @@ public:
 
     ///@name Properties
     ///@{
-    /*! Gets the measurement unit on periodic measurement */
+    //! @brief Gets the measurement unit on periodic measurement
+    //! @return Current measurement unit
     dual_kmeter::MeasurementUnit measurementUnit() const
     {
         return _munit;
     }
-    /*! Gets the measurement channel on periodic measurement */
+    //! @brief Gets the measurement channel on periodic measurement
+    //! @return Current measurement channel
     dual_kmeter::Channel measurementChannel() const
     {
         return _channel;
     }
-    /*! Set the measurement unit on periodic measurement */
+    //! @brief Set the measurement unit on periodic measurement
+    //! @param munit Measurement unit to set
     void setMeasurementUnit(const dual_kmeter::MeasurementUnit munit)
     {
         _munit = munit;
@@ -173,8 +177,8 @@ public:
     }
     /*!
       @brief Start periodic measurement
-      @oaram channel Channel to be measured
       @param interval Periodic interval(ms)
+      @param channel Channel to be measured
       @param munit Measurement unit
       @return True if successful
     */
@@ -213,25 +217,26 @@ public:
     ///@{
     /*!
       @brief Measure temperature single shot
-      @param[out] data Measuerd data
+      @param[out] data Measured data
       @param channel Channel to be measured
       @param munit  measurement unit
       @param timeoutMs Measurement timeout time(ms)
       @return True if successful
       @warning During periodic detection runs, an error is returned
     */
-    bool measureSingleshot(dual_kmeter::Data& d, const dual_kmeter::Channel channel,
+    bool measureSingleshot(dual_kmeter::Data& data, const dual_kmeter::Channel channel,
                            dual_kmeter::MeasurementUnit munit = dual_kmeter::MeasurementUnit::Celsius,
                            const uint32_t timeoutMs           = 100);
     /*!
       @brief Measure internal temperature single shot
-      @param[out] data Measuerd data
+      @param[out] data Measured data
+      @param channel Channel to be measured
       @param munit  measurement unit
       @param timeoutMs Measurement timeout time(ms)
       @return True if successful
       @warning During periodic detection runs, an error is returned
      */
-    bool measureInternalSingleshot(dual_kmeter::Data& d, const dual_kmeter::Channel channel,
+    bool measureInternalSingleshot(dual_kmeter::Data& data, const dual_kmeter::Channel channel,
                                    const dual_kmeter::MeasurementUnit munit = dual_kmeter::MeasurementUnit::Celsius,
                                    const uint32_t timeoutMs                 = 100);
     ///@}
@@ -287,17 +292,17 @@ protected:
 namespace dual_kmeter {
 ///@cond
 namespace command {
-constexpr uint8_t TEMPERATURE_CELSIUS_REG{0x00};                    // R
-constexpr uint8_t TEMPERATURE_FAHRENHEIT_REG{0x04};                 // R
-constexpr uint8_t INTERNAL_TEMPERATURE_CELSIUS_REG{0x10};           // R
-constexpr uint8_t INTERNAL_TEMPERATURE_FAHRENHEIT_REG{0x14};        // R
-constexpr uint8_t CHANNEL_REG{0x20};                                // R/W
-constexpr uint8_t STATUS_REG{0x30};                                 // R
-constexpr uint8_t TEMPERATURE_CELSIUS_STRING_REG{0x40};             // R
-constexpr uint8_t TEMPERATURE_FAHRENHEITSTRING_REG{0x50};           // R
-constexpr uint8_t INTERNAL_TEMPERATURE_CELSIUS_STRING_REG{0x60};    // R
-constexpr uint8_t INTERNAL_TEMPERATURE_FAHRENHEITSTRING_REG{0x70};  // R
-constexpr uint8_t FIRMWARE_VERSION_REG{0xFE};                       // R
+constexpr uint8_t TEMPERATURE_CELSIUS_REG{0x00};                     // R
+constexpr uint8_t TEMPERATURE_FAHRENHEIT_REG{0x04};                  // R
+constexpr uint8_t INTERNAL_TEMPERATURE_CELSIUS_REG{0x10};            // R
+constexpr uint8_t INTERNAL_TEMPERATURE_FAHRENHEIT_REG{0x14};         // R
+constexpr uint8_t CHANNEL_REG{0x20};                                 // R/W
+constexpr uint8_t STATUS_REG{0x30};                                  // R
+constexpr uint8_t TEMPERATURE_CELSIUS_STRING_REG{0x40};              // R
+constexpr uint8_t TEMPERATURE_FAHRENHEIT_STRING_REG{0x50};           // R
+constexpr uint8_t INTERNAL_TEMPERATURE_CELSIUS_STRING_REG{0x60};     // R
+constexpr uint8_t INTERNAL_TEMPERATURE_FAHRENHEIT_STRING_REG{0x70};  // R
+constexpr uint8_t FIRMWARE_VERSION_REG{0xFE};                        // R
 }  // namespace command
 ///@endcond
 }  // namespace dual_kmeter

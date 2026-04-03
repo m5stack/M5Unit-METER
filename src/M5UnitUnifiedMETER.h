@@ -5,6 +5,7 @@
  */
 /*!
   @file M5UnitUnifiedMETER.h
+  @brief Header for M5UnitUnifiedMETER (C compatible include)
  */
 #ifndef M5_UNIT_UNIFIED_METER_H
 #define M5_UNIT_UNIFIED_METER_H

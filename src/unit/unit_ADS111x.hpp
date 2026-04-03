@@ -26,7 +26,7 @@ namespace ads111x {
 /*!
   @enum Mux
   @brief Input multiplexer
-  @warning This feature serve nofunction on the ADS1113 and ADS1114
+  @warning This feature serves no function on the ADS1113 and ADS1114
 */
 enum class Mux : uint8_t {
     AIN_01,  //!< Positive:AIN0 Negative:AIN1 as default
@@ -42,7 +42,7 @@ enum class Mux : uint8_t {
 /*!
   @enum Gain
   @brief Programmable gain amplifier
-  @warning This feature serve nofunction on the ADS1113
+  @warning This feature serves no function on the ADS1113
  */
 enum class Gain : uint8_t {
     PGA_6144,  //!< +/- 6.144 V
@@ -71,8 +71,8 @@ enum class Sampling : uint8_t {
 
 /*!
   @enum ComparatorQueue
-  @brief the value determines the number of successive conversions exceeding the upper orlower threshold required
-  @warning This feature serve nofunction on the ADS1113
+  @brief the value determines the number of successive conversions exceeding the upper or lower threshold required
+  @warning This feature serves no function on the ADS1113
 */
 enum class ComparatorQueue : uint8_t {
     One,      //!< Assert after one conversion
@@ -94,7 +94,8 @@ struct Config {
     }
     inline Gain pga() const
     {
-        return static_cast<Gain>((value >> 9) & 0x07);
+        uint8_t v = (value >> 9) & 0x07;
+        return static_cast<Gain>(v > 5 ? 5 : v);  // 6,7 are duplicates of PGA_256
     }
     inline bool mode() const
     {
@@ -216,12 +217,12 @@ public:
 
     ///@name Settings for begin
     ///@{
-    /*! @brief Gets the configration */
+    /*! @brief Gets the configuration */
     inline config_t config()
     {
         return _cfg;
     }
-    //! @brief Set the configration
+    //! @brief Set the configuration
     inline void config(const config_t& cfg)
     {
         _cfg = cfg;
@@ -284,16 +285,19 @@ public:
     ///@}
 
     ///@warning ADS1113, ADS1114 and ADS1115 differ in the items that can be set
-    ///@name Configration
+    ///@name Configuration
     ///@{
-    /*! @brief Gets the input multiplexer */
+    //! @brief Gets the input multiplexer
+    //! @return Current multiplexer setting
     inline ads111x::Mux multiplexer() const
     {
         return _ads_cfg.mux();
     }
     //! @brief Gets the programmable gain amplifier
+    //! @return Current gain setting
     ads111x::Gain gain() const;
     //! @brief Gets the sampling rate
+    //! @return Current sampling rate
     inline ads111x::Sampling samplingRate() const
     {
         return _ads_cfg.dr();
@@ -326,28 +330,43 @@ public:
         return _ads_cfg.comp_lat();
     }
     //! @brief Gets the comparator queue
+    //! @return Current comparator queue setting
     inline ads111x::ComparatorQueue comparatorQueue() const
     {
         return _ads_cfg.comp_que();
     }
 
     //! @brief Write the input multiplexer
+    //! @param mux Multiplexer setting
+    //! @return True if successful
     virtual bool writeMultiplexer(const ads111x::Mux mux) = 0;
     /*!
       @brief Write the programmable gain amplifier
-      @warning the threshould values  must be updated whenever the PGA settings are changed
+      @param gain Gain setting
+      @return True if successful
+      @warning the threshold values must be updated whenever the PGA settings are changed
       @sa writeThreshold
      */
     virtual bool writeGain(const ads111x::Gain gain) = 0;
-    /*! @brief Write the data rate  */
+    //! @brief Write the data rate
+    //! @param rate Sampling rate
+    //! @return True if successful
     bool writeSamplingRate(const ads111x::Sampling rate);
     //! @brief Write the comparator mode
+    //! @param b true: Window comparator, false: Traditional comparator
+    //! @return True if successful
     virtual bool writeComparatorMode(const bool b) = 0;
     //! @brief Write the comparator polarity
+    //! @param b true: Active high, false: Active low
+    //! @return True if successful
     virtual bool writeComparatorPolarity(const bool b) = 0;
     //! @brief Write the latching comparator
+    //! @param b true: Latching, false: Nonlatching
+    //! @return True if successful
     virtual bool writeLatchingComparator(const bool b) = 0;
     //! @brief Write the comparator queue
+    //! @param c Comparator queue setting
+    //! @return True if successful
     virtual bool writeComparatorQueue(const ads111x::ComparatorQueue c) = 0;
     ///@}
 
@@ -356,14 +375,14 @@ public:
     /*!
       @brief Measurement single shot
       @details Measuring in the current settings
-      @param[out] data Measuerd data
+      @param[out] data Measured data
       @param timeoutMillis Timeout for measure
       @return True if successful
       @warning During periodic detection runs, an error is returned
       @warning Until it can be measured, it will be blocked until the timeout
       time
     */
-    bool measureSingleshot(ads111x::Data& d, const uint32_t timeoutMillis = 1000U);
+    bool measureSingleshot(ads111x::Data& data, const uint32_t timeoutMillis = 1000U);
     ///@}
 
     ///@name Threshold

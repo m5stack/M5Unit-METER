@@ -10,7 +10,6 @@
 #include "unit_INA226.hpp"
 #include <M5Utility.hpp>
 #include <array>
-#include <thread>
 
 using namespace m5::utility::mmh3;
 using namespace m5::unit::types;
@@ -19,7 +18,7 @@ using namespace m5::unit::ina226::command;
 using m5::unit::types::elapsed_time_t;
 
 namespace {
-constexpr uint16_t MANUFACTURER_ID{0X5449};
+constexpr uint16_t MANUFACTURER_ID{0x5449};
 constexpr uint16_t DIE_ID{0x2260};
 constexpr uint16_t DEFAULT_CONFIG_VALUE{0x4127};
 
@@ -221,14 +220,14 @@ struct Mask {
     uint16_t v{};
 };
 
-float caluculate_currentLSB(const float maxCur)
+float calculate_currentLSB(const float maxCur)
 {
-    return maxCur / 32767.f;
+    return maxCur / 32768.f;
 }
 
-uint16_t caluculate_calibration(const float shuntRes, const float maxCur, const float curLSB)
+uint16_t calculate_calibration(const float shuntRes, const float maxCur, const float curLSB)
 {
-    return (0.00512f / (curLSB * shuntRes));
+    return static_cast<uint16_t>(0.00512f / (curLSB * shuntRes));
 }
 
 uint32_t calculate_interval(const uint16_t v /* config bits*/)
@@ -284,7 +283,7 @@ UnitINA226::UnitINA226(const float shuntRes, const float maxCurA, const float cu
     ccfg.clock = 400 * 1000U;
     component_config(ccfg);
     if (_currentLSB == 0.0f) {
-        _currentLSB = caluculate_currentLSB(maxCurA);
+        _currentLSB = calculate_currentLSB(maxCurA);
     }
 }
 
@@ -329,7 +328,7 @@ bool UnitINA226::begin()
     }
 
     // Set calibration
-    uint16_t cal = caluculate_calibration(_shuntRes, _maxCurrentA, _currentLSB);
+    uint16_t cal = calculate_calibration(_shuntRes, _maxCurrentA, _currentLSB);
     if (!writeCalibration(cal)) {
         M5_LIB_LOGE("Failed to writeCalibration %u", cal);
         return false;
@@ -402,7 +401,7 @@ bool UnitINA226::stop_periodic_measurement()
     if (inPeriodic()) {
         return powerDown();
     }
-    return false;
+    return true;
 }
 
 bool UnitINA226::measureSingleshot(ina226::Data& data, const bool current, const bool voltage, const bool power)
@@ -593,15 +592,16 @@ bool UnitINA226::powerDown()
 bool UnitINA226::softReset(const bool all)
 {
     ModeCfg mc{};
-    uint16_t cal{};
     _periodic = false;
 
     if (read_configuration(mc.v)) {
         mc.reset(true);
         if (write_configuration(mc.v)) {
             m5::utility::delay(2);
+            uint16_t cal{};
             if (read_configuration(mc.v) && mc.v == DEFAULT_CONFIG_VALUE && readCalibration(cal) && cal == 0) {
-                _periodic = true;  // Default config register value is 0x4127 (measn Mode ShuntAndBus)
+                // Default config 0x4127 is ShuntAndBus continuous mode,
+                // but leave _periodic false; caller manages it via powerDown/startPeriodicMeasurement
                 return true;
             }
         }
@@ -722,10 +722,11 @@ bool UnitINA226::read_measurement(ina226::Data& d)
     uint8_t reg{SHUNT_VOLTAGE_REG};  // 0x01
     for (uint_fast8_t i = 0; i < 4; ++i) {
         if (_measureBits & (1U << i)) {
-            ret &= readRegister16BE((uint8_t)(reg + i), d.raw[i], 0);  // reg 0x01 - 0x04
+            ret &= readRegister16BE(static_cast<uint8_t>(reg + i), d.raw[i], 0);  // reg 0x01 - 0x04
         }
     }
-    d.currentLSB = _currentLSB;
+    d.currentLSB  = _currentLSB;
+    d.measureBits = _measureBits;
     return _measureBits && ret;
 }
 
