@@ -11,7 +11,7 @@ var classm5_1_1unit_1_1_unit_a_d_s111x =
     [ "gain", "classm5_1_1unit_1_1_unit_a_d_s111x.html#ae517d65928a97ad204e96d0c79c04b4e", null ],
     [ "generalReset", "classm5_1_1unit_1_1_unit_a_d_s111x.html#ae47d778759038ba093ab6b12d1949cdc", null ],
     [ "latchingComparator", "classm5_1_1unit_1_1_unit_a_d_s111x.html#a02474928fa93d2563d0015cf87c68213", null ],
-    [ "measureSingleshot", "classm5_1_1unit_1_1_unit_a_d_s111x.html#a44a1efc61b35279f4971dda91af2d190", null ],
+    [ "measureSingleshot", "classm5_1_1unit_1_1_unit_a_d_s111x.html#adf11f6c5b0f119d1f120221218dc1b79", null ],
     [ "multiplexer", "classm5_1_1unit_1_1_unit_a_d_s111x.html#ab3fe6f1a7fbc2558b33e81dccdc0d11d", null ],
     [ "readThreshold", "classm5_1_1unit_1_1_unit_a_d_s111x.html#a073e1e5a8dee4a487e812347af206b6c", null ],
     [ "samplingRate", "classm5_1_1unit_1_1_unit_a_d_s111x.html#a4ce7f05471e7761f4e2133fed1ab5865", null ],

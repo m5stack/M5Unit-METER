@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">M5Unit-METER<span id="projectnumber">&#160;0.2.1 git rev:6a6ea23</span>
+   <div id="projectname">M5Unit-METER<span id="projectnumber">&#160;0.3.0 git rev:2c09d95</span>
    </div>
   </td>
  </tr>
@@ -113,15 +113,19 @@ $(function(){initNavTree('structm5_1_1unit_1_1ina226_1_1_data.html',''); initRes
 Public Member Functions</h2></td></tr>
 <tr class="memitem:acaacc3b1e0fbbd925ce5dcc27a86900d" id="r_acaacc3b1e0fbbd925ce5dcc27a86900d"><td class="memItemLeft" align="right" valign="top"><a id="acaacc3b1e0fbbd925ce5dcc27a86900d" name="acaacc3b1e0fbbd925ce5dcc27a86900d"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>shuntVoltage</b> () const</td></tr>
+<tr class="memdesc:acaacc3b1e0fbbd925ce5dcc27a86900d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shunt voltage (mV) Returns NaN if not measured. <br /></td></tr>
 <tr class="separator:acaacc3b1e0fbbd925ce5dcc27a86900d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad617e6c3dcc785f04a9e7e308b2f615b" id="r_ad617e6c3dcc785f04a9e7e308b2f615b"><td class="memItemLeft" align="right" valign="top"><a id="ad617e6c3dcc785f04a9e7e308b2f615b" name="ad617e6c3dcc785f04a9e7e308b2f615b"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>voltage</b> () const</td></tr>
+<tr class="memdesc:ad617e6c3dcc785f04a9e7e308b2f615b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bus voltage (mV) Returns NaN if not measured. <br /></td></tr>
 <tr class="separator:ad617e6c3dcc785f04a9e7e308b2f615b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7de2a5d2bf8a7885fb4f8056bb3d44f6" id="r_a7de2a5d2bf8a7885fb4f8056bb3d44f6"><td class="memItemLeft" align="right" valign="top"><a id="a7de2a5d2bf8a7885fb4f8056bb3d44f6" name="a7de2a5d2bf8a7885fb4f8056bb3d44f6"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>power</b> () const</td></tr>
+<tr class="memdesc:a7de2a5d2bf8a7885fb4f8056bb3d44f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power (mW) Returns NaN if not measured. <br /></td></tr>
 <tr class="separator:a7de2a5d2bf8a7885fb4f8056bb3d44f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a664685d1acfce0a62a4f02a246606730" id="r_a664685d1acfce0a62a4f02a246606730"><td class="memItemLeft" align="right" valign="top"><a id="a664685d1acfce0a62a4f02a246606730" name="a664685d1acfce0a62a4f02a246606730"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>current</b> () const</td></tr>
+<tr class="memdesc:a664685d1acfce0a62a4f02a246606730"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current (mA) Returns NaN if not measured. <br /></td></tr>
 <tr class="separator:a664685d1acfce0a62a4f02a246606730"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -134,6 +138,10 @@ std::array&lt; uint16_t, 4 &gt;&#160;</td><td class="memItemRight" valign="botto
 float&#160;</td><td class="memItemRight" valign="bottom"><b>currentLSB</b> {}</td></tr>
 <tr class="memdesc:a9d2f014ac7bc41c3fed698103b7b41f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">currentLSB <br /></td></tr>
 <tr class="separator:a9d2f014ac7bc41c3fed698103b7b41f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b9ef0e081bdf39628fb8611e90ea266" id="r_a0b9ef0e081bdf39628fb8611e90ea266"><td class="memItemLeft" align="right" valign="top"><a id="a0b9ef0e081bdf39628fb8611e90ea266" name="a0b9ef0e081bdf39628fb8611e90ea266"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>measureBits</b> {}</td></tr>
+<tr class="memdesc:a0b9ef0e081bdf39628fb8611e90ea266"><td class="mdescLeft">&#160;</td><td class="mdescRight">Measured channels bitmask (0:Shunt 1:Bus 2:Power 3:Current) <br /></td></tr>
+<tr class="separator:a0b9ef0e081bdf39628fb8611e90ea266"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Measurement data group. </p>

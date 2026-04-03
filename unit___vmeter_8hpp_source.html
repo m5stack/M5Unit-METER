@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">M5Unit-METER<span id="projectnumber">&#160;0.2.1 git rev:6a6ea23</span>
+   <div id="projectname">M5Unit-METER<span id="projectnumber">&#160;0.3.0 git rev:2c09d95</span>
    </div>
   </td>
  </tr>
@@ -120,7 +120,7 @@ $(function(){initNavTree('unit___vmeter_8hpp_source.html',''); initResizable(tru
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keyword">constexpr</span> <span class="keyword">static</span> <span class="keywordtype">float</span> PRESSURE_COEFFICIENT{0.01591895f};</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keyword">explicit</span> UnitVmeter(<span class="keyword">const</span> uint8_t addr = DEFAULT_ADDRESS, <span class="keyword">const</span> uint8_t eepromAddr = DEFAULT_EEPROM_ADDRESS)</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        : UnitAVmeterBase(addr, eepromAddr)</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        : <a class="code hl_function" href="classm5_1_1unit_1_1_unit_a_vmeter_base.html#a7fcaea44f1e7facbc36214928bbbe533">UnitAVmeterBase</a>(addr, eepromAddr)</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    {</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="comment">// component_config().clock is set at ADS111x constructor</span></div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    }</div>
@@ -158,9 +158,10 @@ $(function(){initNavTree('unit___vmeter_8hpp_source.html',''); initResizable(tru
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>}  <span class="comment">// namespace unit</span></div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>}  <span class="comment">// namespace m5</span></div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclassm5_1_1unit_1_1_unit_a_d_s111x_html_a75fdc754b8488e5ea9217e0eef9d63ae"><div class="ttname"><a href="classm5_1_1unit_1_1_unit_a_d_s111x.html#a75fdc754b8488e5ea9217e0eef9d63ae">m5::unit::UnitADS111x::coefficient</a></div><div class="ttdeci">float coefficient() const</div><div class="ttdoc">Coefficient value.</div><div class="ttdef"><b>Definition</b> unit_ADS111x.hpp:237</div></div>
-<div class="ttc" id="aclassm5_1_1unit_1_1_unit_a_d_s111x_html_ac9638bee4d38e8184d550c81651815db"><div class="ttname"><a href="classm5_1_1unit_1_1_unit_a_d_s111x.html#ac9638bee4d38e8184d550c81651815db">m5::unit::UnitADS111x::adc</a></div><div class="ttdeci">int16_t adc() const</div><div class="ttdoc">Oldest measured ADC.</div><div class="ttdef"><b>Definition</b> unit_ADS111x.hpp:246</div></div>
+<div class="ttc" id="aclassm5_1_1unit_1_1_unit_a_d_s111x_html_a75fdc754b8488e5ea9217e0eef9d63ae"><div class="ttname"><a href="classm5_1_1unit_1_1_unit_a_d_s111x.html#a75fdc754b8488e5ea9217e0eef9d63ae">m5::unit::UnitADS111x::coefficient</a></div><div class="ttdeci">float coefficient() const</div><div class="ttdoc">Coefficient value.</div><div class="ttdef"><b>Definition</b> unit_ADS111x.hpp:238</div></div>
+<div class="ttc" id="aclassm5_1_1unit_1_1_unit_a_d_s111x_html_ac9638bee4d38e8184d550c81651815db"><div class="ttname"><a href="classm5_1_1unit_1_1_unit_a_d_s111x.html#ac9638bee4d38e8184d550c81651815db">m5::unit::UnitADS111x::adc</a></div><div class="ttdeci">int16_t adc() const</div><div class="ttdoc">Oldest measured ADC.</div><div class="ttdef"><b>Definition</b> unit_ADS111x.hpp:247</div></div>
 <div class="ttc" id="aclassm5_1_1unit_1_1_unit_a_d_s111x_html_ae517d65928a97ad204e96d0c79c04b4e"><div class="ttname"><a href="classm5_1_1unit_1_1_unit_a_d_s111x.html#ae517d65928a97ad204e96d0c79c04b4e">m5::unit::UnitADS111x::gain</a></div><div class="ttdeci">ads111x::Gain gain() const</div><div class="ttdoc">Gets the programmable gain amplifier.</div><div class="ttdef"><b>Definition</b> unit_ADS111x.cpp:104</div></div>
+<div class="ttc" id="aclassm5_1_1unit_1_1_unit_a_vmeter_base_html_a7fcaea44f1e7facbc36214928bbbe533"><div class="ttname"><a href="classm5_1_1unit_1_1_unit_a_vmeter_base.html#a7fcaea44f1e7facbc36214928bbbe533">m5::unit::UnitAVmeterBase::UnitAVmeterBase</a></div><div class="ttdeci">UnitAVmeterBase(const uint8_t addr=DEFAULT_ADDRESS, const uint8_t eepromAddr=0x00)</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition</b> unit_av_base.cpp:25</div></div>
 <div class="ttc" id="aclassm5_1_1unit_1_1_unit_vmeter_html_a686f2a65dd1f56f801f627d90be78306"><div class="ttname"><a href="classm5_1_1unit_1_1_unit_vmeter.html#a686f2a65dd1f56f801f627d90be78306">m5::unit::UnitVmeter::correction</a></div><div class="ttdeci">float correction() const</div><div class="ttdoc">Gets the correction value.</div><div class="ttdef"><b>Definition</b> unit_Vmeter.hpp:45</div></div>
 <div class="ttc" id="aclassm5_1_1unit_1_1_unit_vmeter_html_abf4886d08bba8ef43a87d1bcba685ca8"><div class="ttname"><a href="classm5_1_1unit_1_1_unit_vmeter.html#abf4886d08bba8ef43a87d1bcba685ca8">m5::unit::UnitVmeter::resolution</a></div><div class="ttdeci">float resolution() const</div><div class="ttdoc">Resolution of 1 LSB.</div><div class="ttdef"><b>Definition</b> unit_Vmeter.hpp:39</div></div>
 <div class="ttc" id="aclassm5_1_1unit_1_1_unit_vmeter_html_ad468159ed863811c42342455f7a08c3e"><div class="ttname"><a href="classm5_1_1unit_1_1_unit_vmeter.html#ad468159ed863811c42342455f7a08c3e">m5::unit::UnitVmeter::voltage</a></div><div class="ttdeci">float voltage() const</div><div class="ttdoc">Oldest voltage (mV)</div><div class="ttdef"><b>Definition</b> unit_Vmeter.hpp:51</div></div>

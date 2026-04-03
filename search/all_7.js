@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['latchingcomparator_0',['latchingComparator',['../classm5_1_1unit_1_1_unit_a_d_s111x.html#a02474928fa93d2563d0015cf87c68213',1,'m5::unit::UnitADS111x']]]
+  ['interval_0',['interval',['../structm5_1_1unit_1_1_unit_dual_kmeter_1_1config__t.html#a2bd8565c38e841156ab8afca273c6ff0',1,'m5::unit::UnitDualKmeter::config_t::interval'],['../structm5_1_1unit_1_1_unit_kmeter_i_s_o_1_1config__t.html#a1a49ca0e4ffa759060df62d168f887e4',1,'m5::unit::UnitKmeterISO::config_t::interval']]]
 ];

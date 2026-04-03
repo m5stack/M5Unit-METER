@@ -15,7 +15,7 @@ var annotated_dup =
           [ "Data", "structm5_1_1unit_1_1kmeter__iso_1_1_data.html", "structm5_1_1unit_1_1kmeter__iso_1_1_data" ]
         ] ],
         [ "meter", null, [
-          [ "UnitEEPROM", "classm5_1_1unit_1_1meter_1_1_unit_e_e_p_r_o_m.html", null ]
+          [ "UnitEEPROM", "classm5_1_1unit_1_1meter_1_1_unit_e_e_p_r_o_m.html", "classm5_1_1unit_1_1meter_1_1_unit_e_e_p_r_o_m" ]
         ] ],
         [ "UnitADS1113", "classm5_1_1unit_1_1_unit_a_d_s1113.html", "classm5_1_1unit_1_1_unit_a_d_s1113" ],
         [ "UnitADS1114", "classm5_1_1unit_1_1_unit_a_d_s1114.html", "classm5_1_1unit_1_1_unit_a_d_s1114" ],
