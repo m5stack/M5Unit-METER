@@ -50,18 +50,22 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Purpose: guarantee that ESP-IDF native (idf.py) users can build the library as a component and
+# every bundled example, on every target in idf_component.yml and every supported IDF boundary.
+# Compile coverage only (runtime is verified on hardware separately).
+#
 # Cross design: example/variant coverage on esp32s3 (latest IDF), and library/deps coverage on the
 # chip x IDF matrix via one representative example. The M5Unit-METER component globs all
 # src/*.cpp, so every example build compiles the full unit driver set -- a single example already
 # exercises the whole library per (target, idf). Job A sweeps the per-example app code + Kconfig
-# variants once (esp32s3 / v5.5.4); Job B sweeps the IDF-sensitive library + wiring across the
-# other SoCs and IDF boundaries using UnitVmeter/PlotToSerial (GROVE, wiring::addI2C); Job C builds
+# variants once (esp32s3 / v6.1); Job B sweeps the IDF-sensitive library + wiring across every
+# SoC and IDF boundary using UnitVmeter/PlotToSerial (GROVE, wiring::addI2C); Job C builds
 # the Tab5 built-in INA226 variant, which only exists on esp32p4.
 jobs:
   # Example & variant coverage: every example app + INA226 / GraphicalMeter variants on esp32s3
   # (LCD-capable dual-core Xtensa with PSRAM) at the latest IDF.
   build-examples:
-    name: v5.5.4 esp32s3 ${{ matrix.example_config.label }}
+    name: v6.1 esp32s3 ${{ matrix.example_config.label }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
@@ -114,11 +118,12 @@ jobs:
       - name: ESP-IDF build
         uses: espressif/esp-idf-ci-action@v1
         with:
-          esp_idf_version: v5.5.4
+          esp_idf_version: v6.1
           target: esp32s3
           path: ${{ matrix.example_config.example_path }}
 
-  # Chip coverage: UnitVmeter/PlotToSerial on every other supported SoC. esp32 = classic Xtensa
+  # Chip coverage: UnitVmeter/PlotToSerial on every supported SoC. esp32s3 is included for the
+  # older IDF boundaries (its v6.1 build is already done by build-examples). esp32 = classic Xtensa
   # dual-core (also the M5Unified legacy-touch path). esp32c6 (NanoC6 / NessoN1) / esp32h2 (NanoH2)
   # = RISC-V single-core, exercises the app_main CONFIG_FREERTOS_UNICORE feedIdle branch.
   # esp32p4 (M5Stack Tab5) = RISC-V dual-core; the sdkconfig.defaults.esp32p4 overlay is auto-applied.
@@ -130,14 +135,18 @@ jobs:
       fail-fast: false
       max-parallel: 20
       matrix:
-        target: [esp32, esp32c6, esp32h2, esp32p4]
+        target: [esp32, esp32s3, esp32c6, esp32h2, esp32p4]
         # idf boundaries: 5.1.7 = oldest legacy-driver (5.0.x dropped: M5GFX needs esp_mm added
-        # in 5.1), 5.4.4 = new driver/*_master.h era, 5.5.4 = latest.
-        idf: [v5.1.7, v5.4.4, v5.5.4]
+        # in 5.1), 5.4.4 = new driver/*_master.h era, 5.5.4 = latest 5.x,
+        # 6.1 = latest (M5Unified/M5GFX support 6.x; 7.x is not verified yet).
+        idf: [v5.1.7, v5.4.4, v5.5.4, v6.1]
         exclude:
           # esp32p4 stable from IDF v5.3 (M5GFX P4 verified on 5.4/5.5). 5.1.7 not applicable.
           - target: esp32p4
             idf: v5.1.7
+          # esp32s3 x v6.1 UnitVmeter is identical to the build-examples job.
+          - target: esp32s3
+            idf: v6.1
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -158,7 +167,7 @@ jobs:
       fail-fast: false
       max-parallel: 20
       matrix:
-        idf: [v5.4.4, v5.5.4]
+        idf: [v5.4.4, v5.5.4, v6.1]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
