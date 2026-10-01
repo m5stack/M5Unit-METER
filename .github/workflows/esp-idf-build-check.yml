@@ -1,0 +1,176 @@
+name: Build(esp-idf-native)
+
+on:
+  push:
+    tags-ignore:
+      - '*.*.*'
+      - 'v*.*.*'
+    branches:
+      - '*'
+    paths:
+      - 'src/**.cpp'
+      - 'src/**.hpp'
+      - 'src/**.h'
+      - 'src/**.c'
+      - 'CMakeLists.txt'
+      - 'idf_component.yml'
+      - 'examples/UnitUnified/**.cpp'
+      - 'examples/UnitUnified/**.hpp'
+      - 'examples/UnitUnified/**.h'
+      - 'examples/UnitUnified/**.c'
+      - 'examples/UnitUnified/**/CMakeLists.txt'
+      - 'examples/UnitUnified/**/Kconfig.projbuild'
+      - 'examples/UnitUnified/**/idf_component.yml'
+      - 'examples/UnitUnified/common/**'
+      - '.github/workflows/esp-idf-build-check.yml'
+  pull_request:
+    paths:
+      - 'src/**.cpp'
+      - 'src/**.hpp'
+      - 'src/**.h'
+      - 'src/**.c'
+      - 'CMakeLists.txt'
+      - 'idf_component.yml'
+      - 'examples/UnitUnified/**.cpp'
+      - 'examples/UnitUnified/**.hpp'
+      - 'examples/UnitUnified/**.h'
+      - 'examples/UnitUnified/**.c'
+      - 'examples/UnitUnified/**/CMakeLists.txt'
+      - 'examples/UnitUnified/**/Kconfig.projbuild'
+      - 'examples/UnitUnified/**/idf_component.yml'
+      - 'examples/UnitUnified/common/**'
+      - '.github/workflows/esp-idf-build-check.yml'
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Cross design: example/variant coverage on esp32s3 (latest IDF), and library/deps coverage on the
+# chip x IDF matrix via one representative example. The M5Unit-METER component globs all
+# src/*.cpp, so every example build compiles the full unit driver set -- a single example already
+# exercises the whole library per (target, idf). Job A sweeps the per-example app code + Kconfig
+# variants once (esp32s3 / v5.5.4); Job B sweeps the IDF-sensitive library + wiring across the
+# other SoCs and IDF boundaries using UnitVmeter/PlotToSerial (GROVE, wiring::addI2C); Job C builds
+# the Tab5 built-in INA226 variant, which only exists on esp32p4.
+jobs:
+  # Example & variant coverage: every example app + INA226 / GraphicalMeter variants on esp32s3
+  # (LCD-capable dual-core Xtensa with PSRAM) at the latest IDF.
+  build-examples:
+    name: v5.5.4 esp32s3 ${{ matrix.example_config.label }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        example_config:
+          - label: UnitAmeter
+            example_path: examples/UnitUnified/UnitAmeter/PlotToSerial
+            config: ''
+          - label: UnitVmeter
+            example_path: examples/UnitUnified/UnitVmeter/PlotToSerial
+            config: ''
+          - label: UnitKmeterISO
+            example_path: examples/UnitUnified/UnitKmeterISO/PlotToSerial
+            config: ''
+          - label: UnitDualKmeter
+            example_path: examples/UnitUnified/UnitDualKmeter/PlotToSerial
+            config: ''
+          - label: UnitINA226 (10A)
+            example_path: examples/UnitUnified/UnitINA226/PlotToSerial
+            config: CONFIG_EXAMPLE_USING_UNIT_INA226_10A=y
+          - label: UnitINA226 (1A)
+            example_path: examples/UnitUnified/UnitINA226/PlotToSerial
+            config: CONFIG_EXAMPLE_USING_UNIT_INA226_1A=y
+          - label: GraphicalMeter (Vmeter)
+            example_path: examples/UnitUnified/GraphicalMeter
+            config: CONFIG_EXAMPLE_USING_UNIT_VMETER=y
+          - label: GraphicalMeter (Ameter)
+            example_path: examples/UnitUnified/GraphicalMeter
+            config: CONFIG_EXAMPLE_USING_UNIT_AMETER=y
+          - label: GraphicalMeter (KmeterISO)
+            example_path: examples/UnitUnified/GraphicalMeter
+            config: CONFIG_EXAMPLE_USING_UNIT_KMETER_ISO=y
+          - label: GraphicalMeter (DualKmeter)
+            example_path: examples/UnitUnified/GraphicalMeter
+            config: CONFIG_EXAMPLE_USING_UNIT_DUAL_KMETER=y
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Kconfig variant
+        # The example's own sdkconfig.defaults is not read (top CMakeLists points SDKCONFIG_DEFAULTS
+        # at common/sdkconfig.defaults). Append the choice to common/ in the CI workspace only.
+        if: matrix.example_config.config != ''
+        run: |
+          echo "" >> examples/UnitUnified/common/sdkconfig.defaults
+          echo "${{ matrix.example_config.config }}" >> examples/UnitUnified/common/sdkconfig.defaults
+
+      - name: ESP-IDF build
+        uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: v5.5.4
+          target: esp32s3
+          path: ${{ matrix.example_config.example_path }}
+
+  # Chip coverage: UnitVmeter/PlotToSerial on every other supported SoC. esp32 = classic Xtensa
+  # dual-core (also the M5Unified legacy-touch path). esp32c6 (NanoC6 / NessoN1) / esp32h2 (NanoH2)
+  # = RISC-V single-core, exercises the app_main CONFIG_FREERTOS_UNICORE feedIdle branch.
+  # esp32p4 (M5Stack Tab5) = RISC-V dual-core; the sdkconfig.defaults.esp32p4 overlay is auto-applied.
+  build-chips:
+    name: ${{ matrix.idf }} ${{ matrix.target }} UnitVmeter
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        target: [esp32, esp32c6, esp32h2, esp32p4]
+        # idf boundaries: 5.1.7 = oldest legacy-driver (5.0.x dropped: M5GFX needs esp_mm added
+        # in 5.1), 5.4.4 = new driver/*_master.h era, 5.5.4 = latest.
+        idf: [v5.1.7, v5.4.4, v5.5.4]
+        exclude:
+          # esp32p4 stable from IDF v5.3 (M5GFX P4 verified on 5.4/5.5). 5.1.7 not applicable.
+          - target: esp32p4
+            idf: v5.1.7
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: ESP-IDF build
+        uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: ${{ matrix.idf }}
+          target: ${{ matrix.target }}
+          path: examples/UnitUnified/UnitVmeter/PlotToSerial
+
+  # Tab5 built-in INA226 (internal I2C): the Kconfig option only exists on esp32p4.
+  build-tab5:
+    name: ${{ matrix.idf }} esp32p4 UnitINA226 (Tab5 built-in)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        idf: [v5.4.4, v5.5.4]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Kconfig variant
+        run: |
+          echo "" >> examples/UnitUnified/common/sdkconfig.defaults
+          echo "CONFIG_EXAMPLE_BUILTIN_UNIT_INA226_10A=y" >> examples/UnitUnified/common/sdkconfig.defaults
+
+      - name: ESP-IDF build
+        uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: ${{ matrix.idf }}
+          target: esp32p4
+          path: examples/UnitUnified/UnitINA226/PlotToSerial
