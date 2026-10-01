@@ -123,7 +123,8 @@ jobs:
           path: ${{ matrix.example_config.example_path }}
 
   # Chip coverage: UnitVmeter/PlotToSerial on every supported SoC. esp32s3 is included for the
-  # older IDF boundaries (its v6.1 build is already done by build-examples). esp32 = classic Xtensa
+  # older IDF boundaries (its v6.1 build is already done by build-examples). esp32c3 (StampC3 etc.)
+  # = RISC-V single-core without PSRAM. esp32 = classic Xtensa
   # dual-core (also the M5Unified legacy-touch path). esp32c6 (NanoC6 / NessoN1) / esp32h2 (NanoH2)
   # = RISC-V single-core, exercises the app_main CONFIG_FREERTOS_UNICORE feedIdle branch.
   # esp32p4 (M5Stack Tab5) = RISC-V dual-core; the sdkconfig.defaults.esp32p4 overlay is auto-applied.
@@ -135,7 +136,7 @@ jobs:
       fail-fast: false
       max-parallel: 20
       matrix:
-        target: [esp32, esp32s3, esp32c6, esp32h2, esp32p4]
+        target: [esp32, esp32s3, esp32c3, esp32c6, esp32h2, esp32p4]
         # idf boundaries: 5.1.7 = oldest legacy-driver (5.0.x dropped: M5GFX needs esp_mm added
         # in 5.1), 5.4.4 = new driver/*_master.h era, 5.5.4 = latest 5.x,
         # 6.1 = latest (M5Unified/M5GFX support 6.x; 7.x is not verified yet).
