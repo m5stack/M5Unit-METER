@@ -18,6 +18,10 @@
 #include <iostream>
 #include <esp_random.h>
 
+// BUILTIN_UNIT_INA226_10A: Tab5 built-in INA226 (10A shunt) on the internal I2C (M5.In_I2C)
+#if defined(BUILTIN_UNIT_INA226_10A) && !defined(USING_UNIT_INA226_10A)
+#define USING_UNIT_INA226_10A
+#endif
 #if !defined(USING_UNIT_INA226_1A) && !defined(USING_UNIT_INA226_10A)
 #define USING_UNIT_INA226_10A
 #endif
@@ -42,6 +46,17 @@ protected:
         ptr->component_config(ccfg);
         return ptr;
     }
+#if defined(BUILTIN_UNIT_INA226_10A)
+    // The built-in INA226 is on the internal I2C, not on the GROVE port
+    virtual bool begin() override
+    {
+        if (M5.getBoard() != m5::board_t::board_M5Tab5) {
+            M5_LOGE("Core is NOT Tab5");
+            return false;
+        }
+        return Units.add(*unit, M5.In_I2C) && Units.begin();
+    }
+#endif
 };
 #elif defined(USING_UNIT_INA226_1A)
 #pragma message "Using 1A"
