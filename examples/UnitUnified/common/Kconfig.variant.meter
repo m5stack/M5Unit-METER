@@ -1,0 +1,22 @@
+# "Target unit" selection for the GraphicalMeter example (ESP-IDF).
+# rsource'd from GraphicalMeter/main/Kconfig.projbuild. The chosen CONFIG_EXAMPLE_USING_* is mapped
+# to the source-level USING_* macro in common/variant.cmake (shared with the Arduino build).
+menu "M5Unit-METER GraphicalMeter example"
+
+choice EXAMPLE_METER_VARIANT
+    prompt "Target unit"
+    default EXAMPLE_USING_UNIT_VMETER
+    help
+        Which meter unit this example drives.
+
+    config EXAMPLE_USING_UNIT_VMETER
+        bool "UnitVmeter (U087, I2C / GROVE)"
+    config EXAMPLE_USING_UNIT_AMETER
+        bool "UnitAmeter (U086, I2C / GROVE)"
+    config EXAMPLE_USING_UNIT_KMETER_ISO
+        bool "UnitKmeterISO (U133-V11, I2C / GROVE)"
+    config EXAMPLE_USING_UNIT_DUAL_KMETER
+        bool "ModuleDualKmeter (M127, M5-Bus internal I2C)"
+endchoice
+
+endmenu
