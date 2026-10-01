@@ -1,0 +1,38 @@
+description: Library for M5Stack UNIT METER (Ameter / Vmeter / KmeterISO / DualKmeter / INA226) using M5UnitUnified.
+url: https://github.com/m5stack/M5Unit-METER
+issues: https://github.com/m5stack/M5Unit-METER/issues
+license: MIT
+version: "0.3.0"
+
+dependencies:
+  idf: ">=5.0"
+  # M5UnitUnified / M5Utility are not yet on the ESP Component Registry, so reference the main
+  # branch via git (switch to a version constraint after publish).
+  m5stack/M5UnitUnified:
+    git: https://github.com/m5stack/M5UnitUnified.git
+    version: main
+  m5stack/M5Utility:
+    git: https://github.com/m5stack/M5Utility.git
+    version: main
+
+targets:
+  - esp32
+  - esp32s3
+  - esp32c3
+  - esp32c6
+  - esp32h2
+  - esp32p4
+
+files:
+  exclude:
+    - "docs/**"
+    - "examples/**"
+    - "test/**"
+    - "boards/**"
+    - "datasheet/**"
+    - "platformio.ini"
+    - "library.json"
+    - "library.properties"
+    - "*_env.ini"
+    - ".clang-format"
+    - ".gitignore"
