@@ -84,6 +84,7 @@ jobs:
           - AtomS3
           - AtomS3R
           - NanoC6
+          - NanoH2
           - StickCPlus
           - StickCPlus2
           - StickS3
@@ -177,6 +178,8 @@ jobs:
             board: AtomS3R
           - unit: UnitDualKmeter
             board: NanoC6
+          - unit: UnitDualKmeter
+            board: NanoH2
           - unit: UnitDualKmeter
             board: StickCPlus
           - unit: UnitDualKmeter
