@@ -69,7 +69,7 @@ See also examples using conventional methods here.
 ## Examples
 See also [examples/UnitUnified](examples/UnitUnified)
 
-### For ArduinoIDE settings
+### For Arduino IDE settings
 You must choose a define symbol for the unit you will use.
 (Rewrite source or specify with compile options)
 
@@ -102,6 +102,31 @@ You must choose a define symbol for the unit you will use.
 // #define BUILTIN_UNIT_INA226_10A
 #endif
 ```
+
+### For ESP-IDF settings
+
+> **NOTE:** The library and examples target ESP-IDF **5.1 or later** (5.x and 6.x).
+
+On ESP-IDF native builds (`idf.py`), the unit is selected via Kconfig instead of editing the source `#define`. The examples with a variant expose the choice through `main/Kconfig.projbuild`, which sources one of the Kconfig files in `examples/UnitUnified/common/`:
+
+| Kconfig file | Variants offered | Used by |
+|---|---|---|
+| `Kconfig.variant.ina226` | UnitINA226-10A / UnitINA226-1A / M5Tab5 built-in INA226 | UnitINA226/PlotToSerial |
+| `Kconfig.variant.meter` | UnitVmeter / UnitAmeter / UnitKmeterISO / ModuleDualKmeter | GraphicalMeter |
+
+`examples/UnitUnified/common/variant.cmake` then maps the chosen `CONFIG_EXAMPLE_USING_*` to the source-level macro shared with the Arduino build, so the example source itself does not need to be edited. The **M5Tab5 built-in INA226** option appears only when the target is esp32p4.
+
+Pick the variant with `menuconfig`:
+
+```sh
+cd examples/UnitUnified/UnitINA226/PlotToSerial    # or GraphicalMeter
+idf.py set-target esp32s3                          # or esp32 / esp32c6 / esp32p4 / ...
+idf.py menuconfig
+# -> M5Unit-METER INA226 example (or M5Unit-METER GraphicalMeter example) -> Target unit -> choose ONE
+idf.py build flash monitor
+```
+
+The other examples (UnitAmeter / UnitVmeter / UnitKmeterISO / UnitDualKmeter PlotToSerial) have no variant; run `idf.py set-target <chip>` and `idf.py build flash monitor` directly.
 
 ## Doxygen document
 [GitHub Pages](https://m5stack.github.io/M5Unit-METER/)
