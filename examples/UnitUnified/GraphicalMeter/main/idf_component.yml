@@ -4,7 +4,7 @@
 ##   M5Unit-METER's own idf_component.yml (git main until the ESP Component Registry publish).
 ## - M5Unified >=0.2.17 declares M5GFX as a transitive dependency in its idf_component.yml.
 dependencies:
-  idf: ">=5.0"
+  idf: ">=5.1"
   m5stack/M5Unit-METER:
     path: "../../../.."
   m5stack/M5Unified: ">=0.2.17"
