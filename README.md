@@ -105,7 +105,7 @@ You must choose a define symbol for the unit you will use.
 
 ### For ESP-IDF settings
 
-> **NOTE:** The library and examples target ESP-IDF **5.1 or later** (5.x and 6.x).
+> **NOTE:** The ESP-IDF native build (`idf.py`) targets ESP-IDF **5.1 or later** (5.x and 6.x).
 
 On ESP-IDF native builds (`idf.py`), the unit is selected via Kconfig instead of editing the source `#define`. The examples with a variant expose the choice through `main/Kconfig.projbuild`, which sources one of the Kconfig files in `examples/UnitUnified/common/`:
 
