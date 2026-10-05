@@ -2,7 +2,7 @@ name: Build(arduino-m5stack)
 
 env:
   SKETCH_NAMES_FIND_START: ./examples/UnitUnified
-  REQUIRED_LIBRARIES: M5Unified,M5UnitUnified
+  REQUIRED_LIBRARIES: M5Unified,M5UnitUnified,M5Unit-HUB
 
 on:
   push:
@@ -154,6 +154,13 @@ jobs:
             archi: esp32
             board: m5stack_core
             build-properties: "-DUSING_UNIT_DUAL_KMETER"
+          - sketch: ViaPaHub
+            platform-url: https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json
+            platform-version: 3.2.5
+            platform: m5stack
+            archi: esp32
+            board: m5stack_core
+            build-properties: ""
           - sketch: PlotToSerial
             unit: UnitINA226
             platform-url: https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json

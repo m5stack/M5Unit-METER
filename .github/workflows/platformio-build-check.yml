@@ -164,6 +164,10 @@ jobs:
             framework: Arduino
             espressif32: latest
             unit: BUILTIN_UNIT_INA226_10A
+          - example: ViaPaHub
+            board: Core
+            framework: Arduino
+            espressif32: latest
 
         exclude:
           - unit: UnitDualKmeter

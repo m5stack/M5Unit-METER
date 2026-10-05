@@ -66,6 +66,17 @@ See also examples using conventional methods here.
 
 - [M5Unit-METER - MIT](LICENSE)
 
+## Support via [PaHub](https://docs.m5stack.com/en/unit/Unit-PaHub%20v2.1)
+
+|Unit|Support|Note|
+|---|---|---|
+|UnitAmeter|OK||
+|UnitVmeter|OK||
+|UnitKmeterISO|OK||
+|UnitINA226-10A / UnitINA226-1A|OK||
+
+See also [examples/UnitUnified/ViaPaHub](examples/UnitUnified/ViaPaHub) and [M5Unit-HUB](https://github.com/m5stack/M5Unit-HUB)
+
 ## Examples
 See also [examples/UnitUnified](examples/UnitUnified)
 
