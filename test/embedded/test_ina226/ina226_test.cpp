@@ -380,9 +380,11 @@ TEST_F(TestINA226, Periodic)
     EXPECT_FALSE(unit->inPeriodic());
 
     // SoftwareI2C adds ~2-3ms overhead per transaction
-    auto ad      = unit->asAdapter<m5::unit::AdapterI2C>(m5::unit::Adapter::Type::I2C);
-    bool is_bus  = ad && ad->implType() == m5::unit::AdapterI2C::ImplType::Bus;
-    uint32_t tol = is_bus ? 5 : 1;
+    auto ad           = unit->asAdapter<m5::unit::AdapterI2C>(m5::unit::Adapter::Type::I2C);
+    const bool is_bus = ad && ad->implType() == m5::unit::AdapterI2C::ImplType::Bus;
+    // Reading all channels takes ~0.8-1.1ms even at 400kHz on any board and path, so an interval this short has no
+    // margin and samples may be missed
+    constexpr uint32_t TIGHT_INTERVAL_MS{2};
 
     // Rate coverage with all channels (timing verification)
     for (auto&& p : periodic_param_table) {
@@ -397,8 +399,10 @@ TEST_F(TestINA226, Periodic)
         EXPECT_TRUE(unit->startPeriodicMeasurement(r, ct1, ct2));
         EXPECT_TRUE(unit->inPeriodic());
 
-        uint32_t timeout = is_bus ? std::max<uint32_t>(unit->interval(), 500) * (STORED_SIZE + 1) * 4 : 0;
-        auto result      = collect_periodic_measurements(unit.get(), STORED_SIZE, timeout);
+        const bool relaxed = is_bus || unit->interval() <= TIGHT_INTERVAL_MS;
+        const uint32_t tol = relaxed ? 5 : 1;
+        uint32_t timeout   = relaxed ? std::max<uint32_t>(unit->interval(), 500) * (STORED_SIZE + 1) * 4 : 0;
+        auto result        = collect_periodic_measurements(unit.get(), STORED_SIZE, timeout);
         EXPECT_FALSE(result.timed_out);
         EXPECT_EQ(result.update_count, STORED_SIZE);
         EXPECT_LE(result.median(), result.expected_interval + tol);
