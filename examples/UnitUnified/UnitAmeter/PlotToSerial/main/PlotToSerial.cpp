@@ -44,7 +44,7 @@ void setup()
         m5::unit::wiring::failStop();
     }
 
-    M5_LOGI("M5UnitUnified has been begun");
+    M5_LOGI("M5UnitUnified initialized");
     M5_LOGI("%s", Units.debugInfo().c_str());
 
     M5_LOGI(">RES:%f COEF:%f CF:%f CORR:%f periodic:%d", unit.resolution(), unit.coefficient(),
@@ -66,11 +66,9 @@ void loop()
     }
 
     if (M5.BtnA.wasClicked()) {
-        {
-            rate = static_cast<Sampling>((m5::stl::to_underlying(rate) + 1) & 0x07);
-            if (!unit.writeSamplingRate(rate)) {
-                M5_LOGE("Failed to writeSamplingRate");
-            }
+        rate = static_cast<Sampling>((m5::stl::to_underlying(rate) + 1) & 0x07);
+        if (!unit.writeSamplingRate(rate)) {
+            M5_LOGE("Failed to writeSamplingRate");
         }
     }
 }
