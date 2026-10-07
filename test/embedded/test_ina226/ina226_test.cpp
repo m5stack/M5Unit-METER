@@ -399,10 +399,10 @@ TEST_F(TestINA226, Periodic)
         EXPECT_TRUE(unit->startPeriodicMeasurement(r, ct1, ct2));
         EXPECT_TRUE(unit->inPeriodic());
 
-        const bool relaxed = is_bus || unit->interval() <= TIGHT_INTERVAL_MS;
-        const uint32_t tol = relaxed ? 5 : 1;
-        uint32_t timeout   = relaxed ? std::max<uint32_t>(unit->interval(), 500) * (STORED_SIZE + 1) * 4 : 0;
-        auto result        = collect_periodic_measurements(unit.get(), STORED_SIZE, timeout);
+        const bool relaxed     = is_bus || unit->interval() <= TIGHT_INTERVAL_MS;
+        const uint32_t tol     = relaxed ? 5 : 1;
+        const uint32_t timeout = relaxed ? std::max<uint32_t>(unit->interval(), 500) * (STORED_SIZE + 1) * 4 : 0;
+        auto result            = collect_periodic_measurements(unit.get(), STORED_SIZE, timeout);
         EXPECT_FALSE(result.timed_out);
         EXPECT_EQ(result.update_count, STORED_SIZE);
         EXPECT_LE(result.median(), result.expected_interval + tol);
