@@ -19,13 +19,13 @@ CONFIG_COMPILER_DISABLE_DEFAULT_ERRORS=y
 CONFIG_TOUCH_SUPPRESS_DEPRECATE_WARN=y
 
 # Flash size: 4MB is a safe default for M5Stack boards. Boards with more flash still boot (they
-# just won't use the extra). Override per board if needed (see README): CONFIG_ESPTOOLPY_FLASHSIZE.
+# just won't use the extra). Override per board if needed: CONFIG_ESPTOOLPY_FLASHSIZE.
 CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
 CONFIG_ESPTOOLPY_FLASHSIZE="4MB"
 
 # Enable PSRAM where present. IGNORE_NOTFOUND lets boards WITHOUT PSRAM still boot (the region is
 # simply not added). Default mode is Quad; OCTAL-PSRAM boards (some ESP32-S3) MUST override with
-# CONFIG_SPIRAM_MODE_OCT=y (see README). Targets with no PSRAM interface (C3/C6/H2) ignore these.
+# CONFIG_SPIRAM_MODE_OCT=y. Targets with no PSRAM interface (C3/C6/H2) ignore these.
 CONFIG_SPIRAM=y
 CONFIG_SPIRAM_IGNORE_NOTFOUND=y
 
