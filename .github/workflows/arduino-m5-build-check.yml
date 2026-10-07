@@ -179,7 +179,11 @@ jobs:
           - unit: UnitDualKmeter
             board: m5stack_atoms3e
           - unit: UnitDualKmeter
+            board: m5stack_atoms3r
+          - unit: UnitDualKmeter
             board: m5stack_capsule
+          - unit: UnitDualKmeter
+            board: m5stack_cardputer
           - unit: UnitDualKmeter
             board: m5stack_coreink
           - unit: UnitDualKmeter
@@ -187,13 +191,21 @@ jobs:
           - unit: UnitDualKmeter
             board: m5stack_dinmeter
           - unit: UnitDualKmeter
+            board: m5stack_nano_c6
+          - unit: UnitDualKmeter
+            board: m5stack_nano_h2
+          - unit: UnitDualKmeter
             board: m5stack_paper
+          - unit: UnitDualKmeter
+            board: m5stack_papers3
           - unit: UnitDualKmeter
             board: m5stack_stamp_s3
           - unit: UnitDualKmeter
             board: m5stack_stickc_plus
           - unit: UnitDualKmeter
             board: m5stack_stickc_plus2
+          - unit: UnitDualKmeter
+            board: m5stack_sticks3
 
     steps:
       - name: Checkout

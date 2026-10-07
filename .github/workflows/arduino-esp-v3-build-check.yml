@@ -160,6 +160,8 @@ jobs:
           - unit: UnitDualKmeter
             board: m5stack_atoms3
           - unit: UnitDualKmeter
+            board: m5stack_cardputer
+          - unit: UnitDualKmeter
             board: m5stack_coreink
           - unit: UnitDualKmeter
             board: m5stack_dial
