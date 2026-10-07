@@ -128,6 +128,7 @@ jobs:
   # dual-core (also the M5Unified legacy-touch path). esp32c6 (NanoC6 / NessoN1) / esp32h2 (NanoH2)
   # = RISC-V single-core, exercises the app_main CONFIG_FREERTOS_UNICORE feedIdle branch.
   # esp32p4 (M5Stack Tab5) = RISC-V dual-core; the sdkconfig.defaults.esp32p4 overlay is auto-applied.
+  # esp32c5 = RISC-V single-core, supported from IDF v5.5.
   build-chips:
     name: ${{ matrix.idf }} ${{ matrix.target }} UnitVmeter
     runs-on: ubuntu-latest
@@ -136,7 +137,7 @@ jobs:
       fail-fast: false
       max-parallel: 20
       matrix:
-        target: [esp32, esp32s3, esp32c3, esp32c6, esp32h2, esp32p4]
+        target: [esp32, esp32s3, esp32c3, esp32c5, esp32c6, esp32h2, esp32p4]
         # idf boundaries: 5.1.7 = oldest legacy-driver (5.0.x dropped: M5GFX needs esp_mm added
         # in 5.1), 5.4.4 = new driver/*_master.h era, 5.5.4 = latest 5.x,
         # 6.1 = latest (M5Unified/M5GFX support 6.x; 7.x is not verified yet).
@@ -148,6 +149,11 @@ jobs:
           # esp32s3 x v6.1 UnitVmeter is identical to the build-examples job.
           - target: esp32s3
             idf: v6.1
+          # esp32c5 is supported from IDF v5.5.
+          - target: esp32c5
+            idf: v5.1.7
+          - target: esp32c5
+            idf: v5.4.4
     steps:
       - name: Checkout
         uses: actions/checkout@v4
