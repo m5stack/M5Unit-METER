@@ -103,6 +103,9 @@ jobs:
           - label: GraphicalMeter (DualKmeter)
             example_path: examples/UnitUnified/GraphicalMeter
             config: CONFIG_EXAMPLE_USING_UNIT_DUAL_KMETER=y
+          - label: ViaPaHub
+            example_path: examples/UnitUnified/ViaPaHub
+            config: ''
     steps:
       - name: Checkout
         uses: actions/checkout@v4
