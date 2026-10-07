@@ -2,7 +2,7 @@ description: Library for M5Stack UNIT METER (Ameter / Vmeter / KmeterISO / DualK
 url: https://github.com/m5stack/M5Unit-METER
 issues: https://github.com/m5stack/M5Unit-METER/issues
 license: MIT
-version: "0.3.0"
+version: "0.4.0"
 
 dependencies:
   idf: ">=5.1"
