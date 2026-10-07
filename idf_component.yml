@@ -6,8 +6,8 @@ version: "0.4.0"
 
 dependencies:
   idf: ">=5.1"
-  # M5UnitUnified / M5Utility are not yet on the ESP Component Registry, so reference the main
-  # branch via git (switch to a version constraint after publish).
+  # M5UnitUnified / M5Utility are not on the ESP Component Registry, so the main branch is
+  # referenced via git.
   m5stack/M5UnitUnified:
     git: https://github.com/m5stack/M5UnitUnified.git
     version: main
@@ -30,7 +30,6 @@ files:
     - "examples/**"
     - "test/**"
     - "boards/**"
-    - "datasheet/**"
     - "platformio.ini"
     - "library.json"
     - "library.properties"
