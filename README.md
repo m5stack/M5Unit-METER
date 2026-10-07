@@ -46,7 +46,6 @@ Unit INA226-10A is a fully isolated high-precision current and voltage measureme
 Unit INA226-1A is a fully isolated high-precision current, voltage, and power measurement unit, suitable for scenarios measuring DC 0 ~ 30V voltage and up to 1A current, supporting simultaneous voltage and current measurements.
 
 ## Related Link
-See also examples using conventional methods here.
 
 - [Unit Ameter & Datasheet](https://docs.m5stack.com/en/unit/Ameter%20Unit)
 - [Unit Vmeter & Datasheet](https://docs.m5stack.com/en/unit/vmeter)
@@ -91,13 +90,13 @@ You must choose a define symbol for the unit you will use.
 // *************************************************************
 #if !defined(USING_UNIT_VMETER) && !defined(USING_UNIT_AMETER) && !defined(USING_UNIT_KMETER_ISO) && \
     !defined(USING_UNIT_DUAL_KMETER)
-// For Vmeter
+// For UnitVmeter (U087)
 // #define USING_UNIT_VMETER
-// For Ameter
+// For UnitAmeter (U086)
 // #define USING_UNIT_AMETER
-// For KmeterISO
+// For UnitKmeterISO (U133-V11)
 // #define USING_UNIT_KMETER_ISO
-// For DualKmeter
+// For ModuleDualKmeter (M127)
 // #define USING_UNIT_DUAL_KMETER
 #endif
 ```
@@ -108,8 +107,11 @@ You must choose a define symbol for the unit you will use.
 // Choose one define symbol to match the unit you are using
 // *************************************************************
 #if !defined(USING_UNIT_INA226_1A) && !defined(USING_UNIT_INA226_10A) && !defined(BUILTIN_UNIT_INA226_10A)
+// For UnitINA226-1A (U200-1A)
 // #define USING_UNIT_INA226_1A
+// For UnitINA226-10A (U200)
 // #define USING_UNIT_INA226_10A
+// For Tab5 built-in INA226 (10A)
 // #define BUILTIN_UNIT_INA226_10A
 #endif
 ```
@@ -137,7 +139,7 @@ idf.py menuconfig
 idf.py build flash monitor
 ```
 
-The other examples (UnitAmeter / UnitVmeter / UnitKmeterISO / UnitDualKmeter PlotToSerial) have no variant; run `idf.py set-target <chip>` and `idf.py build flash monitor` directly.
+The other examples (UnitAmeter / UnitVmeter / UnitKmeterISO / UnitDualKmeter PlotToSerial, ViaPaHub) have no variant; run `idf.py set-target <chip>` and `idf.py build flash monitor` directly.
 
 ## Doxygen document
 [GitHub Pages](https://m5stack.github.io/M5Unit-METER/)
