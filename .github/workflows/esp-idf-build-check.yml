@@ -143,7 +143,7 @@ jobs:
         target: [esp32, esp32s3, esp32c3, esp32c5, esp32c6, esp32h2, esp32p4]
         # idf boundaries: 5.1.7 = oldest legacy-driver (5.0.x dropped: M5GFX needs esp_mm added
         # in 5.1), 5.4.4 = new driver/*_master.h era, 5.5.4 = latest 5.x,
-        # 6.1 = latest (M5Unified/M5GFX support 6.x; 7.x is not verified yet).
+        # 6.1 = latest (M5Unified/M5GFX support 6.x; 7.x is not verified).
         idf: [v5.1.7, v5.4.4, v5.5.4, v6.1]
         exclude:
           # esp32p4 stable from IDF v5.3 (M5GFX P4 verified on 5.4/5.5). 5.1.7 not applicable.
