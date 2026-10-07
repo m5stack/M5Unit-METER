@@ -15,8 +15,11 @@
 // Choose one define symbol to match the unit you are using
 // *************************************************************
 #if !defined(USING_UNIT_INA226_1A) && !defined(USING_UNIT_INA226_10A) && !defined(BUILTIN_UNIT_INA226_10A)
+// For UnitINA226-1A (U200-1A)
 // #define USING_UNIT_INA226_1A
+// For UnitINA226-10A (U200)
 // #define USING_UNIT_INA226_10A
+// For Tab5 built-in INA226 (10A)
 // #define BUILTIN_UNIT_INA226_10A
 #endif
 
@@ -59,9 +62,7 @@ void setup()
     auto board = M5.getBoard();
     if (board != m5::board_t::board_M5Tab5) {
         M5_LOGE("Core is NOT Tab5");
-        while (true) {
-            m5::utility::delay(10000);
-        }
+        m5::unit::wiring::failStop();
     }
 
     if (!Units.add(unit, M5.In_I2C) || !Units.begin()) {
@@ -79,7 +80,7 @@ void setup()
 
     lcd.setFont(&fonts::AsciiFont8x16);
 
-    M5_LOGI("M5UnitUnified has been begun");
+    M5_LOGI("M5UnitUnified initialized");
     M5_LOGI("%s", Units.debugInfo().c_str());
     lcd.fillScreen(TFT_DARKGREEN);
     lcd.setTextColor(TFT_WHITE, TFT_DARKGREEN);
