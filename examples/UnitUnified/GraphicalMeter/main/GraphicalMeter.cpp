@@ -39,13 +39,13 @@
 // *************************************************************
 #if !defined(USING_UNIT_VMETER) && !defined(USING_UNIT_AMETER) && !defined(USING_UNIT_KMETER_ISO) && \
     !defined(USING_UNIT_DUAL_KMETER)
-// For Vmeter
+// For UnitVmeter (U087)
 // #define USING_UNIT_VMETER
-// For Ameter
+// For UnitAmeter (U086)
 // #define USING_UNIT_AMETER
-// For KmeterISO
+// For UnitKmeterISO (U133-V11)
 // #define USING_UNIT_KMETER_ISO
-// For DualKmeter
+// For ModuleDualKmeter (M127)
 // #define USING_UNIT_DUAL_KMETER
 #endif
 
@@ -445,14 +445,14 @@ void update_meter(void*)
 
 #if defined(USING_UNIT_DUAL_KMETER)
 // DualKmeter uses M5-Bus internal I2C
-bool initialize_unit(const m5::board_t)
+bool initialize_unit()
 {
     return Units.add(unit, M5.In_I2C) && Units.begin();
 }
 #else
 // Vmeter/Ameter/KmeterISO use GROVE port
 // NessoN1 -> SoftwareI2C (M5HAL), NanoC6 / NanoH2 -> M5.Ex_I2C, others -> Wire
-bool initialize_unit(const m5::board_t)
+bool initialize_unit()
 {
     return m5::unit::wiring::addI2C(Units, unit) && Units.begin();
 }
@@ -481,9 +481,7 @@ void setup()
     if (lcd.width() == 0 || lcd.isEPD()) {
         M5_LOGE("The core must be equipped with LCD");
         M5.Speaker.tone(1000, 20);
-        while (true) {
-            m5::utility::delay(10000);
-        }
+        m5::unit::wiring::failStop();
     }
 
     // The screen shall be in landscape mode (except Tab5)
@@ -550,12 +548,12 @@ void setup()
     unit.component_config(ccfg);
 
     // I2C initialization
-    auto began = initialize_unit(board);
+    auto began = initialize_unit();
     if (!began) {
         M5_LOGE("Failed to begin");
         m5::unit::wiring::failStop();
     }
-    M5_LOGI("M5UnitUnified has been begun");
+    M5_LOGI("M5UnitUnified initialized");
     M5_LOGI("%s", Units.debugInfo().c_str());
 #if defined(USING_UNIT_DUAL_KMETER)
     if (!unit.writeCurrentChannel(m5::unit::dual_kmeter::Channel::One)) {
