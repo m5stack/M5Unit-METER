@@ -16,6 +16,8 @@ var dir_b9225a18e54a15d8544a67849bf5de50 =
     [ "unit_DualKmeter.hpp", "unit___dual_kmeter_8hpp.html", "unit___dual_kmeter_8hpp" ],
     [ "unit_EEPROM.cpp", "unit___e_e_p_r_o_m_8cpp.html", null ],
     [ "unit_EEPROM.hpp", "unit___e_e_p_r_o_m_8hpp.html", "unit___e_e_p_r_o_m_8hpp" ],
+    [ "unit_INA226.cpp", "unit___i_n_a226_8cpp.html", null ],
+    [ "unit_INA226.hpp", "unit___i_n_a226_8hpp.html", "unit___i_n_a226_8hpp" ],
     [ "unit_KmeterISO.cpp", "unit___kmeter_i_s_o_8cpp.html", null ],
     [ "unit_KmeterISO.hpp", "unit___kmeter_i_s_o_8hpp.html", "unit___kmeter_i_s_o_8hpp" ],
     [ "unit_Vmeter.cpp", "unit___vmeter_8cpp.html", null ],

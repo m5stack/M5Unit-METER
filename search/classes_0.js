@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['config_5ft_0',['config_t',['../structm5_1_1unit_1_1_unit_a_d_s111x_1_1config__t.html',1,'m5::unit::UnitADS111x::config_t'],['../structm5_1_1unit_1_1_unit_dual_kmeter_1_1config__t.html',1,'m5::unit::UnitDualKmeter::config_t'],['../structm5_1_1unit_1_1_unit_kmeter_i_s_o_1_1config__t.html',1,'m5::unit::UnitKmeterISO::config_t']]]
+  ['config_5ft_0',['config_t',['../structm5_1_1unit_1_1_unit_a_d_s111x_1_1config__t.html',1,'m5::unit::UnitADS111x::config_t'],['../structm5_1_1unit_1_1_unit_dual_kmeter_1_1config__t.html',1,'m5::unit::UnitDualKmeter::config_t'],['../structm5_1_1unit_1_1_unit_i_n_a226_1_1config__t.html',1,'m5::unit::UnitINA226::config_t'],['../structm5_1_1unit_1_1_unit_kmeter_i_s_o_1_1config__t.html',1,'m5::unit::UnitKmeterISO::config_t']]]
 ];

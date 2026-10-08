@@ -8,6 +8,9 @@ var searchData=
   ['unitavmeterbase_5',['UnitAVmeterBase',['../classm5_1_1unit_1_1_unit_a_vmeter_base.html',1,'m5::unit']]],
   ['unitdualkmeter_6',['UnitDualKmeter',['../classm5_1_1unit_1_1_unit_dual_kmeter.html',1,'m5::unit']]],
   ['uniteeprom_7',['UnitEEPROM',['../classm5_1_1unit_1_1meter_1_1_unit_e_e_p_r_o_m.html',1,'m5::unit::meter']]],
-  ['unitkmeteriso_8',['UnitKmeterISO',['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html',1,'m5::unit']]],
-  ['unitvmeter_9',['UnitVmeter',['../classm5_1_1unit_1_1_unit_vmeter.html',1,'m5::unit']]]
+  ['unitina226_8',['UnitINA226',['../classm5_1_1unit_1_1_unit_i_n_a226.html',1,'m5::unit']]],
+  ['unitina226_5f10a_9',['UnitINA226_10A',['../classm5_1_1unit_1_1_unit_i_n_a226__10_a.html',1,'m5::unit']]],
+  ['unitina226_5f1a_10',['UnitINA226_1A',['../classm5_1_1unit_1_1_unit_i_n_a226__1_a.html',1,'m5::unit']]],
+  ['unitkmeteriso_11',['UnitKmeterISO',['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html',1,'m5::unit']]],
+  ['unitvmeter_12',['UnitVmeter',['../classm5_1_1unit_1_1_unit_vmeter.html',1,'m5::unit']]]
 ];

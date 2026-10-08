@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['gain_0',['Gain',['../unit___a_d_s111x_8hpp.html#ac482a60d7c757148d4a5016b4024f5e0',1,'m5::unit::ads111x']]]
+  ['channel_0',['Channel',['../unit___dual_kmeter_8hpp.html#af2b515195d529e2a1bdbe487e78eedb4',1,'m5::unit::dual_kmeter']]],
+  ['comparatorqueue_1',['ComparatorQueue',['../unit___a_d_s111x_8hpp.html#aa7b7de5d60e1a10ad0763e15a2e27986',1,'m5::unit::ads111x']]],
+  ['conversiontime_2',['ConversionTime',['../unit___i_n_a226_8hpp.html#a965d15715bd35278c99a2b9d462dacc7',1,'m5::unit::ina226']]]
 ];

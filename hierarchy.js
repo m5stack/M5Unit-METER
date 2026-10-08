@@ -12,18 +12,25 @@ var hierarchy =
         ] ]
       ] ],
       [ "m5::unit::UnitDualKmeter", "classm5_1_1unit_1_1_unit_dual_kmeter.html", null ],
+      [ "m5::unit::UnitINA226", "classm5_1_1unit_1_1_unit_i_n_a226.html", [
+        [ "m5::unit::UnitINA226_10A", "classm5_1_1unit_1_1_unit_i_n_a226__10_a.html", null ],
+        [ "m5::unit::UnitINA226_1A", "classm5_1_1unit_1_1_unit_i_n_a226__1_a.html", null ]
+      ] ],
       [ "m5::unit::UnitKmeterISO", "classm5_1_1unit_1_1_unit_kmeter_i_s_o.html", null ],
       [ "m5::unit::meter::UnitEEPROM", "classm5_1_1unit_1_1meter_1_1_unit_e_e_p_r_o_m.html", null ]
     ] ],
     [ "m5::unit::UnitADS111x::config_t", "structm5_1_1unit_1_1_unit_a_d_s111x_1_1config__t.html", null ],
     [ "m5::unit::UnitDualKmeter::config_t", "structm5_1_1unit_1_1_unit_dual_kmeter_1_1config__t.html", null ],
+    [ "m5::unit::UnitINA226::config_t", "structm5_1_1unit_1_1_unit_i_n_a226_1_1config__t.html", null ],
     [ "m5::unit::UnitKmeterISO::config_t", "structm5_1_1unit_1_1_unit_kmeter_i_s_o_1_1config__t.html", null ],
     [ "m5::unit::ads111x::Data", "structm5_1_1unit_1_1ads111x_1_1_data.html", null ],
     [ "m5::unit::dual_kmeter::Data", "structm5_1_1unit_1_1dual__kmeter_1_1_data.html", null ],
+    [ "m5::unit::ina226::Data", "structm5_1_1unit_1_1ina226_1_1_data.html", null ],
     [ "m5::unit::kmeter_iso::Data", "structm5_1_1unit_1_1kmeter__iso_1_1_data.html", null ],
     [ "PeriodicMeasurementAdapter", null, [
       [ "m5::unit::UnitADS111x", "classm5_1_1unit_1_1_unit_a_d_s111x.html", null ],
       [ "m5::unit::UnitDualKmeter", "classm5_1_1unit_1_1_unit_dual_kmeter.html", null ],
+      [ "m5::unit::UnitINA226", "classm5_1_1unit_1_1_unit_i_n_a226.html", null ],
       [ "m5::unit::UnitKmeterISO", "classm5_1_1unit_1_1_unit_kmeter_i_s_o.html", null ]
     ] ]
 ];
