@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['unitina226_0',['UnitINA226',['../classm5_1_1unit_1_1_unit_i_n_a226.html#aee229cbd924ed54af9fcb9b3629957d8',1,'m5::unit::UnitINA226']]],
-  ['unitina226_5f10a_1',['UnitINA226_10A',['../classm5_1_1unit_1_1_unit_i_n_a226__10_a.html#a9b2047527136d28ad61a67a5b7e39ecb',1,'m5::unit::UnitINA226_10A']]],
-  ['unitina226_5f1a_2',['UnitINA226_1A',['../classm5_1_1unit_1_1_unit_i_n_a226__1_a.html#a61c63243430cbb61e9b2f7eaa6222b0d',1,'m5::unit::UnitINA226_1A']]]
+  ['temperature_0',['temperature',['../structm5_1_1unit_1_1dual__kmeter_1_1_data.html#a6b1016d8248e1cc4d8295df3de244793',1,'m5::unit::dual_kmeter::Data::temperature()'],['../classm5_1_1unit_1_1_unit_dual_kmeter.html#a8dc6e2a3fa1f20264cee7be3016af67c',1,'m5::unit::UnitDualKmeter::temperature()'],['../structm5_1_1unit_1_1kmeter__iso_1_1_data.html#a7fb2469440ce5673df89d631f24a2941',1,'m5::unit::kmeter_iso::Data::temperature()'],['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html#af500c97292227c5c9de4c455237f6d04',1,'m5::unit::UnitKmeterISO::temperature()']]]
 ];
