@@ -2,7 +2,7 @@ name: Build(arduino-esp32:3.x)
 
 env:
   SKETCH_NAMES_FIND_START: ./examples/UnitUnified
-  REQUIRED_LIBRARIES: M5Unified,M5UnitUnified
+  REQUIRED_LIBRARIES: M5Unified,M5UnitUnified,M5Unit-HUB
 on:
   push:
     tags-ignore:
@@ -66,29 +66,30 @@ jobs:
           - UnitDualKmeter
           - UnitINA226
 
+        # Reduced to one board per chip (ESP32 / S3 / C6 / P4) plus boards whose definition bakes in different build properties (Cardputer)
         board:
-          - arduino_nesso_n1
-          - m5stack_atom
-          - m5stack_atoms3
-          - m5stack_capsule
+#          - arduino_nesso_n1  # ESP32-C6: represented by m5stack_nanoc6
+#          - m5stack_atom  # ESP32: represented by m5stack_core
+#          - m5stack_atoms3  # ESP32-S3: represented by m5stack_cores3
+#          - m5stack_capsule  # ESP32-S3: represented by m5stack_cores3
           - m5stack_cardputer
           - m5stack_core
-          - m5stack_core2
-          - m5stack_coreink
+#          - m5stack_core2  # ESP32: represented by m5stack_core
+#          - m5stack_coreink  # ESP32: represented by m5stack_core
           - m5stack_cores3
-          - m5stack_dial
-          - m5stack_dinmeter
-          - m5stack_fire
+#          - m5stack_dial  # ESP32-S3: represented by m5stack_cores3
+#          - m5stack_dinmeter  # ESP32-S3: represented by m5stack_cores3
+#          - m5stack_fire  # ESP32: represented by m5stack_core
           - m5stack_nanoc6
-          - m5stack_paper
+#          - m5stack_paper  # ESP32: represented by m5stack_core
 #          - m5stack_poe_cam
 #          - m5stack_stamp_c3
 #          - m5stack_stamp_pico
-          - m5stack_stamp_s3
+#          - m5stack_stamp_s3  # ESP32-S3: represented by m5stack_cores3
 #          - m5stack_station
 #          - m5stack_stickc
-          - m5stack_stickc_plus
-          - m5stack_stickc_plus2
+#          - m5stack_stickc_plus  # ESP32: represented by m5stack_core
+#          - m5stack_stickc_plus2  # ESP32: represented by m5stack_core
           - m5stack_tab5
 #          - m5stack_timer_cam
 #          - m5stack_tough
@@ -96,7 +97,7 @@ jobs:
 #          - m5stack_unit_cams3
 
         platform-version:
-          - 3.3.6
+          - 3.3.12
 
         platform:
           - esp32
@@ -111,36 +112,43 @@ jobs:
           # Specific sketches
           - sketch: GraphicalMeter
             platform-url: https://espressif.github.io/arduino-esp32/package_esp32_index.json
-            platform-version: 3.3.6
+            platform-version: 3.3.12
             platform: esp32
             archi: esp32
             board: m5stack_core
             build-properties: "-DUSING_UNIT_VMETER"
           - sketch: GraphicalMeter
             platform-url: https://espressif.github.io/arduino-esp32/package_esp32_index.json
-            platform-version: 3.3.6
+            platform-version: 3.3.12
             platform: esp32
             archi: esp32
             board: m5stack_core
             build-properties: "-DUSING_UNIT_AMETER"
           - sketch: GraphicalMeter
             platform-url: https://espressif.github.io/arduino-esp32/package_esp32_index.json
-            platform-version: 3.3.6
+            platform-version: 3.3.12
             platform: esp32
             archi: esp32
             board: m5stack_core
             build-properties: "-DUSING_UNIT_KMETER_ISO"
           - sketch: GraphicalMeter
             platform-url: https://espressif.github.io/arduino-esp32/package_esp32_index.json
-            platform-version: 3.3.6
+            platform-version: 3.3.12
             platform: esp32
             archi: esp32
             board: m5stack_core
             build-properties: "-DUSING_UNIT_DUAL_KMETER"
+          - sketch: ViaPaHub
+            platform-url: https://espressif.github.io/arduino-esp32/package_esp32_index.json
+            platform-version: 3.3.12
+            platform: esp32
+            archi: esp32
+            board: m5stack_core
+            build-properties: ""
           - sketch: PlotToSerial
             unit: UnitINA226
             platform-url: https://espressif.github.io/arduino-esp32/package_esp32_index.json
-            platform-version: 3.3.6
+            platform-version: 3.3.12
             platform: esp32
             archi: esp32
             board: m5stack_tab5
@@ -151,6 +159,8 @@ jobs:
             board: m5stack_atom
           - unit: UnitDualKmeter
             board: m5stack_atoms3
+          - unit: UnitDualKmeter
+            board: m5stack_cardputer
           - unit: UnitDualKmeter
             board: m5stack_coreink
           - unit: UnitDualKmeter

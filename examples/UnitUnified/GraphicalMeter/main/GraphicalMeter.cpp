@@ -21,8 +21,6 @@
 #endif
 #include <M5Unified.h>
 #include <M5GFX.h>
-#include <M5HAL.hpp>  // For NessoN1
-#include <Wire.h>
 #include <M5UnitUnified.h>
 #include <M5UnitUnifiedMETER.h>
 #include <cassert>
@@ -32,6 +30,7 @@
 #include <limits>
 #include <freertos/queue.h>
 #include <vector>
+#include <wiring/m5_unit_unified_wiring.hpp>  // Board-aware connection helpers (include last)
 
 //#define OUTPUT_DEBUG
 
@@ -40,13 +39,13 @@
 // *************************************************************
 #if !defined(USING_UNIT_VMETER) && !defined(USING_UNIT_AMETER) && !defined(USING_UNIT_KMETER_ISO) && \
     !defined(USING_UNIT_DUAL_KMETER)
-// For Vmeter
+// For UnitVmeter (U087)
 // #define USING_UNIT_VMETER
-// For Ameter
+// For UnitAmeter (U086)
 // #define USING_UNIT_AMETER
-// For KmeterISO
+// For UnitKmeterISO (U133-V11)
 // #define USING_UNIT_KMETER_ISO
-// For DualKmeter
+// For ModuleDualKmeter (M127)
 // #define USING_UNIT_DUAL_KMETER
 #endif
 
@@ -446,33 +445,16 @@ void update_meter(void*)
 
 #if defined(USING_UNIT_DUAL_KMETER)
 // DualKmeter uses M5-Bus internal I2C
-bool initialize_unit(const m5::board_t)
+bool initialize_unit()
 {
     return Units.add(unit, M5.In_I2C) && Units.begin();
 }
 #else
 // Vmeter/Ameter/KmeterISO use GROVE port
-bool initialize_unit(const m5::board_t board)
+// NessoN1 -> SoftwareI2C (M5HAL), NanoC6 / NanoH2 -> M5.Ex_I2C, others -> Wire
+bool initialize_unit()
 {
-    auto pin_num_sda = M5.getPin(m5::pin_name_t::port_a_sda);
-    auto pin_num_scl = M5.getPin(m5::pin_name_t::port_a_scl);
-    if (board == m5::board_t::board_ArduinoNessoN1) {
-        // NessoN1: GROVE is on port_b (GPIO 5/4), not port_a
-        // Wire is used internally, so SoftwareI2C handles the unit.
-        pin_num_sda = M5.getPin(m5::pin_name_t::port_b_out);
-        pin_num_scl = M5.getPin(m5::pin_name_t::port_b_in);
-        M5_LOGI("getPin(M5HAL): SDA:%u SCL:%u", pin_num_sda, pin_num_scl);
-        m5::hal::bus::I2CBusConfig i2c_cfg;
-        i2c_cfg.pin_sda = m5::hal::gpio::getPin(pin_num_sda);
-        i2c_cfg.pin_scl = m5::hal::gpio::getPin(pin_num_scl);
-        auto i2c_bus    = m5::hal::bus::i2c::getBus(i2c_cfg);
-        M5_LOGI("Bus:%d", i2c_bus.has_value());
-        return Units.add(unit, i2c_bus ? i2c_bus.value() : nullptr) && Units.begin();
-    }
-    M5_LOGI("getPin: SDA:%u SCL:%u", pin_num_sda, pin_num_scl);
-    Wire.end();
-    Wire.begin(pin_num_sda, pin_num_scl, unit.component_config().clock);
-    return Units.add(unit, Wire) && Units.begin();
+    return m5::unit::wiring::addI2C(Units, unit) && Units.begin();
 }
 #endif
 
@@ -499,9 +481,7 @@ void setup()
     if (lcd.width() == 0 || lcd.isEPD()) {
         M5_LOGE("The core must be equipped with LCD");
         M5.Speaker.tone(1000, 20);
-        while (true) {
-            m5::utility::delay(10000);
-        }
+        m5::unit::wiring::failStop();
     }
 
     // The screen shall be in landscape mode (except Tab5)
@@ -568,15 +548,12 @@ void setup()
     unit.component_config(ccfg);
 
     // I2C initialization
-    auto began = initialize_unit(board);
+    auto began = initialize_unit();
     if (!began) {
         M5_LOGE("Failed to begin");
-        lcd.fillScreen(TFT_RED);
-        while (true) {
-            m5::utility::delay(10000);
-        }
+        m5::unit::wiring::failStop();
     }
-    M5_LOGI("M5UnitUnified has been begun");
+    M5_LOGI("M5UnitUnified initialized");
     M5_LOGI("%s", Units.debugInfo().c_str());
 #if defined(USING_UNIT_DUAL_KMETER)
     if (!unit.writeCurrentChannel(m5::unit::dual_kmeter::Channel::One)) {
@@ -587,10 +564,7 @@ void setup()
     sample_queue = xQueueCreate(SAMPLE_QUEUE_SIZE, sizeof(float));
     if (!sample_queue) {
         M5_LOGE("Failed to create sample queue");
-        lcd.fillScreen(TFT_RED);
-        while (true) {
-            m5::utility::delay(10000);
-        }
+        m5::unit::wiring::failStop();
     }
     M5_LOGI("sample queue created");
 
@@ -604,7 +578,8 @@ void setup()
     value_sprite.setTextDatum(textdatum_t::middle_right);
     value_sprite.setTextColor(TFT_WHITE);
 
-    xTaskCreateUniversal(update_meter, "meter", 8192, nullptr, 1, nullptr, PRO_CPU_NUM);
+    // Core 0 (PRO_CPU) exists on every target, so this also works on single-core SoCs and ESP-IDF native
+    xTaskCreatePinnedToCore(update_meter, "meter", 8192, nullptr, 1, nullptr, 0);
 }
 
 void loop()
@@ -703,3 +678,36 @@ void loop()
         ++upsCnt;
     }
 }
+
+#if !defined(ARDUINO)
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
+#include <esp_timer.h>
+
+#if CONFIG_FREERTOS_UNICORE
+// Single-core SoCs: run loop() back-to-back, but every ~2 s yield a 5 ms slice so the IDLE task
+// runs and feeds the task watchdog (default 5 s).
+static inline void feedIdleTaskPeriodically(void)
+{
+    constexpr uint32_t FEED_INTERVAL_MS{2000};
+    constexpr TickType_t FEED_SLEEP_TICKS{pdMS_TO_TICKS(5)};
+    static uint32_t s_last_feed_ms{};
+    const uint32_t now_ms{static_cast<uint32_t>(esp_timer_get_time() / 1000)};
+    if (now_ms - s_last_feed_ms >= FEED_INTERVAL_MS) {
+        s_last_feed_ms = now_ms;
+        vTaskDelay(FEED_SLEEP_TICKS);
+    }
+}
+#endif
+
+extern "C" void app_main(void)
+{
+    setup();
+    for (;;) {
+#if CONFIG_FREERTOS_UNICORE
+        feedIdleTaskPeriodically();
+#endif
+        loop();
+    }
+}
+#endif

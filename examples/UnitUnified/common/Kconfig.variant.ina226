@@ -1,0 +1,21 @@
+# "Target unit" selection for the UnitINA226 PlotToSerial example (ESP-IDF).
+# rsource'd from UnitINA226/PlotToSerial/main/Kconfig.projbuild. The chosen CONFIG_EXAMPLE_USING_*
+# is mapped to the source-level macro in common/variant.cmake (shared with the Arduino build).
+menu "M5Unit-METER INA226 example"
+
+choice EXAMPLE_INA226_VARIANT
+    prompt "Target unit"
+    default EXAMPLE_USING_UNIT_INA226_10A
+    help
+        Which INA226 unit this example drives.
+
+    config EXAMPLE_USING_UNIT_INA226_10A
+        bool "UnitINA226-10A (U200, I2C / GROVE)"
+    config EXAMPLE_USING_UNIT_INA226_1A
+        bool "UnitINA226-1A (U200-1A, I2C / GROVE)"
+    config EXAMPLE_BUILTIN_UNIT_INA226_10A
+        bool "M5Tab5 built-in INA226 (10A, internal I2C)"
+        depends on IDF_TARGET_ESP32P4
+endchoice
+
+endmenu

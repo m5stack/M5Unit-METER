@@ -12,13 +12,13 @@
 // *************************************************************
 #if !defined(USING_UNIT_VMETER) && !defined(USING_UNIT_AMETER) && !defined(USING_UNIT_KMETER_ISO) && \
     !defined(USING_UNIT_DUAL_KMETER)
-// For Vmeter
+// For UnitVmeter (U087)
 // #define USING_UNIT_VMETER
-// For Ameter
+// For UnitAmeter (U086)
 // #define USING_UNIT_AMETER
-// For KmeterISO
+// For UnitKmeterISO (U133-V11)
 // #define USING_UNIT_KMETER_ISO
-// For DualKmeter
+// For ModuleDualKmeter (M127)
 // #define USING_UNIT_DUAL_KMETER
 #endif
 #include "main/GraphicalMeter.cpp"
