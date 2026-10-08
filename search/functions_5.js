@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['measureinternalsingleshot_0',['measureInternalSingleshot',['../classm5_1_1unit_1_1_unit_dual_kmeter.html#a7bc8e9d7cf06da06e080e1f15082782f',1,'m5::unit::UnitDualKmeter::measureInternalSingleshot()'],['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html#a526a2721dbddf924ebd96efe40f4f899',1,'m5::unit::UnitKmeterISO::measureInternalSingleshot()']]],
-  ['measurementchannel_1',['measurementChannel',['../classm5_1_1unit_1_1_unit_dual_kmeter.html#ae0dbe205e08fa0d8bfc1504891c0cfe9',1,'m5::unit::UnitDualKmeter']]],
-  ['measurementunit_2',['measurementUnit',['../classm5_1_1unit_1_1_unit_dual_kmeter.html#a87ff0de53c8a1744af9286a2cc0787f6',1,'m5::unit::UnitDualKmeter::measurementUnit()'],['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html#a77e7e44ce02878770dc6ebaa4f89464c',1,'m5::unit::UnitKmeterISO::measurementUnit()']]],
-  ['measuresingleshot_3',['measureSingleshot',['../classm5_1_1unit_1_1_unit_a_d_s111x.html#a44a1efc61b35279f4971dda91af2d190',1,'m5::unit::UnitADS111x::measureSingleshot()'],['../classm5_1_1unit_1_1_unit_dual_kmeter.html#a14d686fe04a785e0d743655394c591cf',1,'m5::unit::UnitDualKmeter::measureSingleshot()'],['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html#a2632abd72ef84f88ba2c39efdd19eb24',1,'m5::unit::UnitKmeterISO::measureSingleshot()']]],
-  ['mode_4',['mode',['../structm5_1_1unit_1_1ads111x_1_1_config.html#a7eaa48d4129a7768820c11f496a19c4d',1,'m5::unit::ads111x::Config']]],
-  ['multiplexer_5',['multiplexer',['../classm5_1_1unit_1_1_unit_a_d_s111x.html#ab3fe6f1a7fbc2558b33e81dccdc0d11d',1,'m5::unit::UnitADS111x']]],
-  ['mux_6',['mux',['../structm5_1_1unit_1_1ads111x_1_1_config.html#a305ddc3883815230624f5d1e6e77bd56',1,'m5::unit::ads111x::Config']]]
+  ['readcurrentchannel_0',['readCurrentChannel',['../classm5_1_1unit_1_1_unit_dual_kmeter.html#af63d278e4081b25c7f4b238b541f8b82',1,'m5::unit::UnitDualKmeter']]],
+  ['readfirmwareversion_1',['readFirmwareVersion',['../classm5_1_1unit_1_1_unit_dual_kmeter.html#ace3a57c680cd27965aa1ace385008876',1,'m5::unit::UnitDualKmeter::readFirmwareVersion()'],['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html#a23066384fa45da10980e7a08a4de70a8',1,'m5::unit::UnitKmeterISO::readFirmwareVersion(uint8_t &amp;ver)']]],
+  ['readi2caddress_2',['readI2CAddress',['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html#a30ca808ecab922bee09660cc7394bdcd',1,'m5::unit::UnitKmeterISO']]],
+  ['readstatus_3',['readStatus',['../classm5_1_1unit_1_1_unit_dual_kmeter.html#a60957d839d84c8e49a388cf4fef8b42f',1,'m5::unit::UnitDualKmeter::readStatus()'],['../classm5_1_1unit_1_1_unit_kmeter_i_s_o.html#a5dd61ee501cc08f504127e96361d359c',1,'m5::unit::UnitKmeterISO::readStatus()']]],
+  ['readthreshold_4',['readThreshold',['../classm5_1_1unit_1_1_unit_a_d_s111x.html#a073e1e5a8dee4a487e812347af206b6c',1,'m5::unit::UnitADS111x']]],
+  ['resolution_5',['resolution',['../classm5_1_1unit_1_1_unit_ameter.html#a7b957bbe00ebfd1a55984b81f9870262',1,'m5::unit::UnitAmeter::resolution()'],['../classm5_1_1unit_1_1_unit_vmeter.html#abf4886d08bba8ef43a87d1bcba685ca8',1,'m5::unit::UnitVmeter::resolution()']]]
 ];

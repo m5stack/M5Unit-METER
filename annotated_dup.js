@@ -3,7 +3,6 @@ var annotated_dup =
     [ "m5", "namespacem5.html", [
       [ "unit", null, [
         [ "ads111x", null, [
-          [ "Config", "structm5_1_1unit_1_1ads111x_1_1_config.html", "structm5_1_1unit_1_1ads111x_1_1_config" ],
           [ "Data", "structm5_1_1unit_1_1ads111x_1_1_data.html", "structm5_1_1unit_1_1ads111x_1_1_data" ]
         ] ],
         [ "dual_kmeter", null, [

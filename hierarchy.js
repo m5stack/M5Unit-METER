@@ -15,7 +15,6 @@ var hierarchy =
       [ "m5::unit::UnitKmeterISO", "classm5_1_1unit_1_1_unit_kmeter_i_s_o.html", null ],
       [ "m5::unit::meter::UnitEEPROM", "classm5_1_1unit_1_1meter_1_1_unit_e_e_p_r_o_m.html", null ]
     ] ],
-    [ "m5::unit::ads111x::Config", "structm5_1_1unit_1_1ads111x_1_1_config.html", null ],
     [ "m5::unit::UnitADS111x::config_t", "structm5_1_1unit_1_1_unit_a_d_s111x_1_1config__t.html", null ],
     [ "m5::unit::UnitDualKmeter::config_t", "structm5_1_1unit_1_1_unit_dual_kmeter_1_1config__t.html", null ],
     [ "m5::unit::UnitKmeterISO::config_t", "structm5_1_1unit_1_1_unit_kmeter_i_s_o_1_1config__t.html", null ],
