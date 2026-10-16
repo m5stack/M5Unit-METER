@@ -71,6 +71,8 @@ public:
     explicit UnitKmeterISO(const uint8_t addr = DEFAULT_ADDRESS)
         : Component(addr), _data{new m5::container::CircularBuffer<kmeter_iso::Data>(1)}
     {
+        // 100 kHz: the firmware's slave data setup time (STM32F030, I2CCLK 8 MHz) does not meet the Fast-mode worst
+        // case (RM0360 22.4.5), and the official driver also uses 100 kHz
         auto ccfg  = component_config();
         ccfg.clock = 100 * 1000U;
         component_config(ccfg);
