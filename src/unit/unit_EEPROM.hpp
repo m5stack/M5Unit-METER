@@ -34,6 +34,10 @@ class UnitEEPROM : public Component {
 public:
     explicit UnitEEPROM(const uint8_t addr = DEFAULT_ADDRESS) : Component(addr)
     {
+        // 400 kHz, the same as the ADS1115 on the same bus (the official driver also reads this EEPROM at 400 kHz)
+        auto ccfg  = component_config();
+        ccfg.clock = 400 * 1000U;
+        component_config(ccfg);
     }
     virtual ~UnitEEPROM()
     {
